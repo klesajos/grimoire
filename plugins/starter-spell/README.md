@@ -232,8 +232,8 @@ flowchart TB
     SP --> R[Every response]
     CM[CLAUDE.md] -. added as a note AFTER the prompt — only ADDS .-> R
 
-    style B fill:#fde2e2
-    style O fill:#e2ecfd
+    style B fill:#ffdede,stroke:#c97a7a,stroke-width:1px,color:#1f2328
+    style O fill:#dde8ff,stroke:#6c8ebf,stroke-width:1px,color:#1f2328
 ```
 
 - **CLAUDE.md** is a note attached *after* the system prompt. It can only **ADD**
