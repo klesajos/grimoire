@@ -21,6 +21,10 @@ A **structure** diagram that shows a **snapshot** of a system at one moment: con
 
 ## Worked example — one library loan snapshot
 
+![Object diagram — instance specifications linked at runtime](images/uml-object-library.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 A snapshot of the library model from `class-diagram.md` at a moment in time:
 
 ```

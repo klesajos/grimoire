@@ -120,24 +120,34 @@ click A callbackFn "Tooltip"
 
 ## Worked example
 
+![Mermaid flowchart — node shapes, edges, and a subgraph](images/mermaid-flowchart.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-flowchart.png -->
+
 ```mermaid
----
-title: Deploy pipeline
-config:
-  theme: neutral
----
 flowchart TD
   Start([Push to main]) --> Build[Build image]
   Build --> Test{Tests pass?}
-  Test -->|yes| Scan[Security scan]
+  Test -->|yes| Scan(Security scan)
   Test -->|no| Fail[/Notify author/]
-  Scan --> Deploy[[Deploy to prod]]
+  Scan --> Deploy
+
+  subgraph Production
+    Deploy[[Deploy to prod]] --> DB[(Postgres)]
+    Deploy --> Cache((Redis))
+  end
+
   Deploy --> Done([Live])
-  Fail --> Done2([Pipeline failed])
+  Fail --> Failed([Pipeline failed])
 
   classDef bad fill:#fdd,stroke:#c00;
-  class Fail,Done2 bad;
+  class Fail,Failed bad;
 ```
+
+</details>
 
 ## Pitfalls
 

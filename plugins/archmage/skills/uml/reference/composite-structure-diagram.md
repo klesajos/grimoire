@@ -24,6 +24,10 @@ A **structure** diagram showing the **internal structure** of a classifier: the 
 
 ## Worked example — `Car` internal structure
 
+![Composite structure — a class's internal parts and connectors](images/uml-composite-structure.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 A `Car` classifier composed of parts wired through ports:
 
 ```

@@ -11,6 +11,28 @@ and render. All names are fully qualified as `enterprise-architect:<tool>`.
 - [Linked documents & selection](#linked-documents--selection)
 - [A typical read flow](#a-typical-read-flow)
 
+![A typical read flow through the EA model](images/ea-mcp-read-flow.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-mcp-read-flow.png -->
+
+```mermaid
+flowchart LR
+    A["get_root_packages"]
+    B["get_packages_information"]
+    C["get_diagrams_information"]
+    D["get_diagram_image (render)"]
+    E["get_elements_information (detail)"]
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+```
+
+</details>
+
 ## Navigate the tree
 
 | Tool | Use |

@@ -83,26 +83,49 @@ Valid values: `1`, `0..1`, `1..*`, `*`, `n`, `0..n`, `1..n`.
 
 ## Worked example
 
+<details open>
+<summary>Mermaid class diagram — members and the main relationship types (rendered by GitHub from the source below)</summary>
+
+<!-- render: images/mermaid-class.png -->
+
 ```mermaid
 classDiagram
   direction LR
-  class Shape {
-    <<abstract>>
+  class PaymentMethod {
+    <<interface>>
+    +charge() bool
+  }
+  class Order {
     +String id
-    +area()* double
+    -double total
+    #String status
+    +addItem() void
   }
-  class Circle {
-    +double radius
-    +area() double
+  class Customer {
+    +String name
+    -String email
   }
-  class Repository~T~ {
-    +save(T) void
-    +findById(String) T
+  class CreditCard {
+    +String number
+    +charge() bool
   }
-  Shape <|-- Circle
-  Repository~Shape~ ..> Shape : manages
-  note for Shape "Base type for all geometry"
+  class LineItem {
+    +int qty
+    +double price
+  }
+  class Address {
+    +String city
+  }
+
+  PaymentMethod <|.. CreditCard : realization
+  Order <|-- PriorityOrder : inheritance
+  Order "1" *-- "1..*" LineItem : composition
+  Customer "1" o-- "0..*" Address : aggregation
+  Customer "1" --> "*" Order : association
+  Order ..> PaymentMethod : dependency
 ```
+
+</details>
 
 ## Pitfalls
 

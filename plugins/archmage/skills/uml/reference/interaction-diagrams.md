@@ -62,26 +62,36 @@ Lifelines: `:Customer`, `:ATM`, `:Bank`.
    `[else]`: `ATM` → `Customer` : `ejectCard()`
 
 ### Mermaid
-Sequence diagrams are native (`sequenceDiagram`); `alt`/`opt`/`loop`/`par`/`critical`/`break` map to Mermaid blocks.
+Sequence diagrams are native (`sequenceDiagram`); `alt`/`opt`/`loop`/`par`/`critical`/`break` map to Mermaid blocks. Below, a payment interaction with activations and an `alt` fragment splitting **authorised** from **declined**:
+
+![Sequence diagram — a payment interaction with an alt fragment](images/uml-sequence-payment.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/uml-sequence-payment.png -->
 
 ```mermaid
 sequenceDiagram
     actor Customer
-    participant ATM
-    participant Bank
-    Customer->>ATM: insertCard() / enterPin(p)
-    ATM->>Bank: verify(pin)
-    Bank-->>ATM: ok
-    alt ok
-        Customer->>ATM: requestCash(amt)
-        ATM->>Bank: debit(amt)
-        opt balance >= amt
-            ATM-->>Customer: dispense(amt)
-        end
-    else not ok
-        ATM-->>Customer: ejectCard()
+    participant Checkout
+    participant Gateway
+    Customer->>Checkout: pay(amount)
+    activate Checkout
+    Checkout->>Gateway: authorise(card, amount)
+    activate Gateway
+    Gateway-->>Checkout: result
+    deactivate Gateway
+    alt authorised
+        Checkout->>Gateway: capture(amount)
+        Checkout-->>Customer: receipt
+    else declined
+        Checkout-->>Customer: paymentFailed
     end
+    deactivate Checkout
 ```
+
+</details>
 
 ### Common mistakes
 - Using **synchronous** (filled ►) where **asynchronous** (open →) is meant, or omitting the **return** on a sync call.

@@ -24,6 +24,26 @@ workflow). For notation rules, use `uml` / `bpmn` / `archimate` / `togaf` / `mer
 Claude Code  ──stdio──▶  MCP3.exe (server)  ──named pipe──▶  MCP_EA add-in (inside EA.exe)  ──COM──▶  EA repository
 ```
 
+![How the EA MCP conduit connects Claude Code to the EA repository](images/ea-mcp-architecture.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-mcp-architecture.png -->
+
+```mermaid
+flowchart LR
+    CC["Claude Code"]
+    SRV["MCP3.exe (server)"]
+    ADDIN["MCP_EA add-in (inside EA.exe)"]
+    REPO["EA repository"]
+    CC -->|stdio| SRV
+    SRV -->|named pipe| ADDIN
+    ADDIN -->|in-proc COM| REPO
+```
+
+</details>
+
 The server never touches EA's COM directly; the add-in inside a **running EA with a project open**
 does. So **EA must be running with a repository open** for anything to work, and only **one** EA
 instance may be open (two → COM ambiguity → timeouts).

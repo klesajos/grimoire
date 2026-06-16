@@ -2,6 +2,26 @@
 
 TOGAF (the *method*) and ArchiMate (the *modeling language*) are complementary Open Group standards: the ADM tells you **which architecture to develop in which phase**, and ArchiMate gives you a **notation to express it**. This file maps ADM phases and their artifacts onto ArchiMate layers and elements. For the ArchiMate language itself — element/relationship semantics, the full layer set, and viewpoints — use the **`archimate`** skill.
 
+![Mapping ADM phases to ArchiMate layers](images/togaf-archimate-mapping.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/togaf-archimate-mapping.png -->
+
+```mermaid
+flowchart LR
+  A["A. Architecture Vision"] --> Mot["Motivation layer"]
+  A --> Strat["Strategy layer"]
+  B["B. Business"] --> Bus["Business layer"]
+  C["C. Information Systems"] --> App["Application layer"]
+  C --> Data["Data Objects"]
+  D["D. Technology"] --> Tech["Technology layer"]
+  EF["E / F. Opportunities, Solutions & Migration"] --> ImplMig["Implementation & Migration layer"]
+```
+
+</details>
+
 ## ArchiMate layers in one line
 
 - **Strategy** layer — Resource, Capability, Course of Action, Value Stream.

@@ -9,6 +9,34 @@ walks these checks automatically.
 - [Tool-call errors](#tool-call-errors)
 - [Wrong things got created / wrong target](#wrong-things-got-created--wrong-target)
 
+![Troubleshooting a failed EA connection](images/ea-mcp-troubleshooting.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-mcp-troubleshooting.png -->
+
+```mermaid
+flowchart TD
+    S["Failed to connect / timeout"]
+    Q1{"Is a project open?"}
+    Q2{"Exactly one EA instance running?"}
+    Q3{"Client restarted after -enableEdit?"}
+    Q4["Check the install"]
+    F1["Open a repository in EA"]
+    F2["Close all but one EA instance"]
+    F3["Fully restart the client"]
+    S --> Q1
+    Q1 -->|no| F1
+    Q1 -->|yes| Q2
+    Q2 -->|no| F2
+    Q2 -->|yes| Q3
+    Q3 -->|no| F3
+    Q3 -->|yes, still failing| Q4
+```
+
+</details>
+
 ## Connection failures
 
 **Symptom:** "Failed to connect to Enterprise Architect", timeouts, or `get_root_packages` hangs/errors.

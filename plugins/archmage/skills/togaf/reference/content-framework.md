@@ -2,6 +2,32 @@
 
 The **Architecture Content Framework** defines *what* the ADM produces and how those outputs relate, so that architecture work is consistent and reusable. The **Architecture Content** volume of the TOGAF Standard, 10th Edition specifies this. (Note the 10th-Edition terminology: the **TOGAF Content Framework** and the **TOGAF Enterprise Metamodel** are now named as two distinct things.)
 
+![Architecture Content Framework and Repository structure](images/togaf-content-hierarchy.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/togaf-content-hierarchy.png -->
+
+```mermaid
+flowchart TB
+  subgraph Repo["Architecture Repository"]
+    AR["Architecture Repository"]
+    AR --> AL["Architecture Landscape"]
+    AR --> RL["Reference Library<br/>(TRM, III-RM)"]
+    AR --> SIB["Standards Information Base"]
+    AR --> GR["Governance Repository"]
+    AR --> AC["Architecture Capability"]
+  end
+
+  subgraph Content["Content atoms"]
+    DEL["Deliverables"] --> ART["Artifacts<br/>(catalogs / matrices / diagrams)"]
+    ART --> BB["Building Blocks<br/>(ABB / SBB)"]
+  end
+```
+
+</details>
+
 ## Contents
 
 - [Deliverables, Artifacts, Building Blocks](#deliverables-artifacts-building-blocks)

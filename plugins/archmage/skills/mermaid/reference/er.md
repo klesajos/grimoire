@@ -71,12 +71,15 @@ erDiagram
 
 ## Worked example
 
+![Mermaid ER diagram — entities, keys, and crow's-foot cardinality](images/mermaid-er.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-er.png -->
+
 ```mermaid
----
-title: Shop schema
----
 erDiagram
-  direction LR
   CUSTOMER ||--o{ ORDER : places
   ORDER ||--|{ LINE_ITEM : contains
   PRODUCT ||--o{ LINE_ITEM : "ordered in"
@@ -101,6 +104,8 @@ erDiagram
     int qty
   }
 ```
+
+</details>
 
 ## Pitfalls
 

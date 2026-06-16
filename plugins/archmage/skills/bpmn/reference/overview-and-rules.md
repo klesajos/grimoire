@@ -189,6 +189,29 @@ This example is extended with a timer escalation in `events.md`, with task-type
 choices in `activities.md`, and split into two pools (employee ↔ HR system) in
 `pools-lanes-collaboration.md`.
 
+The diagram below is a Mermaid **approximation** of a simple BPMN process —
+Mermaid has no native BPMN, so circles stand in for events and a diamond for the
+gateway; Enterprise Architect renders true BPMN notation.
+
+![A simple BPMN process (Mermaid approximation — EA renders true BPMN)](images/bpmn-process-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-process-approx.png -->
+
+```mermaid
+flowchart LR
+  S((Start)) --> R[Receive request]
+  R --> G{Approved?}
+  G -- Yes --> F[Fulfil]
+  F --> E1((End))
+  G -- No --> J[Reject]
+  J --> E2((End))
+```
+
+</details>
+
 ## 9. Mermaid note (no native BPMN)
 
 **Mermaid has no native BPMN diagram type.** There is no BPMN renderer in

@@ -47,22 +47,32 @@ Lanes: **Customer**, **Sales**, **Warehouse**.
 
 Mermaid has **no native activity diagram**, but a `flowchart` renders the control flow well; use `subgraph` for swimlanes. Fork/join are approximated by a node fanning out/in (Mermaid has no synchronization-bar semantics — note this).
 
+![Activity diagram (as a Mermaid flowchart) — order fulfilment with a decision and parallel actions](images/uml-activity-order-fulfilment.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/uml-activity-order-fulfilment.png -->
+
 ```mermaid
 flowchart TD
-    start([●]) --> submit[Submit Order]
+    start((start)) --> submit[Submit Order]
     submit --> validate[Validate Order]
     validate --> dec{valid?}
-    dec -- "[else]" --> reject[Notify Rejection] --> stop1((◉))
-    dec -- "[valid]" --> fork[" "]:::bar
+    dec -- "[else]" --> reject[Notify Rejection]
+    reject --> stop1(((end)))
+    dec -- "[valid]" --> fork[ ]:::bar
     fork --> reserve[Reserve Stock]
     fork --> charge[Charge Card]
-    reserve --> join[" "]:::bar
+    reserve --> join[ ]:::bar
     charge --> join
     join --> ship[Ship Order]
     ship --> confirm[Send Confirmation]
-    confirm --> stop2((◉))
-    classDef bar fill:#000,stroke:#000,color:#000;
+    confirm --> stop2(((end)))
+    classDef bar fill:#000,stroke:#000,color:#fff;
 ```
+
+</details>
 
 (The `fork`/`join` bars are visual stand-ins; Mermaid does not enforce the join's "wait for all" semantics.)
 

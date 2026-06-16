@@ -127,6 +127,31 @@ Token note: the multi-instance pick task holds several instance-tokens at once
 that synchronize before "Pack shipment" — equivalent to a fan-out/fan-in over the
 order lines without drawing explicit parallel gateways.
 
+The diagram below is a Mermaid **approximation** of activity/task types and a
+sub-process: Mermaid has no BPMN task icons, so each node is labelled by its task
+type and the sub-process is shown as a `subgraph` — Enterprise Architect renders
+true BPMN activities with type markers.
+
+![BPMN activity/task types and a sub-process (Mermaid approximation)](images/bpmn-activities-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-activities-approx.png -->
+
+```mermaid
+flowchart LR
+  S((Start)) --> U["User task: Pack shipment"]
+  U --> V["Service task: Reserve stock"]
+  V --> SP
+  subgraph SP["Sub-Process: Take payment"]
+    P1["Authorize card"] --> P2["Capture funds"]
+  end
+  SP --> E((End))
+```
+
+</details>
+
 ## 8. Common activity mistakes
 
 - **Untyped tasks everywhere.** Once the nature is known, type the task — it

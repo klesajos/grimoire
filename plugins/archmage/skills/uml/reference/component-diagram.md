@@ -25,6 +25,10 @@ A **structure** diagram showing **components** — modular, replaceable units of
 
 ## Worked example — order system
 
+![Component diagram — components with provided/required interfaces](images/uml-component-ordering.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 ```
    ┌──「component」 WebUI ──┐                ┌──「component」 OrderService ──┐
    │                       │○──────────────⊂│                              │○── IOrderMgmt

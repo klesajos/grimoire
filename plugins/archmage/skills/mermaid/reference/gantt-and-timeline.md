@@ -54,11 +54,16 @@ Optional tags come first, comma-separated: `done`, `active`, `crit`, `milestone`
 
 ### Gantt worked example
 
+![Mermaid gantt — a small project schedule with a milestone](images/mermaid-gantt.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-gantt.png -->
+
 ```mermaid
----
-title: Release schedule
----
 gantt
+  title Release schedule
   dateFormat  YYYY-MM-DD
   axisFormat  %m/%d
   excludes    weekends
@@ -70,6 +75,8 @@ gantt
     QA           :crit,    qa,  after imp, 5d
     Ship         :         shp, after qa, 2d
 ```
+
+</details>
 
 ### Gantt pitfalls
 

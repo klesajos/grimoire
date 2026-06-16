@@ -2,6 +2,30 @@
 
 The **Enterprise Architecture Capability & Governance** volume of the TOGAF Standard, 10th Edition covers *who runs architecture and how it is steered* — the organizational and governance machinery around the ADM, plus the structures that let architecture scale: the Enterprise Continuum, partitioning, iteration, and levels of architecture.
 
+![Architecture capability and governance structure](images/togaf-governance.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/togaf-governance.png -->
+
+```mermaid
+flowchart TB
+  AB["Architecture Board"]
+  AB -->|governs| ADM["ADM cycles<br/>(Strategic / Segment / Capability)"]
+  AB --> CON["Architecture Contracts"]
+  AB --> COMP["Compliance Assessments"]
+
+  subgraph EC["Enterprise Continuum"]
+    AContinuum["Architecture Continuum"]
+    SContinuum["Solutions Continuum"]
+  end
+
+  ADM --> EC
+```
+
+</details>
+
 ## Contents
 
 - [The Architecture Capability](#the-architecture-capability)

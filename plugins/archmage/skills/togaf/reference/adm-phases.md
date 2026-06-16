@@ -2,6 +2,38 @@
 
 The Architecture Development Method (ADM) is the core of the TOGAF Standard, 10th Edition. It is an iterative cycle of phases driven by **Requirements Management** at the center. In the 10th Edition the cycle diagram **has no directional arrowheads** — phases are not strictly sequential and you may iterate, skip, or re-enter phases as governance requires; the Preliminary↔Phase A link is bidirectional.
 
+![ADM phase progression with central Requirements Management](images/togaf-adm-phase-flow.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/togaf-adm-phase-flow.png -->
+
+```mermaid
+flowchart LR
+  P["Preliminary"] --> A["A. Architecture Vision"]
+  A --> B["B. Business"]
+  B --> C["C. Information Systems"]
+  C --> D["D. Technology"]
+  D --> E["E. Opportunities & Solutions"]
+  E --> F["F. Migration Planning"]
+  F --> G["G. Implementation Governance"]
+  G --> H["H. Architecture Change Mgmt"]
+
+  RM(["Requirements<br/>Management"])
+  RM --- P
+  RM --- A
+  RM --- B
+  RM --- C
+  RM --- D
+  RM --- E
+  RM --- F
+  RM --- G
+  RM --- H
+```
+
+</details>
+
 ## Contents
 
 - [Reading the cycle](#reading-the-cycle)

@@ -33,6 +33,37 @@ create_or_update_package        # parent first → capture packageID
   → get_diagram_image           # VERIFY — render the PNG and check it
 ```
 
+![The build-and-verify modelling workflow](images/ea-modeling-workflow.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-modeling-workflow.png -->
+
+```mermaid
+flowchart LR
+    A["create_or_update_package"]
+    B["create_or_update_elements"]
+    C["attributes / operations"]
+    D["create_or_update_connectors"]
+    E["create_or_update_diagram"]
+    F["open_diagrams"]
+    G["place_elements_on_diagram"]
+    H["layout_connectors"]
+    I["get_diagram_image (verify)"]
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I -->|fix and re-render| B
+```
+
+</details>
+
 **Always finish with `get_diagram_image`.** Building blind is how silent errors (duplicate
 messages, missed placements, wrong target package) survive. Render and look.
 

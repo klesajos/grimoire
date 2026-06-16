@@ -25,6 +25,10 @@ A **structure** diagram showing the **physical/runtime architecture**: the hardw
 
 ## Worked example — web app deployment
 
+![Deployment diagram — nodes, a device, and «deploy»ed artifacts](images/uml-deployment-ordering.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 ```
 ┌─「device」 Client PC ─────┐         ┌─「device」 App Server ──────────────────┐
 │  ┌──────────────────┐    │ «HTTPS» │  ┌─「executionEnvironment」 Tomcat ──┐  │

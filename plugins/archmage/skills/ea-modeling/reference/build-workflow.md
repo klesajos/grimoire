@@ -15,6 +15,32 @@ model; the same shape applies to every diagram kind (per-kind quirks are in
 - [Step 7 — verify](#step-7--verify)
 - [The gotcha list (memorize)](#the-gotcha-list-memorize)
 
+![The seven-step EA build workflow](images/ea-build-steps.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-build-steps.png -->
+
+```mermaid
+flowchart TD
+    S1["1. Package"]
+    S2["2. Elements"]
+    S3["3. Members (attributes/operations)"]
+    S4["4. Connectors"]
+    S5["5. Diagram"]
+    S6["6. Open + place + layout"]
+    S7["7. Verify"]
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+```
+
+</details>
+
 ## Step 0 — confirm the target package
 
 ```
@@ -29,8 +55,8 @@ Create the container first; capture the returned `packageID`.
 
 ```
 enterprise-architect:create_or_update_package
-  [{ "name": "Ordering", "parentPackageID": <modelRootId> }]
-→ returns packageID, e.g. 7
+  { "packageInfo": { "packageID": 0, "name": "Ordering", "owningPackageID": <modelRootId> } }
+→ returns packageID, e.g. 7      # packageID:0 = create; parent is owningPackageID
 ```
 
 ## Step 2 — elements
@@ -40,11 +66,11 @@ cheatsheet.
 
 ```
 enterprise-architect:create_or_update_elements
-  [
-    { "type": "Class", "name": "Order",    "packageID": 7 },
-    { "type": "Class", "name": "Customer", "packageID": 7 }
-  ]
-→ returns [ {id: 101}, {id: 102} ]
+  { "elementInfo": [
+    { "elementID": 0, "type": "Class", "name": "Order",    "owningPackageID": 7 },
+    { "elementID": 0, "type": "Class", "name": "Customer", "owningPackageID": 7 }
+  ] }
+→ returns [ {id: 101}, {id: 102} ]    # container is owningPackageID; owningElementID nests in an element
 ```
 
 Optional per element: `stereotypes`, `notes`, and `taggedValues` as an **array**:
@@ -70,10 +96,11 @@ Reference the element IDs from step 2. **`direction: "Unspecified"`.**
 
 ```
 enterprise-architect:create_or_update_connectors
-  [ { "type": "Association",
-      "sourceElementID": 102, "targetElementID": 101,
-      "direction": "Unspecified",
-      "sourceCardinality": "1", "targetCardinality": "0..*" } ]
+  { "connectorInfo": [ {
+      "connectorID": 0, "type": "Association", "direction": "Unspecified",
+      "sourceEnd": { "relatedElementID": 102, "multiplicity": "1" },
+      "targetEnd": { "relatedElementID": 101, "multiplicity": "0..*" } } ] }
+  # ends are sourceEnd/targetEnd.relatedElementID — NOT sourceElementID/targetElementID
 ```
 
 For use-case «include»/«extend»: `type:"Dependency"`, `stereotypes:"include"` (or `"extend"`).
@@ -83,7 +110,7 @@ For activity edges: `type:"ControlFlow"`. For state transitions: `type:"StateFlo
 
 ```
 enterprise-architect:create_or_update_diagram
-  [ { "name": "Domain", "type": "Class", "packageID": 7 } ]
+  { "diagramInfo": { "diagramID": 0, "name": "Domain", "type": "Class", "owningPackageID": 7, "owningElementID": 0 } }
 → returns diagramID, e.g. 20
 ```
 
@@ -96,10 +123,11 @@ behave). Place each element with geometry — **x and y must be > 10** — then 
 enterprise-architect:open_diagrams [20]
 
 enterprise-architect:place_elements_on_diagram
-  [ { "diagramID": 20, "elementID": 101, "x": 60,  "y": 40, "width": 160, "height": 90 },
-    { "diagramID": 20, "elementID": 102, "x": 320, "y": 40, "width": 160, "height": 90 } ]
+  { "diagramID": 20, "placements": [
+    { "elementID": 101, "x": 60,  "y": 40, "width": 160, "height": 90 },
+    { "elementID": 102, "x": 320, "y": 40, "width": 160, "height": 90 } ] }
 
-enterprise-architect:layout_connectors [20]
+enterprise-architect:layout_connectors { "diagramID": 20 }
 ```
 
 ## Step 7 — verify
