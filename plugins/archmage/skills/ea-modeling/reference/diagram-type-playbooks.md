@@ -44,8 +44,8 @@ flowchart TD
 
 - Diagram `type: "Class"`. Elements `Class`/`Interface`.
 - Add **attributes** (`create_or_update_attributes`) and **operations** (`create_or_update_operations`) by owning element ID, after the class exists.
-- Connectors: `Association` (with `sourceCardinality`/`targetCardinality` for multiplicity),
-  `Aggregation` (set composite kind for composition — verify the flag), `Generalization` (child→parent),
+- Connectors: `Association` (set multiplicity via `sourceEnd.multiplicity` / `targetEnd.multiplicity`),
+  `Aggregation` (for composition the filled diamond is **GUI-only** — the MCP exposes no aggregation-kind field; set composite in the EA GUI), `Generalization` (child→parent),
   `Realization` (class→interface), `Dependency`.
 - Place classes in a grid (x/y > 10), `layout_connectors`, render.
 
@@ -75,6 +75,28 @@ This is the highest-risk build. Read this before doing it.
 Order messages top-to-bottom by their sequence position. Synchronous calls vs returns vs async are
 set on the message; render to confirm arrowheads.
 
+**Watch the field names — messages are the one exception.** `create_or_update_messages` uses flat
+`sourceElementID` / `targetElementID`, **NOT** the `sourceEnd.relatedElementID` /
+`targetEnd.relatedElementID` you use for connectors. Carrying the connector rule over here is the
+classic mistake. The payload:
+
+```
+create_or_update_messages {
+  "diagramID": 20,
+  "messageInfo": [
+    { "connectorID": 0, "name": "submit()", "sourceElementID": 101, "targetElementID": 102, "order": 1 },
+    { "connectorID": 0, "name": "ack",       "sourceElementID": 102, "targetElementID": 101, "order": 2,
+      "isReturnMessage": true },
+    { "connectorID": 0, "name": "notify()",  "sourceElementID": 102, "targetElementID": 103, "order": 3,
+      "isAsynchronousMessage": true }
+  ]
+}
+```
+
+`connectorID: 0` creates; `order` sequences the arrows; `isReturnMessage: true` draws a dashed
+return arrow and `isAsynchronousMessage: true` an open-arrowhead async call (a plain synchronous
+call needs neither).
+
 ## Activity diagram
 
 - Diagram `type: "Activity"`. Nodes: `Action`, `Decision` (diamond, for branch **and** merge),
@@ -93,6 +115,9 @@ set on the message; render to confirm arrowheads.
 
 ## Requirements diagram
 
-- Diagram `type: "Requirements"`. Elements `Requirement` (verify the element string in live EA).
+- Diagram `type: "Requirements"` (confirmed). Elements `Requirement` — **verify the element string
+  in live EA**: the diagram type is confirmed but the UML `Requirement` element is not (they were
+  verified separately). This UML `Requirement` is **not** the confirmed ArchiMate
+  `ArchiMate3::ArchiMate_Requirement` — different MDG type; see the `archimate` spell.
 - Link requirements to design elements with `Realization` (element realises requirement) or
   `Dependency`/«trace». Hierarchy via `Aggregation`/nesting.

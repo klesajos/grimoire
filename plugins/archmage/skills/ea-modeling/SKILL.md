@@ -1,6 +1,6 @@
 ---
 name: ea-modeling
-description: Builds and reads Sparx Enterprise Architect models through the EA MCP. Covers the create-elements then connectors then diagram then place then layout then verify build workflow, exploration/reading recipes, and mapping UML/BPMN/ArchiMate concepts onto EA element, connector, and diagram types. Use when the user wants to create, build, generate, populate, read, explore, explain, or render a model or diagram in Enterprise Architect / Sparx EA, or to turn a UML/BPMN/ArchiMate design into actual EA elements. For connection failures or tool setup, ea-mcp applies instead.
+description: Builds and reads Sparx Enterprise Architect models through the EA MCP. Covers the create-elements then connectors then diagram then place then layout then verify build workflow, exploration/reading recipes, and mapping UML/BPMN/ArchiMate concepts onto EA element, connector, and diagram types. Use when the user wants to create, build, generate, populate, read, explore, explain, or render a model or diagram **in Enterprise Architect / Sparx EA** (the read verbs apply only when the target is an EA repository — explaining/rendering a Mermaid or text diagram is not this skill), or to turn a UML/BPMN/ArchiMate design into actual EA elements. For connection failures or tool setup, ea-mcp applies instead.
 ---
 
 # ea-modeling — build & read models in Enterprise Architect
@@ -12,12 +12,26 @@ It assumes the conduit is healthy — if it is not (connection/setup/tool errors
 ## When to use this spell
 
 - "Create / build / generate / populate a model (or a class/sequence/activity/… diagram) **in EA**."
-- "Read / explore / explain / summarise / render this EA model or diagram."
+- "Read / explore / explain / summarise / render **this EA model or diagram**." (The read verbs are gated on an EA target — explaining or rendering a Mermaid/text diagram is `mermaid` or the notation skill, not this one.)
 - "Turn this UML/BPMN/ArchiMate design into actual EA elements."
 
 For the **notation rules** (what a valid class/sequence/BPMN/ArchiMate diagram *is*), pull the
 matching spell: `uml`, `bpmn`, `archimate`, `togaf`, `mermaid`. This spell is the EA *mechanics*;
 those are the *grammar*.
+
+**Choosing the notation** (when the request names neither a notation nor a diagram type — e.g.
+"model a small ordering system in EA", pick by *intent* before pulling a spell):
+
+| Intent in the request | Notation | Then route to |
+| --- | --- | --- |
+| Domain / data **structure** — things and how they relate | UML class diagram | `uml` |
+| **Behaviour / process** — steps, decisions, control flow | UML activity (system/algorithmic) or BPMN (business process with lanes/actors) | `uml` or `bpmn` |
+| **Enterprise / layered** — business + application + technology together | ArchiMate | `archimate` (TOGAF context → `togaf`) |
+| **Actor goals** — who wants what from the system | UML use case | `uml` |
+
+Default an unqualified "ordering system" to a **UML class diagram** for the structure, adding a
+**use case** (actor goals) or **activity/BPMN** (the ordering flow) only if the request implies
+behaviour. Then continue into the workflow below.
 
 ## The one workflow to remember
 

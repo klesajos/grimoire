@@ -84,11 +84,16 @@ Attach class members by owning element ID.
 
 ```
 enterprise-architect:create_or_update_attributes
-  [ { "elementID": 101, "name": "total", "type": "Money", "visibility": "Private" } ]
+  { "elementID": 101, "attributeInfo": [
+    { "attributeID": 0, "name": "total", "type": "Money", "scope": "Private" } ] }
 
 enterprise-architect:create_or_update_operations
-  [ { "elementID": 101, "name": "submit", "returnType": "void" } ]
+  { "elementID": 101, "operationInfo": [
+    { "operationID": 0, "name": "submit", "returnType": "void" } ] }
 ```
+`elementID` is the **top-level** target; members go in the `attributeInfo`/`operationInfo` array.
+New members use `attributeID:0`/`operationID:0`. The visibility field is **`scope`** (not
+`visibility`) — values `Private`/`Protected`/`Package`/`Public`.
 
 ## Step 4 — connectors
 

@@ -124,5 +124,5 @@ classDiagram
 
 - Diagram `type`: **"Class"** (confirmed).
 - Element `type`: **"Class"**, **"Interface"** (use stereotype/keyword for enumeration: verify in live EA).
-- Connector `type`: **"Association"**, **"Aggregation"** (for composition use **"Aggregation"** with the composite aggregation kind for the filled diamond — verify the exact flag in live EA), **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
+- Connector `type`: **"Association"**, **"Aggregation"** (for composition the filled diamond is **GUI-only** — the MCP exposes no aggregation-kind field; set composite in the EA GUI), **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
 - Attributes/operations go through `enterprise-architect:create_or_update_attributes` / `…create_or_update_operations`. For the build sequence see the **`ea-modeling`** skill and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

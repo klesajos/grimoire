@@ -21,12 +21,14 @@ Call `enterprise-architect:get_root_packages`.
   5. EA blocked on a modal dialog, or genuinely slow under ARM64 emulation (raise `-setTimeout`).
 
 **2. Write-tools check.**
-Determine whether the write tools are present (look for `enterprise-architect:create_or_update_package`
-in the available tools — do **not** call it).
-- ✅ Present → editing is enabled.
-- ❌ Absent → `-enableEdit` did not take effect. Fixes: ensure `-enableEdit` is in the server args
-  (`claude mcp list` / `.mcp.json`), then **fully restart the client** (a running server ignores
-  new args).
+This is an **operator-side** check — a command can't reliably introspect its own live tool
+catalog, so frame it as guidance rather than a verdict you derive. Tell the operator:
+> If you do **not** see `enterprise-architect:create_or_update_*` tools in my catalog, then
+> `-enableEdit` is off or the client was not restarted.
+- ✅ If those write tools are present → editing is enabled.
+- ❌ If they are absent → `-enableEdit` did not take effect. Fixes: ensure `-enableEdit` is in the
+  server args (`claude mcp list` / `.mcp.json`), then **fully restart the client** (a running
+  server ignores new args).
 
 **3. Working-context check.**
 Call `enterprise-architect:get_opened_diagrams`.

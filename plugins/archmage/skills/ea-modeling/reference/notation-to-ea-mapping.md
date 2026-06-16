@@ -22,36 +22,47 @@ and `archimate` spells.
 | Sequence diagram | `Sequence` | lifeline element `Sequence`; messages via `create_or_update_messages` (open the diagram first!) |
 | Activity diagram | `Activity` | `Action`, `Decision` (diamond), initial/final `StateNode`; edges `ControlFlow` |
 | State machine diagram | `StateMachine` | `State`, initial/final `StateNode`; transitions `StateFlow` |
-| Requirements | `Requirements` | `Requirement` (verify in live EA); realise with `Realization`/`Dependency` |
+| Requirements | `Requirements` (confirmed) | `Requirement` (verify in live EA — the UML element is unconfirmed even though the diagram type is; not the ArchiMate `ArchiMate3::ArchiMate_Requirement`); realise with `Realization`/`Dependency` |
 | Object diagram | `Object` | `Object` instances; `Association`/links |
 | Component diagram | `Component` | `Component`, `Interface`; `Dependency`/`Realization` |
 | Deployment diagram | `Deployment` | `Node`, `Device`, `Artifact`, `Component`; `Dependency` |
 | Package diagram | `Package` (verify) | packages; `Dependency`/«import» |
 
-Confirmed diagram `type` strings: `Class`, `Use Case`, `Sequence`, `Activity`, `StateMachine`,
-`Requirements`, `Object`, `Component`, `Deployment`, `Composite Structure`, `Profile`. The
-`Package` diagram type is EA's standard name but is not yet hand-confirmed — **verify in live EA**
-before relying on it.
+Confirmed diagram `type` strings (all hand-verified live): `Class`, `Use Case`, `Sequence`,
+`Activity`, `StateMachine`, `Requirements`, `Object`, `Component`, `Deployment`,
+`Composite Structure`, `Profile`, `Package`, `Communication`, `Timing` — i.e. every UML diagram type.
+
+Two **element** strings on otherwise-confirmed diagrams are still unconfirmed: the UML `Requirement`
+element (hosted on the confirmed `Requirements` diagram) and EA's package-on-diagram constructs.
+The confirmed `Requirements` *diagram* type does **not** imply its `Requirement` element string is
+confirmed — they were verified separately, and only the diagram was. Note also that the UML
+`Requirement` element is distinct from the confirmed ArchiMate `ArchiMate3::ArchiMate_Requirement`
+(see the `archimate` spell's `ea-bridge.md`); one being confirmed says nothing about the other.
 
 ## BPMN → EA
 
-EA models BPMN via the **BPMN 2.0 MDG technology**. Elements are UML elements carrying BPMN
-stereotypes; the diagram is a BPMN business-process diagram, not a plain Activity diagram. The
-exact EA MDG `type`/stereotype strings (e.g. for Task, Gateway, Pool/Lane, Sequence Flow, Message
-Flow, the event triggers) are **not yet hand-confirmed** — treat every BPMN-in-EA string as
-**"verify in live EA"**. Author the model from the `bpmn` spell's rules, then confirm the
-stereotype strings against a live repository (create one of each on a `ZZ_` throwaway and read it
-back with `get_elements_information`).
+EA models BPMN via the **BPMN 2.0 MDG technology**: elements are UML elements carrying BPMN
+profile stereotypes, hosted on a BPMN business-process diagram rather than a plain Activity diagram.
 
-General shape (verify strings):
-| BPMN thing | EA host | Note |
+> **Confirmed limitation: BPMN is NOT creatable via the
+> `enterprise-architect:create_or_update_elements` MCP create tool.** A type string like
+> `"BPMN2.0::Activity"` errors ("Invalid type"), and passing it in the `stereotypes` field strips
+> the `BPMN2.0` profile prefix — you get a plain `«Activity»` UML element, not real BPMN notation.
+> This is a settled dead-end, not an unverified string: don't probe it on a throwaway. To author
+> BPMN in EA, place the elements from the **EA GUI toolbox** for now; the MCP MDG strings for BPMN
+> are unresolved. When the goal is just a diagram in the repo, ship the **labelled Mermaid
+> approximation** the `bpmn` spell produces. This matches
+> `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` and the `bpmn` spell.
+
+The table below names the EA MDG concepts for reference only — it is **not** a create recipe:
+| BPMN thing | EA MDG host | Note |
 | --- | --- | --- |
-| Process diagram | BPMN business-process diagram | verify the diagram `type` string |
-| Task / Sub-Process | element with BPMN Activity stereotype | task type via a tagged value |
-| Gateway (XOR/AND/OR/event-based) | element with BPMN Gateway stereotype | gateway kind via a tagged value |
-| Start/Intermediate/End event | element with BPMN Event stereotype | trigger via a tagged value |
+| Process diagram | BPMN business-process diagram | created in the EA GUI |
+| Task / Sub-Process | `«BPMN2.0::Activity»` element | task type via a tagged value |
+| Gateway (XOR/AND/OR/event-based) | `«BPMN2.0::Gateway»` element | gateway kind via a tagged value |
+| Start/Intermediate/End event | `«BPMN2.0::Event»` element | trigger via a tagged value |
 | Sequence Flow / Message Flow | BPMN connector stereotypes | direction `"Unspecified"` |
-| Pool / Lane | BPMN swimlane constructs | verify how EA represents these |
+| Pool / Lane | BPMN swimlane constructs | placed in the EA GUI |
 
 ## ArchiMate → EA
 
@@ -64,13 +75,25 @@ with **fully-qualified `type` strings** (not a bare stereotype field): elements 
 **confirmed live** through the MCP against a real repository. Build from the `archimate` spell's
 layer/element/relationship catalog; its `ea-bridge.md` carries the confirmed strings.
 
+**Host the view on a `Class` diagram** (`create_or_update_diagram` with `type:"Class"`). The
+ArchiMate view diagram-type string is unresolved: the bare `ArchiMate3::Layered` was not recognised
+in testing and silently fell back to `Class` (the live schema's example is `Archimate3::Application`,
+lowercase `m`, so the real view FQN is probably `Archimate3::<ViewName>` — unconfirmed). Use `Class`
+directly; the `ArchiMate3::ArchiMate_*` elements above still render with full ArchiMate notation on
+it. See the diagram-`type` table in `ea-type-cheatsheet.md`.
+
 ## What "verify in live EA" means here
 
 The confirmed UML strings and the ArchiMate 3 MDG strings were hand-verified through the MCP
-against a real repository. The BPMN MDG strings and the `Package` UML diagram type were not. To
-verify one:
-1. On a `ZZ_Verify` throwaway package, create one element/connector/diagram of the kind in question.
-2. Read it back with `get_elements_information` / `get_connectors_information` /
-   `get_diagrams_information` and note the exact `type`/stereotype EA stored.
-3. Update `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` with the confirmed string.
-4. Delete the `ZZ_Verify` package manually in EA (no MCP delete for packages).
+against a real repository. Two UML strings were not: the `Package` diagram type and the
+`Requirement` element type (BPMN is a separate, *settled* case — see the BPMN section above — and
+is not creatable via the MCP, so there is nothing to verify there). To verify them, run the
+standard `ZZ_` smoke test:
+1. On a `ZZ_Verify` throwaway package, create a diagram with `type:"Package"`, and create an
+   element with `type:"Requirement"` (host it on a `Requirements` diagram, which is already
+   confirmed).
+2. Read them back with `get_diagrams_information` / `get_elements_information` and note the exact
+   `type` EA stored.
+3. Update `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` with the confirmed
+   string(s), and flip the rows here to Confirmed.
+4. Delete the `ZZ_Verify` package manually in EA (no MCP delete for packages or elements).

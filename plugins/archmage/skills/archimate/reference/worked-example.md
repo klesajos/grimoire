@@ -57,7 +57,7 @@ Relationships:
 Relationships:
 - *Rating Engine* **assigned to** *Premium Calculation* (Application Function); the function **realizes** *Calculate Quote* (Application Service), exposed through *Rating API* (Application Interface).
 - *Premium Calculation* **accesses** *Quote Data* (Data Object).
-- *Quote Portal* **serves** the business (it supports the *Quoting* business process); *Quote Portal* **serving**→ *Request Quote/Present Quote* steps.
+- *Quote Portal* **serves** the business: directly it serves an Application Service the portal exposes, and the chain *Quote Portal* → (Application Service) **serving**→ *Request Quote/Present Quote* steps yields a **derived** *Quote Portal* —serves→ *Quoting process* relationship (a derivation shortcut, not a primitive Component→Process serving link).
 - *Calculate Quote* **serving**→ *Quote Portal*; *Manage Policy* **serving**→ *Quote Portal* (the portal uses both services).
 - *Quote Data* **realizes** *Insurance Quote*; *Policy Record* **realizes** *Policy* (cross-layer Realization from Application passive structure to Business passive structure).
 
@@ -68,17 +68,17 @@ Relationships:
 | Web Server | **Node** | Hosts the Quote Portal. |
 | App Server | **Node** | Hosts Rating Engine + PAS. |
 | Linux + Tomcat | **System Software** | Execution environment on the nodes. |
-| Policy Database | **System Software** (DBMS) on a **Device** / cloud **Node** | Stores policy/quote artifacts. |
+| Policy Database | **System Software** (DBMS) **assigned to** a cloud **Node** (the **Device**/host it runs on) | Stores policy/quote artifacts. |
 | Hosting Service | **Technology Service** | Compute/runtime offered upward. |
 | Database Service | **Technology Service** | Persistence offered upward. |
-| LAN/Internet | **Communication Network** (realizing a **Path** between nodes) | Connectivity. |
+| LAN/Internet | **Communication Network** that **realizes** the **Path** linking the Nodes | Connectivity. |
 | quote-portal.war / rating.jar / pas.ear | **Artifacts** | Deployable units of the application components. |
 
 Relationships:
 - *Web Server* / *App Server* (Nodes) **assigned to** their **Artifacts** (deployment); each Artifact **realizes** its Application Component (e.g. *rating.jar* **realizes** *Rating Engine*).
-- *Linux + Tomcat* (System Software) **assigned to** the Nodes; Nodes **realize** *Hosting Service*; DBMS **realizes** *Database Service*.
+- *Linux + Tomcat* (System Software) **assigned to** the Nodes; the *Policy Database* DBMS (System Software) is likewise **assigned to** its cloud Node (not a peer of the network); Nodes **realize** *Hosting Service*; DBMS **realizes** *Database Service*.
 - *Hosting Service* and *Database Service* (Technology Services) **serve** the Application layer (Components/Functions).
-- *Communication Network* **realizes** the *Path* connecting *Web Server* and *App Server*.
+- The *Path* connects the *Web Server* and *App Server* Nodes (a logical link); the *Communication Network* (LAN/Internet) **realizes** that *Path* — the physical medium realizes the logical connection, not the other way round.
 
 ## Stitching the layers (the serving chain)
 
@@ -128,7 +128,9 @@ APPLICATION       [Quote Portal «AppComponent»]            [Policy «BusinessO
                      ^ realizes                      ^ realizes
               [Rating Engine «AppComponent»]    [PAS «AppComponent»]
                      ^ realizes (artifact)            ^ realizes (artifact)
-TECHNOLOGY    [rating.jar «Artifact»]@[App Server «Node»] -- network -- [Policy DB «SystemSoftware»]
+TECHNOLOGY    [rating.jar «Artifact»]@[App Server «Node»] ==Path/Network== [Cloud DB Node «Node»]
+                                                                  ^ assigned-to
+                                                          [Policy DB «SystemSoftware/DBMS»]
                      | serving (Hosting/Database «TechService»)
 ```
 

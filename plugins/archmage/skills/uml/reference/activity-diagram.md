@@ -87,5 +87,5 @@ flowchart TD
 ## EA bridge
 
 - Diagram `type`: **"Activity"** (confirmed).
-- Element `type`: **"Action"**, **"Decision"** (the diamond — also serves as merge), **"StateNode"** for the initial/final nodes (verify final-node subtype in live EA), fork/join via an **"Synchronization"**/"Fork-Join" node (verify in live EA). Partitions via an **"ActivityPartition"** element (verify in live EA).
-- Connector `type`: **"ControlFlow"** for activity edges (set the guard as the connector's guard property), **"ObjectFlow"** for data edges (verify in live EA). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+- Element `type`: **"Action"**, **"Decision"** (the diamond — also serves as merge), **"StateNode"** for the initial/final nodes (verify final-node subtype in live EA), fork/join via a **"Synchronization"** node (try this first; fall back to "Fork-Join" if that name is rejected — verify in live EA). Partitions via an **"ActivityPartition"** element (verify in live EA).
+- Connector `type`: **"ControlFlow"** for activity edges (set the guard as the connector's guard property), **"ObjectFlow"** for data edges (try this name first; fall back to a plain "ControlFlow" through object nodes if it is rejected — verify in live EA). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

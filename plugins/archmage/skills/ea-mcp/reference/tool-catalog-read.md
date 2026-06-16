@@ -1,7 +1,10 @@
 # EA MCP — read tool catalog
 
 Read tools are always available (no `-enableEdit` needed). Use them to navigate, search, inspect,
-and render. All names are fully qualified as `enterprise-architect:<tool>`.
+and render. The bare names in the tables and flow below are each the EA MCP tool
+`enterprise-architect:<tool>` (documentation shorthand for the invokable
+`mcp__enterprise-architect__<tool>`) — see the tool-name convention in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
 
 ## Contents
 - [Navigate the tree](#navigate-the-tree)

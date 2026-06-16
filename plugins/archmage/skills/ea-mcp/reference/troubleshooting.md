@@ -3,6 +3,10 @@
 A cause→fix table for the failures you will actually hit. Start with `/archmage:ea-doctor`, which
 walks these checks automatically.
 
+Tools are named in prose as `enterprise-architect:<tool>` (documentation shorthand for the invokable
+`mcp__enterprise-architect__<tool>`); see the tool-name convention in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`. The flowchart below uses bare names.
+
 ## Contents
 - [Connection failures](#connection-failures)
 - [Missing write tools](#missing-write-tools)
@@ -39,7 +43,7 @@ flowchart TD
 
 ## Connection failures
 
-**Symptom:** "Failed to connect to Enterprise Architect", timeouts, or `get_root_packages` hangs/errors.
+**Symptom:** "Failed to connect to Enterprise Architect", timeouts, or `enterprise-architect:get_root_packages` hangs/errors.
 
 | Likely cause | Fix |
 | --- | --- |
@@ -52,7 +56,7 @@ flowchart TD
 
 ## Missing write tools
 
-**Symptom:** `create_or_update_*` / `place_elements_on_diagram` are not in the tool list.
+**Symptom:** `create_or_update_*` / `enterprise-architect:place_elements_on_diagram` are not in the tool list.
 
 | Cause | Fix |
 | --- | --- |
@@ -66,8 +70,8 @@ flowchart TD
 | --- | --- | --- |
 | Payload rejected on `taggedValues` | Passed a map | Use an **array of `{name,value}`**. |
 | Connector create fails | `direction: "Source -> Destination"` | Use `"Unspecified"`. |
-| "Selection information is unavailable on hidden diagrams" | Sequence diagram not open | `open_diagrams` first; it **still created** the connectors — verify before retry to avoid dupes. |
-| `get_connectors_information` over a range fails entirely | One invalid ID in the range | Narrow the ID range; query known-good IDs. |
+| "Selection information is unavailable on hidden diagrams" | Sequence diagram not open | `enterprise-architect:open_diagrams` first; it **still created** the connectors — verify before retry to avoid dupes. |
+| `enterprise-architect:get_connectors_information` over a range fails entirely | One invalid ID in the range | Narrow the ID range; query known-good IDs. |
 | Placement ignored / element off-canvas | `x` or `y` ≤ 10 | Use coordinates > 10. |
 | Element read back as a different `type` than written | Initial/final `StateNode` auto-retyped to `Pseudostate` | Expected — see schema-gotchas #9. |
 
@@ -75,10 +79,10 @@ flowchart TD
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| New content landed under the wrong "Model" root | **Two projects each have a root package named "Model" with packageID 1** — opening the wrong one silently retargets all IDs. | Verify the parent package (name + ID) with `get_packages_information` **before** writing. Keep one EA instance open. |
-| Duplicate sequence messages | Retried after the hidden-diagram error | Delete dupes (higher connector IDs) with `delete_connectors_or_messages`. |
-| Junk elements you can't remove | No delete tool for elements/packages | Name throwaways `ZZ_*`; delete them manually in EA. |
-| Half-built model after a timeout | No transaction; each write commits independently | `create_baseline` before big builds; re-run idempotently (create_or_update will update, not duplicate, when given the same IDs). |
+| New content landed under the wrong "Model" root | **Two projects each have a root package named "Model" with packageID 1** — opening the wrong one silently retargets all IDs. | Verify the parent package (name + ID) with `enterprise-architect:get_packages_information` **before** writing. Keep one EA instance open. |
+| Duplicate sequence messages | Retried after the hidden-diagram error | Delete dupes (higher connector IDs) with `enterprise-architect:delete_connectors_or_messages`. |
+| Junk elements you can't remove | No delete tool for elements/packages | Name throwaways `ZZ_*`; delete them manually in EA. The only MCP-side undo is `enterprise-architect:create_baseline` (taken before the edit) + `enterprise-architect:apply_baseline` to restore. |
+| Half-built model after a timeout | No transaction; each write commits independently | `enterprise-architect:create_baseline` **before** big builds. Re-running only updates (not duplicates) for steps whose returned IDs you captured and feed back. If IDs were lost in the timeout, first recover them with `enterprise-architect:get_packages_information` / `enterprise-architect:find_elements_by_name` (or `enterprise-architect:apply_baseline` to roll back) **before** re-running — a blind re-run from scratch duplicates, and duplicates can't be deleted via the MCP. See schema-gotchas #4. |
 
 If none of this resolves it, the problem may be the install itself (registry-view/bitness on
 ARM64) — see the install repo: https://github.com/klesajos/enterprise-architect-mcp-arm64 .

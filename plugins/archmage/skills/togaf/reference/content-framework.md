@@ -54,7 +54,7 @@ Deliverable  ──contains──▶  Artifacts  ──describe──▶  Buildi
 
 - **Architecture Building Block (ABB)** — defines *what* functionality/capability is required, in a solution-independent way. Produced during the architecture-definition phases (B, C, D). Describes required capability and shapes the SBBs that realize it.
 - **Solution Building Block (SBB)** — defines *how* the capability is delivered — specific products, components, or custom builds. Produced largely in Phase E onward; vendor/implementation-specific.
-- ABBs evolve into SBBs as you move down the Enterprise Continuum from the **Architecture Continuum** (abstract) toward the **Solutions Continuum** (concrete). See `reference/capability-and-governance.md` for the Enterprise Continuum.
+- ABBs evolve into SBBs as you move down the Enterprise Continuum from the **Architecture Continuum** (abstract) toward the **Solutions Continuum** (concrete). See `capability-and-governance.md` for the Enterprise Continuum.
 
 ## The Content Metamodel
 
@@ -75,9 +75,9 @@ Artifacts come in three forms; most ADM phases produce all three:
 
 - **Catalog** — a *list* of building blocks of a given type (e.g. Application Portfolio catalog, Technology Standards catalog). Foundational; feeds matrices and diagrams.
 - **Matrix** — a *grid* showing relationships between two types of building block (e.g. Application/Data CRUD matrix, Actor/Role matrix, Application/Technology matrix).
-- **Diagram** — a *picture* of building blocks for a stakeholder/viewpoint (e.g. Business Footprint diagram, Application Communication diagram). Diagrams are where **ArchiMate views** most naturally fit — see `reference/archimate-mapping.md`.
+- **Diagram** — a *picture* of building blocks for a stakeholder/viewpoint (e.g. Business Footprint diagram, Application Communication diagram). Diagrams are where **ArchiMate views** most naturally fit — see `archimate-mapping.md`.
 
-A consolidated list of catalogs/matrices/diagrams per phase is in `reference/adm-phases.md`.
+A consolidated list of catalogs/matrices/diagrams per phase is in `adm-phases.md`.
 
 ## The Architecture Repository
 
@@ -86,7 +86,7 @@ The Architecture Repository is the enterprise's structured store of all architec
 | Repository area | What it holds |
 |-----------------|---------------|
 | **Architecture Metamodel** | The tailored content metamodel and method — how *this* enterprise describes and develops architecture. |
-| **Architecture Landscape** | The architectural representations of assets in use / planned, held at **three levels of granularity**: **Strategic, Segment, Capability** architectures (see partitioning in `reference/capability-and-governance.md`). |
+| **Architecture Landscape** | The architectural representations of assets in use / planned, held at **three levels of granularity**: **Strategic, Segment, Capability** architectures (see partitioning in `capability-and-governance.md`). |
 | **Reference Library** | Guidelines, templates, patterns, and **reference models** available for reuse — including the **Technical Reference Model (TRM)** and the **Integrated Information Infrastructure Reference Model (III-RM)**. |
 | **Standards Information Base (SIB)** | The standards (legal/regulatory, industry, and internal) with which new architecture must comply. |
 | **Governance Repository** | Records of governance activity: compliance assessments, dispensations, capability assessments, Architecture Contracts, and audit information. |

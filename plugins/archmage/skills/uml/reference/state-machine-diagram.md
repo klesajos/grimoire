@@ -20,9 +20,9 @@ A **behavior** diagram describing the lifecycle of **one** object/classifier as 
   - `do / activity` — ongoing while in the state.
   - `event / action` — internal transition (handled without leaving the state).
 - A **transition** is a solid arrow between states labeled `trigger [guard] / effect` — any part optional. The **trigger** is an event (call, signal, change `when(cond)`, or time `after(2s)` / `at(...)`); the **guard** `[ ]` must be true; the **effect** runs during the transition.
+- A **final state** is a circle-in-ring ◉ → the enclosing state machine (or region) completes. Despite the notation it is **not** a pseudostate — UML 2.5.1 makes `FinalState` a subclass of `State`.
 - **Pseudostates** (transient):
   - **Initial**: filled circle ● → the default starting state.
-  - **Final**: circle-in-ring ◉ → the state machine (or region) completes.
   - **Choice**: diamond ◇ — dynamic branch evaluated *after* prior effects (guards on outgoing edges).
   - **Junction**: small filled circle — static merge/branch of transitions.
   - **History**: shallow `(H)` restores the last active substate of a composite; deep `(H*)` restores the full nested configuration.

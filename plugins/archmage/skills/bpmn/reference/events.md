@@ -237,7 +237,7 @@ Mermaid has no event circles, so these are plain flowchart nodes labelled by
 event type — Enterprise Architect renders the true catching/throwing event
 circles with trigger markers.
 
-![BPMN events on a process thread (Mermaid approximation — see EA for true event circles)](images/bpmn-events-approx.png)
+![BPMN events on a process thread — the interrupting 5-day escalation variant (Mermaid approximation — see EA for true event circles)](images/bpmn-events-approx.png)
 
 <details>
 <summary>Mermaid source</summary>

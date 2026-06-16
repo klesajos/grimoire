@@ -6,8 +6,11 @@
 >
 > **Confirmed** = verified working against a live EA repository. **Verify in live EA** = taken
 > from EA/MDG documentation but not yet hand-confirmed through the MCP; check before relying on it.
+> **Falls back to Class** = the string was not resolved as its own diagram type in testing and EA
+> silently created a `Class` diagram instead; use `Class` directly.
 
 ## Contents
+- [Tool-name convention](#tool-name-convention)
 - [Diagram `type` strings](#diagram-type-strings)
 - [Element `type` strings](#element-type-strings)
 - [Connector `type` strings](#connector-type-strings)
@@ -15,6 +18,24 @@
 - [Schema shapes & hard rules](#schema-shapes--hard-rules)
 - [Exact payload field names](#exact-payload-field-names-confirmed-from-the-live-tool-schemas)
 - [The canonical build order](#the-canonical-build-order)
+
+---
+
+## Tool-name convention
+
+The single rule for how EA MCP tools are written across this plugin:
+
+- **In prose**, qualify the server: write tools as **`enterprise-architect:<tool>`** (e.g.
+  `enterprise-architect:create_or_update_elements`) so the right server is unambiguous.
+- **Inside flow diagrams, pseudo-code/recipe blocks, and tool-catalog tables**, bare names
+  (`create_or_update_elements`) are fine — but the document must declare the qualification **once**
+  near its top (as the read/write catalogs and the recipe files do). The bare form is shorthand
+  *within* that block, not a second convention.
+- **`enterprise-architect:<tool>` is documentation shorthand.** The actually-registered,
+  invokable names are **`mcp__enterprise-architect__<tool>`** (e.g.
+  `mcp__enterprise-architect__create_or_update_elements`). Tool calls resolve against that
+  `mcp__<server>__<tool>` form; the `enterprise-architect:` colon form is only for readability in
+  these docs.
 
 ---
 
@@ -35,10 +56,10 @@ Passed to `enterprise-architect:create_or_update_diagram` as `type`.
 | UML Deployment | `Deployment` | Confirmed |
 | UML Composite Structure | `Composite Structure` | Confirmed |
 | UML Profile | `Profile` | Confirmed |
-| UML Package | `Package` | Verify in live EA |
-| UML Communication | `Communication` | Verify in live EA |
-| UML Timing | `Timing` | Verify in live EA |
-| ArchiMate 3 view | `ArchiMate3::Layered` (etc.) | **Not recognised** — passing it silently creates a `Class` diagram. The ArchiMate diagram-type string is unresolved, but ArchiMate elements still render with full ArchiMate notation on a `Class` diagram, so just use `Class`. |
+| UML Package | `Package` | Confirmed |
+| UML Communication | `Communication` | Confirmed |
+| UML Timing | `Timing` | Confirmed |
+| ArchiMate 3 view | `Class` (use this) | **Falls back to Class** — the view FQN appears to be `Archimate3::<ViewName>` (the live `create_or_update_diagram` schema gives `Archimate3::Application` as its example, lowercase `m`), but only the bare layer name `ArchiMate3::Layered` was tried in testing and it silently created a `Class` diagram. The resolving view string is unconfirmed, so use `Class` directly — ArchiMate elements still render with full ArchiMate notation on it. To probe the FQN, retry `Archimate3::Application`/`Business`/`Technology` on a `ZZ_` throwaway and read it back. |
 | BPMN 2.0 process | (BPMN MDG diagram) | Verify in live EA — see the `bpmn` spell |
 
 EA accepts these case-sensitively; copy them exactly (note the space in `Use Case`, no space in `StateMachine`).
@@ -65,7 +86,7 @@ Passed to `enterprise-architect:create_or_update_elements` as `type`.
 | Object / instance | `Object` | Confirmed. Name as `instance : Classifier` to show the classifier. |
 | Part (composite structure) | `Part` | Confirmed. Set `owningElementID` to the structured class so the part nests inside it on the diagram. |
 | Stereotype (profile) | `Class` + `stereotypes:"stereotype"` | Confirmed. A profile stereotype is a `Class` stereotyped «stereotype»; the extended metaclass is a `Class` stereotyped «metaclass». There is **no** `Stereotype` element type (it errors). |
-| Requirement | `Requirement` | Verify in live EA. |
+| Requirement | `Requirement` | Confirmed (the **UML** Requirement element, goes on a `Requirements` diagram). Do **not** confuse it with the ArchiMate `ArchiMate3::ArchiMate_Requirement` (a different MDG type). |
 | Package | — | Use `enterprise-architect:create_or_update_package`, not `create_or_update_elements`. |
 
 **ArchiMate 3 (confirmed):** pass the fully-qualified MDG type directly as `type`, form
@@ -88,7 +109,7 @@ Passed to `enterprise-architect:create_or_update_connectors` as `type`.
 | --- | --- | --- |
 | Association | `Association` | Plain line; add multiplicity via source/target role ends. |
 | Aggregation | `Aggregation` | Hollow diamond. |
-| Composition | `Aggregation` | Set the aggregation kind to composite (strong) — verify the exact flag in live EA. |
+| Composition | `Aggregation` | Use `Aggregation` for the line; the filled (composite) diamond is **GUI-only** — the MCP create tool exposes no aggregation-kind field (a passed `aggregation` value on the end is ignored), so set composite in the EA GUI (or accept a shared/hollow diamond). |
 | Generalization (inheritance) | `Generalization` | Hollow triangle, child → parent. |
 | Dependency | `Dependency` | Dashed arrow. |
 | «include» (use case) | `Dependency` | + `stereotypes:"include"`. Confirmed. |
@@ -134,8 +155,14 @@ The fields are NOT what you might guess — these are the real ones:
   (parent is **`owningPackageID`**, not `parentPackageID`; `packageID: 0` means create).
 - **`create_or_update_elements`** → `{ elementInfo: [ { elementID: 0, type, name, owningPackageID, owningElementID, stereotypes, taggedValues } ] }`
   (container is **`owningPackageID`**; to nest an element inside another element set **`owningElementID`**).
+- **`create_or_update_attributes`** → `{ elementID, attributeInfo: [ { attributeID: 0, name, type, scope } ] }`
+  (owning class is the **top-level `elementID`**; members go in **`attributeInfo`**; `attributeID: 0` means create; the visibility field is **`scope`** with values `Private`/`Protected`/`Package`/`Public` — NOT `visibility`).
+- **`create_or_update_operations`** → `{ elementID, operationInfo: [ { operationID: 0, name, returnType } ] }`
+  (owning class is the **top-level `elementID`**; members go in **`operationInfo`**; `operationID: 0` means create; same `scope` field as attributes for visibility).
 - **`create_or_update_connectors`** → `{ connectorInfo: [ { connectorID: 0, type, direction:"Unspecified", sourceEnd: { relatedElementID }, targetEnd: { relatedElementID }, stereotypes } ] }`
   (the ends are **`sourceEnd.relatedElementID`** / **`targetEnd.relatedElementID`** — NOT `sourceElementID`/`targetElementID`. Multiplicity goes in `sourceEnd.multiplicity` / `targetEnd.multiplicity`.)
+- **`create_or_update_messages`** → `{ diagramID, messageInfo: [ { connectorID: 0, name, sourceElementID, targetElementID, order, isReturnMessage, isAsynchronousMessage } ] }`
+  (**the one tool whose ends DIFFER from connectors**: a sequence message uses flat **`sourceElementID`** / **`targetElementID`** — NOT `sourceEnd.relatedElementID`. `connectorID: 0` means create; `order` sequences the arrows top-to-bottom; set `isReturnMessage: true` for a dashed return arrow and `isAsynchronousMessage: true` for an open-arrowhead async call. The diagram must be **OPEN** first — see rule 6.)
 - **`create_or_update_diagram`** → `{ diagramInfo: { diagramID: 0, name, type, owningPackageID, owningElementID } }`
   (set `owningElementID: 0` when the diagram is owned by a package).
 - **`place_elements_on_diagram`** → `{ diagramID, placements: [ { elementID, x, y, width, height } ] }` (x/y > 10).
