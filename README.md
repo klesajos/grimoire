@@ -42,6 +42,7 @@ Refresh after new plugins are added: `/plugin marketplace update grimoire`.
 | Plugin | What it does | Status |
 | ------ | ------------ | ------ |
 | [`starter-spell`](plugins/starter-spell) | Reference template — copy it to conjure a new plugin | template |
+| [`archmage`](plugins/archmage) | Model in Sparx Enterprise Architect via MCP, plus UML / BPMN / ArchiMate / TOGAF / Mermaid reference spells | active |
 
 ## Add your own
 
