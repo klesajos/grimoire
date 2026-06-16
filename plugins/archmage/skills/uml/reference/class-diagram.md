@@ -61,21 +61,33 @@ Domain: a `Library` lends `Book` copies to `Member`s; a `Loan` is the associatio
 
 Mermaid has native class diagrams. (It approximates association classes as a normal class plus links; everything else maps cleanly.)
 
+<details open>
+<summary>Class diagram — a small library-loans domain (rendered by GitHub from the source below)</summary>
+
+<!-- render: images/uml-class-library-loans.png -->
+
 ```mermaid
 classDiagram
     class Searchable {
         <<interface>>
-        +search(q: String) List~Book~
+        +search() List~Book~
     }
     class Book {
         <<abstract>>
         +title: String
         +isbn: String
     }
-    class PrintedBook
-    class EBook
+    class PrintedBook {
+        +pageCount: int
+    }
+    class EBook {
+        +format: String
+    }
     class Library {
         +name: String
+    }
+    class Catalog {
+        +search() List~Book~
     }
     class BookCopy {
         +barcode: String
@@ -88,14 +100,19 @@ classDiagram
         +dueDate: Date
         +returned: Boolean
     }
+    class LateFeePolicy {
+        +feePerDay: Money
+    }
     Book <|-- PrintedBook
     Book <|-- EBook
+    Catalog ..|> Searchable : realizes
     Library "1" *-- "0..*" BookCopy : owns
-    Catalog ..|> Searchable
     Member "1" -- "0..*" Loan
     Loan "0..*" -- "1" BookCopy
     Loan ..> LateFeePolicy : uses
 ```
+
+</details>
 
 ## Common mistakes
 

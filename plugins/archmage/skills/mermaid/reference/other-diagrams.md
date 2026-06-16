@@ -11,6 +11,13 @@ Covers the remaining stable diagram types and every beta/experimental type. Veri
 
 Proportional pie chart. Keyword `pie`, optional `showData` (prints values), optional `title`. Each slice is `"label" : value` (positive numbers only).
 
+![Mermaid pie chart — an example distribution](images/mermaid-pie.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-pie.png -->
+
 ```mermaid
 pie showData
   title Browser share
@@ -19,6 +26,8 @@ pie showData
   "Edge"   : 5.1
   "Other"  : 12.2
 ```
+
+</details>
 
 Pitfalls: values must be **> 0** (negatives error); slices render clockwise in source order; labels need quotes.
 

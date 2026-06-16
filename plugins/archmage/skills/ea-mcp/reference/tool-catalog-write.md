@@ -10,6 +10,36 @@ Write tools load **only** when `MCP3.exe` runs with `-enableEdit` and the client
 - [Diagrams & layout](#diagrams--layout)
 - [Delete, clone, baseline](#delete-clone-baseline)
 
+![The canonical create/update build order](images/ea-mcp-build-order.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-mcp-build-order.png -->
+
+```mermaid
+flowchart LR
+    A["create_or_update_package"]
+    B["create_or_update_elements"]
+    C["attributes / operations"]
+    D["create_or_update_connectors"]
+    E["create_or_update_diagram"]
+    F["open_diagrams"]
+    G["place_elements_on_diagram"]
+    H["layout_connectors"]
+    I["get_diagram_image (verify)"]
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+```
+
+</details>
+
 ## The contract every create/update tool shares
 
 - They take an **array** of objects and **return the new IDs** in order. Capture those IDs — you

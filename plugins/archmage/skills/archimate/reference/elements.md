@@ -17,6 +17,10 @@ The complete catalog of ArchiMate 3.2 elements, organized by layer/aspect, each 
 
 ## Conventions
 
+![Example elements across layers — business role/process/service, application component/service, technology node](images/archimate-layered-view.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 Each layer follows the generic pattern: **active structure** (the doer), **internal behavior** (what it does), **external behavior = Service** (what it offers), **interface** (the access point for the service), and **passive structure** (what behavior acts on). A **Collaboration** is an active-structure element formed by two or more cooperating active-structure elements; an **Interaction** is the collective behavior of a collaboration.
 
 ## Strategy layer

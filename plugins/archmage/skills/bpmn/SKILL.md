@@ -16,6 +16,32 @@ This skill is a **router**. The body below tells you which reference file to
 open; the substance lives in `reference/*.md`. Do not paraphrase notation from
 memory — open the relevant file and quote its rules.
 
+The sketch below shows the *shape* of a BPMN process as a Mermaid flowchart.
+BPMN has **no native Mermaid diagram type**, so this is an **approximation
+only** — a circle stands in for a start/end event and a diamond for a gateway;
+it omits the real BPMN markers, pools/lanes, and event triggers. For true BPMN
+notation, see the faithful Enterprise Architect images in this skill.
+
+![A BPMN process (Mermaid approximation — see the EA images for true BPMN notation)](images/bpmn-process-sketch.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-process-sketch.png -->
+
+```mermaid
+flowchart LR
+    Start((Start)) --> Receive[Receive order]
+    Receive --> Check[Check stock]
+    Check --> Decide{In stock?}
+    Decide -->|Yes| Ship[Ship order]
+    Decide -->|No| Backorder[Create backorder]
+    Ship --> End((End))
+    Backorder --> End
+```
+
+</details>
+
 ## When to use
 
 - Authoring or reviewing a business process / workflow as a BPMN diagram.

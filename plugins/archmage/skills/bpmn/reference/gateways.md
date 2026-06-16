@@ -165,6 +165,33 @@ correctly bracketed. The OR split may emit one or two tokens; the OR join waits
 for exactly those and merges to one. No branch deadlocks because every split is
 matched by a same-type join.
 
+The diagram below is a Mermaid **approximation** of exclusive and parallel
+gateways: Mermaid has no BPMN gateway markers, so diamonds labelled `XOR` / `AND`
+stand in — Enterprise Architect renders true BPMN gateway diamonds with X / +
+markers.
+
+![BPMN exclusive and parallel gateways (Mermaid approximation)](images/bpmn-gateways-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-gateways-approx.png -->
+
+```mermaid
+flowchart TD
+  S((Start)) --> X{XOR: in stock?}
+  X -- No --> D((End))
+  X -- Yes --> AS{AND split}
+  AS --> T1[Reserve stock]
+  AS --> T2[Schedule delivery]
+  T1 --> AJ{AND join}
+  T2 --> AJ
+  AJ --> P[Pack shipment]
+  P --> E((End))
+```
+
+</details>
+
 ## 11. Common gateway mistakes
 
 - **Work in the diamond.** Gateways route only; compute decisions in a task.

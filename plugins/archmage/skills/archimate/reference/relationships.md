@@ -25,6 +25,62 @@ The full ArchiMate relationship set, with notation, direction conventions, the d
 | **Dynamic** | Triggering, Flow | Temporal/behavioral ordering and transfer. |
 | **Other** | Specialization, Junction | Generalization, and the connector for combining relationships. |
 
+### Visual overview (approximation)
+
+The sketch below names each relationship type on its **edge label**. It is a
+**Mermaid approximation only** — Mermaid has no ArchiMate notation, so it cannot
+draw the real arrowheads (filled/hollow diamonds, balls, triangles, dotted vs.
+dashed lines) that actually carry the meaning. Treat the edge *labels* as the
+source of truth, and see the faithful Enterprise Architect image in this skill
+for the true notation.
+
+![ArchiMate relationships (Mermaid sketch — edge labels name each relationship type)](images/archimate-relationships-sketch.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/archimate-relationships-sketch.png -->
+
+```mermaid
+flowchart TB
+    BService["Business Service"]
+    BProcess["Business Process"]
+    BRole["Business Role"]
+    BObject["Business Object"]
+    Contract["Contract"]
+    Event["Business Event"]
+
+    AComponent["Application Component"]
+    AFunction["Application Function"]
+    AService["Application Service"]
+    DataObject["Data Object"]
+
+    Node["Node"]
+    SysSoftware["System Software"]
+    TService["Technology Service"]
+
+    BProcess -->|Composition| BObject
+    BService -->|Aggregation| AService
+    BRole -->|Assignment| BProcess
+    BProcess -->|Realization| BService
+    TService -->|Serving| AFunction
+    AFunction -->|Access| DataObject
+    Event -->|Triggering| BProcess
+    BProcess -->|Flow| BService
+    Contract -->|Specialization| BObject
+
+    AComponent -->|Assignment| AFunction
+    AFunction -->|Realization| AService
+    AService -->|Serving| BProcess
+    DataObject -->|Realization| BObject
+
+    Node -->|Assignment| SysSoftware
+    SysSoftware -->|Realization| TService
+    AService -->|Influence| BService
+```
+
+</details>
+
 ## Structural relationships
 
 | Relationship | Notation | Meaning |

@@ -72,6 +72,10 @@ The 3.2 spec lists **23** example viewpoints, grouped as below.
 
 ## Key viewpoints worth knowing
 
+![A Layered viewpoint spanning Business, Application, and Technology](images/archimate-layered-view.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 - **Layered Viewpoint** (Overview/Composition) — the flagship. Shows core elements of **all** layers and aspects in one picture, structured by the "each layer *realizes* services that *serve* the layer above" principle. The natural home for a Business→Application→Technology story (see `worked-example.md`). Heavily relies on the **derivation rule** to keep lines manageable.
 - **Service Realization Viewpoint** (Realization) — how business services are realized by business processes (and sometimes by application components/services). Good for "what delivers this service to the customer".
 - **Application Cooperation Viewpoint** (Cooperation) — application components, their interfaces, and the application services/data they exchange. The application-landscape integration picture.

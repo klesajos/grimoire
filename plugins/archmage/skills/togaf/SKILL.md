@@ -7,6 +7,39 @@ description: Reference for the TOGAF Standard, 10th Edition - the Architecture D
 
 TOGAF (The Open Group Architecture Framework) is an enterprise architecture **framework and method**: a structured, repeatable way to develop, govern, and maintain enterprise architectures. Its core is the **Architecture Development Method (ADM)** — a cycle of phases (Preliminary, A–H, plus Requirements Management at the center) — supported by the **Architecture Content Framework** (what you produce), the **Enterprise Continuum and Architecture Repository** (where assets live), and an **Architecture Capability with governance** (who runs it and how). This skill covers the **TOGAF Standard, 10th Edition** (The Open Group, April 2022).
 
+![The TOGAF ADM — phases around Requirements Management (10th edition: not strictly sequential)](images/togaf-adm-cycle.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/togaf-adm-cycle.png -->
+
+```mermaid
+flowchart TB
+  RM(["Requirements<br/>Management"])
+  P["Preliminary"]
+  A["A. Architecture Vision"]
+  B["B. Business"]
+  C["C. Information Systems"]
+  D["D. Technology"]
+  E["E. Opportunities & Solutions"]
+  F["F. Migration Planning"]
+  G["G. Implementation Governance"]
+  H["H. Architecture Change Mgmt"]
+
+  RM <--> P
+  RM <--> A
+  RM <--> B
+  RM <--> C
+  RM <--> D
+  RM <--> E
+  RM <--> F
+  RM <--> G
+  RM <--> H
+```
+
+</details>
+
 ## What changed: 9.2 → 10th Edition (verify before quoting versions)
 
 - The standard is now a **modular document set**, not one monolith. It splits into **TOGAF Fundamental Content** (six free-standing volumes) plus the **TOGAF Series Guides** (the practical, topic-specific guides, formerly the TOGAF Library).

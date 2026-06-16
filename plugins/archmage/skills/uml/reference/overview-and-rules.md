@@ -96,6 +96,42 @@ Prefixed on attributes, operations, roles, and other features:
 | `#` | protected | visible to the classifier and its specializations |
 | `~` | package | visible to elements in the same package |
 
+A small class diagram tying these conventions together — the four visibility markers, an `«interface»`, an `«abstract»` class, and an association carrying multiplicities:
+
+<details open>
+<summary>UML notation basics — visibility, an «interface», an «abstract» class, and a multiplicity-bearing association (rendered by GitHub from the source below)</summary>
+
+<!-- render: images/uml-notation-basics.png -->
+
+```mermaid
+classDiagram
+    class Repository~T~ {
+        <<interface>>
+        +findById() T
+        +save() void
+    }
+    class AbstractEntity {
+        <<abstract>>
+        #id: String
+        +equals() Boolean
+    }
+    class Account {
+        +owner: String
+        -balance: Money
+        #recalculate() void
+        ~auditTag: String
+    }
+    class Transaction {
+        +amount: Money
+        +timestamp: Date
+    }
+    AbstractEntity <|-- Account
+    Account ..|> Repository : realizes
+    Account "1" --> "0..*" Transaction : records
+```
+
+</details>
+
 ### Multiplicity
 
 Written as `lower..upper` on an association end, attribute, or part. `*` means unbounded (so `0..*` = "zero or more"; `*` alone is shorthand for `0..*`). Examples: `1` (exactly one), `0..1` (optional), `1..*` (one or more), `2..4`. Multiplicity may carry `{ordered}`, `{unordered}`, `{unique}`, `{nonunique}` property strings — e.g. `[0..*] {ordered, unique}` is the default-set semantics for a sequence.

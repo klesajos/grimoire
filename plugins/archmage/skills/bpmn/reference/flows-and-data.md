@@ -152,6 +152,30 @@ Note: none of these data connections are sequence flow — they are **data
 associations** (dotted, open arrowhead) and carry no token. Control still flows
 solely along the solid sequence-flow lines.
 
+The diagram below is a Mermaid **approximation** of a sequence flow touching a
+data object and a data store: Mermaid has no BPMN data shapes or dotted data
+associations, so a cylinder/page node and plain labelled arrows stand in —
+Enterprise Architect renders true BPMN data objects, stores, and associations.
+
+![BPMN sequence flow with a data object/store (Mermaid approximation)](images/bpmn-data-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-data-approx.png -->
+
+```mermaid
+flowchart LR
+  S((Start)) --> R[Receive order]
+  R --> C[Check credit]
+  C --> E((End))
+  R -. writes .-> O[/Order/]
+  O -. reads .-> C
+  DB[(Order data)] -. reads .-> C
+```
+
+</details>
+
 ## 11. Common flow/data mistakes
 
 - **Sequence flow crossing a pool** — use **message flow** between pools.

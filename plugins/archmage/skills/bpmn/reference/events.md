@@ -232,6 +232,29 @@ the boundary timer fires and *spawns* a second token that runs the reminder; the
 original token is untouched and completes when the manager responds. Two tokens
 existed briefly — correct, because the reminder is a parallel side-effect.
 
+The sketch below is a Mermaid **approximation** of events on a process thread:
+Mermaid has no event circles, so these are plain flowchart nodes labelled by
+event type — Enterprise Architect renders the true catching/throwing event
+circles with trigger markers.
+
+![BPMN events on a process thread (Mermaid approximation — see EA for true event circles)](images/bpmn-events-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-events-approx.png -->
+
+```mermaid
+flowchart LR
+  S((Start)) --> T(("Timer (wait 2 days)"))
+  T --> A["Manager reviews"]
+  A --> E1((End))
+  A -. error boundary .-> B["Escalate to director"]
+  B --> E2((End))
+```
+
+</details>
+
 ## 9. Common event mistakes
 
 - **Wrong direction marker:** drawing a throwing event with an outline marker (or

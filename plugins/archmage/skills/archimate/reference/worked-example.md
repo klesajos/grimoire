@@ -15,6 +15,10 @@ A small, concrete enterprise modeled end-to-end to show how the layers connect. 
 
 ## The scenario
 
+![The insurance-quoting service as a layered ArchiMate view](images/archimate-layered-view.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 A prospective customer visits ACME's website, enters car/driver details, receives a premium quote, and can accept it to create a policy. Behind the web UI a quoting application calls a rating engine and a policy system; everything runs on ACME's servers and a cloud database.
 
 ## Business layer

@@ -82,28 +82,36 @@ All close with `end`:
 
 ## Worked example
 
+![Mermaid sequence diagram — activations, alt, and loop](images/mermaid-sequence.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-sequence.png -->
+
 ```mermaid
 sequenceDiagram
   autonumber
   actor U as User
   participant W as Web
   participant A as Auth
-  box Purple Backend
-    participant W
-    participant A
-  end
 
   U->>+W: Click "Log in"
-  W->>+A: POST /token
-  alt valid credentials
-    A-->>-W: 200 + JWT
-    W-->>U: Redirect to dashboard
-  else invalid
-    A-->>W: 401
-    W-->>-U: Show error
+  loop up to 3 attempts
+    W->>+A: POST /token
+    alt valid credentials
+      A-->>-W: 200 + JWT
+      W-->>U: Redirect to dashboard
+    else invalid
+      A-->>W: 401
+      W-->>U: Show error
+    end
   end
+  deactivate W
   Note over U,A: Session established
 ```
+
+</details>
 
 ## Pitfalls
 

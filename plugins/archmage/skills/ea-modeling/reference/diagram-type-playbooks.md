@@ -12,6 +12,34 @@ ones that cause rework. General workflow: `build-workflow.md`. Type strings:
 - [State machine diagram](#state-machine-diagram)
 - [Requirements diagram](#requirements-diagram)
 
+![The sequence-message duplicate trap — always open the diagram first](images/ea-sequence-trap.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-sequence-trap.png -->
+
+```mermaid
+flowchart TD
+    A["Create sequence diagram"]
+    Q{"open_diagrams first?"}
+    B["Create messages once"]
+    C["Verify with get_diagram_image"]
+    D["Done"]
+    E["Hidden diagram: errors BUT still creates connectors"]
+    F["Naive retry"]
+    G["Duplicates (warn)"]
+    A --> Q
+    Q -->|yes| B
+    B --> C
+    C --> D
+    Q -->|no| E
+    E --> F
+    F --> G
+```
+
+</details>
+
 ## Class diagram
 
 - Diagram `type: "Class"`. Elements `Class`/`Interface`.

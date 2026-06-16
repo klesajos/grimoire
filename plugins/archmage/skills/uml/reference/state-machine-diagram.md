@@ -47,18 +47,30 @@ States: `New`, `Paid`, `Shipped`, `Delivered`, `Cancelled`.
 
 Mermaid renders state machines natively with `stateDiagram-v2` (supports composite states via nested `state X { }`, choice via `<<choice>>`, fork/join via `<<fork>>`/`<<join>>`).
 
+![State machine — an order's lifecycle](images/uml-state-machine-order.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/uml-state-machine-order.png -->
+
 ```mermaid
 stateDiagram-v2
-    [*] --> New
-    New --> Paid: pay [funds ok] / capture()
-    New --> Cancelled: cancel
-    Paid --> Shipped: ship / book courier
+    [*] --> Placed
+    Placed --> Paid: pay [funds ok] / capture()
+    Placed --> Cancelled: cancel
+    Paid --> Preparing: confirm / pickItems()
     Paid --> Cancelled: cancel / refund()
+    Preparing --> Shipped: dispatch / bookCourier()
+    Preparing --> Cancelled: cancel / refund()
     Shipped --> Delivered: confirmDelivery
-    Delivered: Delivered\nentry / sendReceipt
+    Delivered: Delivered
+    Delivered: entry / sendReceipt
     Delivered --> [*]
     Cancelled --> [*]
 ```
+
+</details>
 
 ## Common mistakes
 

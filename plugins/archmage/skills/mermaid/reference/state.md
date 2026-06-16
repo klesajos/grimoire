@@ -101,22 +101,39 @@ stateDiagram-v2
 
 ## Worked example
 
+![Mermaid state diagram — composite state, choice, and fork/join](images/mermaid-state.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/mermaid-state.png -->
+
 ```mermaid
----
-title: Order lifecycle
----
 stateDiagram-v2
-  direction LR
   [*] --> Draft
   Draft --> Submitted : submit
+
   state review <<choice>>
   Submitted --> review
-  review --> Approved : ok
-  review --> Draft : needs changes
-  Approved --> Shipped : dispatch
-  Shipped --> [*]
+  review --> Fulfilment : score >= 700
+  review --> Draft : score < 700
+
+  state Fulfilment {
+    state split <<fork>>
+    state join_back <<join>>
+    [*] --> split
+    split --> Packing
+    split --> Invoicing
+    Packing --> join_back
+    Invoicing --> join_back
+    join_back --> Shipped
+  }
+
+  Fulfilment --> [*]
   note right of review : automated risk check
 ```
+
+</details>
 
 ## Pitfalls
 

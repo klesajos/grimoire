@@ -50,6 +50,10 @@ Two aspects span all layers and are usually drawn as their own areas:
 
 ## The Full Framework grid
 
+![A layered view — Business (yellow), Application (cyan), and Technology (green) layers](images/archimate-layered-view.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 The ArchiMate 3.2 "Full Framework" places layers (rows) against aspects (columns). Motivation and Implementation & Migration sit as bands across the top/bottom.
 
 ```

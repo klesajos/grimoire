@@ -6,6 +6,30 @@
 - [Enabling write/edit tools](#enabling-writeedit-tools)
 - [Confirming the connection](#confirming-the-connection)
 
+![Setup and connection flow — config to verified connection](images/ea-mcp-setup-flow.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/ea-mcp-setup-flow.png -->
+
+```mermaid
+flowchart TD
+    A["Install MCP3.exe"]
+    B["Configure .mcp.json (type: stdio)"]
+    C["Add -enableEdit arg"]
+    D["Fully restart the client"]
+    E["get_root_packages to verify"]
+    F["Write tools now present"]
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
+
+</details>
+
 ## Install
 
 The server is Sparx Systems' "MCP Server for Enterprise Architect" (`MCP3.exe`), an apphost that

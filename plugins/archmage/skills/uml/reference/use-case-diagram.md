@@ -31,6 +31,10 @@ Direction is the classic trap: **`«include»`** points *from base to the part i
 
 ## Worked example — online store
 
+![Use case diagram — a library system with «include» and «extend»](images/uml-use-case-library.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 - **Actors**: `Customer`, `Payment Gateway` (external system), `Admin`. `Admin` is a generalization of `Customer` (inherits its use cases).
 - **Use cases** inside the boundary `Online Store`: *Browse Catalog*, *Place Order*, *Make Payment*, *Track Shipment*, *Apply Coupon*.
 - *Place Order* `«include»` *Make Payment* (you always pay to order).

@@ -145,6 +145,10 @@ Notes:
 
 ## Building an ArchiMate view in EA
 
+![Built in Enterprise Architect via the ArchiMate 3 MDG (element/relationship stereotypes confirmed)](images/archimate-layered-view.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 Follow the canonical order from `ea-modeling` (don't reinvent it here):
 
 ```

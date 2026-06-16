@@ -23,6 +23,10 @@ A **structure** diagram for the **profile** mechanism — UML's lightweight exte
 
 ## Worked example — an EJB profile
 
+![Profile diagram — stereotypes «extend»ing a metaclass](images/uml-profile-bpm.png)
+
+*Rendered in Sparx Enterprise Architect.*
+
 ```
 ┌─「profile」 EJB ───────────────────────────────────────┐
 │                                                        │

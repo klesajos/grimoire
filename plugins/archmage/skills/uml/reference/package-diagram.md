@@ -52,6 +52,37 @@ A **structure** diagram that groups model elements into **packages** (namespaces
 
 **No native equivalent.** Mermaid has no package diagram. Approximate with a `flowchart` using `subgraph` blocks as packages and dashed arrows (`-.->`) for dependencies, but note it is not true UML package notation (no tabbed-folder glyph, no `«import»`/`«access»` semantics).
 
+The same layered web app as above, rendered as a Mermaid flowchart with `subgraph` packages and labelled dashed dependencies:
+
+![Package diagram (Mermaid approximation) — packages with «import»/«access» dependencies](images/uml-package-dependencies.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/uml-package-dependencies.png -->
+
+```mermaid
+flowchart TD
+    subgraph Web["Web"]
+        WebC["Controllers"]
+    end
+    subgraph Services["Services"]
+        Svc["OrderService"]
+    end
+    subgraph Domain["Domain"]
+        DomT["Order, Customer"]
+    end
+    subgraph Persistence["Persistence"]
+        Repo["Repositories"]
+    end
+    Web -. "«access»" .-> Services
+    Services -. "«import»" .-> Domain
+    Services -. "«access»" .-> Persistence
+    Persistence -. "«access»" .-> Domain
+```
+
+</details>
+
 ## Common mistakes
 
 - Pointing the dependency arrow **the wrong way** — it goes from client to supplier (the package that needs the other).

@@ -107,6 +107,32 @@ Note: nothing connects the two pools except message flow; each pool's token flow
 is independent. A message does **not** carry a token across — the receiving side
 reacts with its own catching event (`overview-and-rules.md` §5).
 
+The diagram below is a Mermaid **approximation** of a collaboration: Mermaid has
+no BPMN pools or message flow, so `subgraph`s stand in for pools and a dashed
+arrow for the message flow — Enterprise Architect renders true BPMN pools, lanes,
+and message-flow connectors.
+
+![BPMN collaboration — two pools with a message flow (Mermaid approximation)](images/bpmn-collaboration-approx.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/bpmn-collaboration-approx.png -->
+
+```mermaid
+flowchart LR
+  subgraph Customer
+    C1[Submit request] --> C2[Receive decision]
+  end
+  subgraph Supplier
+    S1[Record request] --> S2[Send decision]
+  end
+  C1 -.->|message| S1
+  S2 -.->|message| C2
+```
+
+</details>
+
 ## 8. Common swimlane mistakes
 
 - **Sequence flow crossing pools** — the cardinal error; use message flow.
