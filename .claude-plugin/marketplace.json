@@ -9,7 +9,7 @@
       "name": "starter-spell",
       "source": "./plugins/starter-spell",
       "description": "Reference template — copy this folder to conjure a new plugin. Ships one live example of every component type.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "author": {
         "name": "Josef Klesa"
       },

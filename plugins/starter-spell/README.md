@@ -46,6 +46,9 @@ component by **deleting** its file/folder. Details per component below.
 **What it is:** a skill. Claude invokes it automatically when its `description`
 matches the task, or you run it as `/starter-spell:hello-grimoire`.
 
+- **Use it for:** Productivity — a `weekly-status` skill that turns rough notes
+  into your team's status-report format. Coding — a `review-checklist` skill
+  Claude auto-applies when reviewing a PR (N+1 queries, error handling, secrets).
 - **Setup:** none. Auto-discovered from `skills/`.
 - **Make it yours:** edit `SKILL.md`. The `description` frontmatter is what the
   model matches on — make it specific (include trigger phrases). Add supporting
@@ -57,6 +60,9 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
 **What it is:** a slash command. Runs only when the user types
 `/starter-spell:cast`.
 
+- **Use it for:** Productivity — `/standup`: paste yesterday's notes, get a
+  formatted update. Coding — `/scaffold-endpoint Orders`: generate a Laravel
+  controller + service + test in your house conventions.
 - **Setup:** none. Auto-discovered from `commands/`.
 - **Make it yours:** rename the file (the filename becomes the command name) and
   rewrite the body. Use `$ARGUMENTS` for input; declare `argument-hint` /
@@ -68,6 +74,10 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
 **What it is:** a subagent. Dispatched into its own context window for a focused
 task. Safe to ship live — it only runs when invoked.
 
+- **Use it for:** Productivity — a `meeting-notes` familiar that digests a
+  transcript into decisions + action items in its own context. Coding — a
+  `test-writer` familiar dispatched to write tests while your main thread keeps
+  building.
 - **Setup:** none. Auto-discovered from `agents/`.
 - **Make it yours:** edit the frontmatter (`name`, `description`, `model`, and
   optionally `effort`, `maxTurns`, `tools`, `disallowedTools`, `skills`,
@@ -81,6 +91,10 @@ task. Safe to ship live — it only runs when invoked.
 fires on `SessionStart` and runs `scripts/ward.sh`). **Fires without asking** —
 that's the power and the risk.
 
+- **Use it for:** Productivity — a `Stop` hook that appends a one-line session
+  summary to your daily journal. Coding — a `PostToolUse` hook on `Write|Edit`
+  that auto-runs `ruff`/`php-cs-fixer`, or a `PreToolUse` guard that blocks edits
+  to `.env`.
 - **Activate:** `mv hooks/hooks.json.example hooks/hooks.json`
 - **Setup:** make the script executable — `chmod +x scripts/ward.sh` — or the
   hook silently does nothing. Reference bundled scripts via
@@ -96,6 +110,9 @@ that's the power and the risk.
 service. The example points at the official `@modelcontextprotocol/server-everything`
 demo server (a real, runnable MCP server fetched via `npx`).
 
+- **Use it for:** Productivity — connect Jira/Notion/your CRM so Claude reads
+  tickets and logs activity directly. Coding — connect a staging DB so Claude
+  can inspect the live schema while writing queries.
 - **Activate:** `mv .mcp.json.example .mcp.json`
 - **Setup:** the example needs only Node/`npx` (server is fetched on first run).
   A real conduit needs whatever its server needs — bundle a binary under the
@@ -111,6 +128,10 @@ demo server (a real, runnable MCP server fetched via `npx`).
 and find-references while editing. The example wires up
 `typescript-language-server`.
 
+- **Use it for:** Coding (only) — real-time type errors and go-to-definition
+  while editing TS/Go/Python. Claude sees compiler diagnostics after each edit
+  and makes far fewer broken changes. No productivity use — it's purely code
+  intelligence.
 - **Activate:** `mv .lsp.json.example .lsp.json`
 - **Setup (required):** install the language-server binary yourself — it is
   **not** bundled. For the example:
@@ -127,6 +148,9 @@ and find-references while editing. The example wires up
 **What it is:** an output style. While the plugin is enabled it **auto-applies**
 and reshapes how Claude writes (tone, length, format) across the whole session.
 
+- **Use it for:** Productivity — a `brief` style enforcing "minimum necessary
+  words" on every reply. Coding — a style that forces conventional-commit
+  messages and a fixed PR-description structure across the session.
 - **Activate:** `mv output-styles/terse.md.example output-styles/terse.md`
 - **Caution:** because it applies automatically on enable, it's shipped dormant —
   an active style changes *every* response, not just invoked ones.
@@ -139,6 +163,10 @@ and reshapes how Claude writes (tone, length, format) across the whole session.
 **What it is:** a color theme. Shipped **live** — it shows up in `/theme` as an
 option but does nothing until *you* select it (safe; passive).
 
+- **Use it for:** Productivity — a red-tinted theme you switch to in
+  client/production repos so you never mistake them for a sandbox. Coding — a
+  distinct per-stack theme so you instantly know which project's terminal you're
+  in.
 - **Setup:** none. Auto-discovered from `themes/`. Run `/theme` and pick
   "Grimoire Dark".
 - **Make it yours:** set `base` (`dark` / `light`) and a sparse `overrides` map
@@ -152,6 +180,9 @@ option but does nothing until *you* select it (safe; passive).
 and streams each stdout line to Claude as a notification — useful for watching
 logs, deploys, or polled status.
 
+- **Use it for:** Coding — `tail -F` the test-watch or dev-server log so Claude
+  reacts to failures the moment they appear. Productivity — poll a CI/deploy
+  status endpoint and get notified when it finishes.
 - **Activate:** `mv monitors/monitors.json.example monitors/monitors.json`
 - **Caution:** it **auto-starts a process on enable** and emits notifications, so
   it's shipped dormant. Requires Claude Code v2.1.105+; interactive CLI only;
@@ -167,6 +198,9 @@ logs, deploys, or polled status.
 added to the Bash tool's `PATH`, so Claude can call `starter-spell-tool` as a
 bare command. Shipped **live** — it only runs when invoked.
 
+- **Use it for:** Coding — bundle a project CLI (codegen, `db-seed`) Claude can
+  call as a bare command. Productivity — a `report-export` / `invoice-gen` script
+  Claude runs as one step inside a larger workflow.
 - **Setup:** make it executable — `chmod +x bin/starter-spell-tool`.
 - **Make it yours:** replace with a real helper and give it a **distinctive
   name** so it can't shadow a system command (e.g. `git`, `ls`).
