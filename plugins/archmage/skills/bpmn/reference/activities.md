@@ -85,8 +85,9 @@ Notes:
 
 ## 6. Activity markers
 
-Markers sit at the bottom-centre and can combine (e.g. multi-instance + loop is
-not combined, but a sub-process may be both ad-hoc and looped). Applicable to
+Markers sit at the bottom-centre. **Loop and multi-instance are mutually
+exclusive** (an activity has at most one loop characteristic), but other markers
+can co-occur (e.g. a sub-process may be both ad-hoc and looped). Applicable to
 tasks *and* sub-processes.
 
 | Marker | Icon | Meaning |

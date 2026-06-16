@@ -63,6 +63,6 @@ A **structure** diagram showing the **physical/runtime architecture**: the hardw
 
 ## EA bridge
 
-- Diagram `type`: EA **"Deployment"** diagram (mark **verify in live EA**).
-- Element `type`: **"Node"** (set stereotype `device` / `executionEnvironment`), **"Artifact"** — **verify in live EA**.
-- Connector `type`: **"Dependency"** with `stereotypes:"deploy"` or `"manifest"`; communication path is an **"Association"**/**"CommunicationPath"** between nodes — **verify in live EA**. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+- Diagram `type`: EA **"Deployment"** diagram (confirmed).
+- Element `type`: **"Node"** (confirmed), **"Device"** (confirmed — a dedicated type that renders «device»; for `executionEnvironment` use a `Node` with that stereotype), **"Artifact"** (confirmed).
+- Connector `type`: **"Dependency"** with `stereotypes:"deploy"` (artifact → node, confirmed) or `"manifest"` (verify in live EA); communication path is an **"Association"** (confirmed) / **"CommunicationPath"** (verify in live EA) between nodes. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

@@ -246,10 +246,9 @@ circles with trigger markers.
 
 ```mermaid
 flowchart LR
-  S((Start)) --> T(("Timer (wait 2 days)"))
-  T --> A["Manager reviews"]
+  S((Start)) --> A["Manager reviews"]
   A --> E1((End))
-  A -. error boundary .-> B["Escalate to director"]
+  A -. "timer boundary (5 days)" .-> B["Escalate to director"]
   B --> E2((End))
 ```
 

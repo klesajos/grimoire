@@ -21,36 +21,37 @@ A **structure** diagram for the **profile** mechanism — UML's lightweight exte
 - **Applying a profile**: a package shows a `«apply»` (profile application) dashed arrow to the profile it uses.
 - When a stereotype is *applied* to a normal element elsewhere, it shows in guillemets `«stereotypeName»` with its tagged values in a note or `{tag = value}` form.
 
-## Worked example — an EJB profile
+## Worked example — a BPM profile
 
-![Profile diagram — stereotypes «extend»ing a metaclass](images/uml-profile-bpm.png)
+![Profile diagram — a stereotype extending a metaclass, plus a stereotype generalization](images/uml-profile-bpm.png)
 
 *Rendered in Sparx Enterprise Architect.*
 
 ```
-┌─「profile」 EJB ───────────────────────────────────────┐
+┌─「profile」 BPM Profile ────────────────────────────────┐
 │                                                        │
-│  ┌─「stereotype」 Bean ─┐ ▰━━━━━━ ┌─「metaclass」 Component ─┐
-│  │  version : String   │         └──────────────────────────┘
-│  │  transactional:Bool │                                     │
-│  └─────────────────────┘                                     │
-│                                                              │
-│  ┌─「stereotype」 RemoteInterface ─┐ ▰━━━ ┌「metaclass」Interface┐
-│  └────────────────────────────────┘      └─────────────────────┘
-└───────────────────────────────────────────────────────────────┘
+│                 ┌─「metaclass」 Activity ─┐              │
+│                 └──────────▲─────────────┘              │
+│                            ┃ (filled triangle: extension)
+│                 ┌─「stereotype」 BusinessProcess ─┐       │
+│                 └──────────△─────────────────────┘       │
+│                            │ (hollow triangle: generalization)
+│                 ┌─「stereotype」 ManualStep ─┐            │
+│                 └───────────────────────────┘            │
+└─────────────────────────────────────────────────────────┘
 ```
 
 Applied in a model:
 
 ```
-┌──「component」«Bean» OrderService ──┐
-│  {version = "2.1", transactional = true}
-└────────────────────────────────────┘
+┌──「activity」«BusinessProcess» ProcessRefund ──┐
+│  {owner = "Finance"}
+└───────────────────────────────────────────────┘
 ```
 
-- `«stereotype» Bean` **extends** `«metaclass» Component` (filled-triangle extension).
-- `Bean` adds tagged values `version` and `transactional`.
-- A user package does `«apply» EJB` and then stereotypes `OrderService` as `«Bean»` with concrete tag values.
+- `«stereotype» BusinessProcess` **extends** `«metaclass» Activity` (filled-triangle extension — every model `Activity` may now carry the `BusinessProcess` stereotype).
+- `«stereotype» ManualStep` is a **generalization** of `BusinessProcess` (hollow triangle — a specialized stereotype that inherits the extension).
+- A user package does `«apply» BPM Profile` and then stereotypes an `Activity` such as `ProcessRefund` as `«BusinessProcess»` with concrete tag values.
 
 ## Mermaid
 
@@ -65,6 +66,6 @@ Applied in a model:
 
 ## EA bridge
 
-- Diagram `type`: EA models profiles via an **"Profile"** diagram / MDG technology tooling (mark **verify in live EA** — EA's UML Profile authoring uses dedicated stereotype elements).
+- Diagram `type`: **"Profile"** (confirmed). EA also offers dedicated MDG/UML-Profile authoring tooling for packaging a profile as a deployable technology.
 - Element `type`: **"Stereotype"**, **"Class"** with `«metaclass»` keyword — **verify in live EA**.
-- Connector `type`: **"Extension"** (stereotype → metaclass), or "Generalization" is NOT correct here — **verify in live EA**. Tagged values map to EA `taggedValues` (remember: an **array** of `{name,value}`). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+- Connector `type`: **"Extension"** (stereotype → metaclass, the filled-triangle relationship) and **"Generalization"** (stereotype → stereotype, as `ManualStep` → `BusinessProcess` above) — both confirmed. Note that Generalization is *not* a substitute for Extension between a stereotype and its metaclass; that link must be an Extension. Tagged values map to EA `taggedValues` (remember: an **array** of `{name,value}`). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
