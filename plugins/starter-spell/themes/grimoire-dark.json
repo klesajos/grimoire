@@ -1,0 +1,9 @@
+{
+  "name": "Grimoire Dark",
+  "base": "dark",
+  "overrides": {
+    "claude": "#a78bfa",
+    "success": "#34d399",
+    "error": "#f87171"
+  }
+}

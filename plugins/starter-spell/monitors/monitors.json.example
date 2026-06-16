@@ -1,0 +1,7 @@
+[
+  {
+    "name": "starter-watch",
+    "command": "tail -F \"${CLAUDE_PROJECT_DIR}/logs/app.log\"",
+    "description": "Example monitor — streams an app log into the session as notifications"
+  }
+]

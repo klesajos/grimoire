@@ -20,7 +20,15 @@ starter-spell/
 ├─ scripts/
 │  └─ ward.sh                     # the hook's shell script
 ├─ .mcp.json.example              # ⑤ conduit    (MCP server)   — dormant
-└─ .lsp.json.example              # ⑥ (LSP server)              — dormant
+├─ .lsp.json.example              # ⑥ (LSP server)              — dormant
+├─ output-styles/
+│  └─ terse.md.example            # ⑦ output style              — dormant
+├─ themes/
+│  └─ grimoire-dark.json          # ⑧ theme                     — LIVE
+├─ monitors/
+│  └─ monitors.json.example       # ⑨ monitor                   — dormant
+└─ bin/
+   └─ starter-spell-tool          # ⑩ executable (on PATH)      — LIVE
 ```
 
 **Live** = loads and works the moment the plugin is enabled (safe; only acts
@@ -114,12 +122,55 @@ and find-references while editing. The example wires up
 
 ---
 
-## Other components (not scaffolded here)
+## ⑦ Output style — `output-styles/terse.md.example`
 
-Plugins can also ship: **output styles** (`output-styles/`), **themes**
-(`themes/*.json`), **background monitors** (`monitors/monitors.json`), and
-**executables** (`bin/`, added to the Bash `PATH`). See
-https://code.claude.com/docs/en/plugins-reference for those.
+**What it is:** an output style. While the plugin is enabled it **auto-applies**
+and reshapes how Claude writes (tone, length, format) across the whole session.
+
+- **Activate:** `mv output-styles/terse.md.example output-styles/terse.md`
+- **Caution:** because it applies automatically on enable, it's shipped dormant —
+  an active style changes *every* response, not just invoked ones.
+- **Make it yours:** edit the frontmatter (`name`, `description`) and the body,
+  which is appended to Claude's system prompt. The filename is the style's id.
+- **To remove:** delete the file (or the whole `output-styles/` folder).
+
+## ⑧ Theme — `themes/grimoire-dark.json`
+
+**What it is:** a color theme. Shipped **live** — it shows up in `/theme` as an
+option but does nothing until *you* select it (safe; passive).
+
+- **Setup:** none. Auto-discovered from `themes/`. Run `/theme` and pick
+  "Grimoire Dark".
+- **Make it yours:** set `base` (`dark` / `light`) and a sparse `overrides` map
+  of color tokens (`claude`, `success`, `error`, …). Themes are an experimental
+  component — schema may shift between releases.
+- **To remove:** delete the `.json` (or the whole `themes/` folder).
+
+## ⑨ Monitor — `monitors/monitors.json.example`
+
+**What it is:** a background monitor. Runs a shell command for the whole session
+and streams each stdout line to Claude as a notification — useful for watching
+logs, deploys, or polled status.
+
+- **Activate:** `mv monitors/monitors.json.example monitors/monitors.json`
+- **Caution:** it **auto-starts a process on enable** and emits notifications, so
+  it's shipped dormant. Requires Claude Code v2.1.105+; interactive CLI only;
+  runs unsandboxed at hook trust level.
+- **Make it yours:** set `name`, `command` (supports `${CLAUDE_PLUGIN_ROOT}` /
+  `${CLAUDE_PROJECT_DIR}` / `${user_config.*}`), and `description`. Optional
+  `when`: `"always"` (default) or `"on-skill-invoke:<skill>"`.
+- **To remove:** delete the file (or the whole `monitors/` folder).
+
+## ⑩ Executable — `bin/starter-spell-tool`
+
+**What it is:** a bundled executable. While the plugin is enabled, `bin/` is
+added to the Bash tool's `PATH`, so Claude can call `starter-spell-tool` as a
+bare command. Shipped **live** — it only runs when invoked.
+
+- **Setup:** make it executable — `chmod +x bin/starter-spell-tool`.
+- **Make it yours:** replace with a real helper and give it a **distinctive
+  name** so it can't shadow a system command (e.g. `git`, `ls`).
+- **To remove:** delete the file (or the whole `bin/` folder).
 
 ## Conjure a new plugin from this template
 

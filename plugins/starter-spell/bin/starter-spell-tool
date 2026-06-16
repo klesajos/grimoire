@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Example plugin executable. While starter-spell is enabled, this file's
+# directory is added to the Bash tool's PATH, so Claude can run
+# `starter-spell-tool` as a bare command in any Bash call.
+#
+# Replace with a real helper (give it a distinctive name so it can't shadow a
+# system command), or delete the bin/ folder to remove.
+
+echo "🪄 starter-spell-tool ran — the plugin's bin/ directory is on the Bash PATH."
