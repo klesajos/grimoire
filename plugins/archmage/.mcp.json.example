@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "enterprise-architect": {
+      "type": "stdio",
+      "command": "MCP3.exe",
+      "args": ["-enableEdit", "-setTimeout", "60"]
+    }
+  }
+}
