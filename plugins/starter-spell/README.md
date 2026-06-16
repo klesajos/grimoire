@@ -174,12 +174,21 @@ is ever run.
 
 ```mermaid
 flowchart LR
-    A[Claude edits a file] --> B[Language server<br/>re-analyzes the code]
+    A["✏️ Claude edits<br/>a file"] --> B["🔎 Language server<br/>re-analyzes"]
     B --> C{Findings}
-    C -->|errors & warnings| D[Claude sees the real<br/>compiler diagnostics]
-    C -->|types & definitions| D
-    D --> E[Claude fixes it<br/>immediately]
+    C -->|errors| D["📋 Real<br/>diagnostics"]
+    C -->|types| D
+    D --> E["✅ Claude fixes<br/>it at once"]
     E --> A
+
+    classDef act fill:#d9e8ff,stroke:#7aa7e0,stroke-width:1px,color:#1f2328
+    classDef sys fill:#d7f0e0,stroke:#7cc59b,stroke-width:1px,color:#1f2328
+    classDef out fill:#fff3c4,stroke:#e0c860,stroke-width:1px,color:#1f2328
+    classDef dec fill:#e6dcff,stroke:#a98fe0,stroke-width:1px,color:#1f2328
+    class A,E act
+    class B sys
+    class D out
+    class C dec
 ```
 
 Without LSP, Claude only *guesses* from the text in front of it. With LSP it gets
@@ -224,16 +233,23 @@ format*, not knowledge.
 
 ```mermaid
 flowchart TB
-    subgraph SP[Claude's system prompt]
+    subgraph SP["🧠 Claude's system prompt"]
       direction TB
-      B[Built-in coding instructions:<br/>how to scope changes, comment, verify]
-      O["+ your output-style instructions<br/>(added here, EVERY turn — and CAN<br/>switch the coding instructions OFF)"]
+      B["Built-in coding rules<br/>(scope · comment · verify)"]
+      O["➕ output-style rules<br/>⚠️ can switch built-ins OFF"]
     end
-    SP --> R[Every response]
-    CM[CLAUDE.md] -. added as a note AFTER the prompt — only ADDS .-> R
+    SP --> R["💬 Every response"]
+    CM["📄 CLAUDE.md<br/>(only ADDS facts)"] -. attached AFTER prompt .-> R
 
-    style B fill:#ffdede,stroke:#c97a7a,stroke-width:1px,color:#1f2328
-    style O fill:#dde8ff,stroke:#6c8ebf,stroke-width:1px,color:#1f2328
+    classDef builtin fill:#ffdce0,stroke:#e08a98,stroke-width:1px,color:#1f2328
+    classDef ostyle fill:#d9e8ff,stroke:#7aa7e0,stroke-width:1px,color:#1f2328
+    classDef resp fill:#fff3c4,stroke:#e0c860,stroke-width:1px,color:#1f2328
+    classDef md fill:#e6dcff,stroke:#a98fe0,stroke-width:1px,color:#1f2328
+    class B builtin
+    class O ostyle
+    class R resp
+    class CM md
+    style SP fill:#f5f1fb,stroke:#cdbbed,color:#1f2328
 ```
 
 - **CLAUDE.md** is a note attached *after* the system prompt. It can only **ADD**
@@ -321,8 +337,15 @@ without you stopping to ask it to check.
 
 ```mermaid
 flowchart LR
-    M["Background command<br/>(e.g. tail -F laravel.log)"] -->|prints a line| N[Claude Code turns the<br/>line into a notification]
-    N --> C[Claude in your MAIN session<br/>sees it and can react]
+    M["⚙️ Background command<br/>e.g. tail -F app.log"] -->|prints a line| N["🔔 Becomes a<br/>notification"]
+    N --> C["🤖 Claude (main session)<br/>sees it and reacts"]
+
+    classDef cmd fill:#d7f0e0,stroke:#7cc59b,stroke-width:1px,color:#1f2328
+    classDef note fill:#fff3c4,stroke:#e0c860,stroke-width:1px,color:#1f2328
+    classDef claude fill:#d9e8ff,stroke:#7aa7e0,stroke-width:1px,color:#1f2328
+    class M cmd
+    class N note
+    class C claude
 ```
 
 **Where it runs — important:** a monitor feeds your **main interactive session**
@@ -363,14 +386,23 @@ you*.
 
 ```mermaid
 flowchart TB
-    subgraph REF["Reference a path in CLAUDE.md / a skill"]
-      R1[Script must already exist<br/>at that path in THIS repo] --> R2[Open another project →<br/>the script is gone]
-      R2 --> R3[Claude must know &amp;<br/>type the full path]
+    subgraph REF["📄 Path in CLAUDE.md / skill"]
+      direction TB
+      R1["Must already exist<br/>in THIS repo"] --> R2["❌ Gone in<br/>another project"]
+      R2 --> R3["Needs full path"]
     end
-    subgraph BIN["Ship it in the plugin's bin/"]
-      B1[Tool travels WITH the plugin,<br/>installed to the plugin cache] --> B2[Available in EVERY project<br/>the plugin is enabled in]
-      B2 --> B3[Called by short name, no path,<br/>versioned with the plugin]
+    subgraph BIN["📦 Shipped in plugin bin/"]
+      direction TB
+      B1["Travels WITH<br/>the plugin"] --> B2["✅ In EVERY<br/>project"]
+      B2 --> B3["Short name,<br/>no path"]
     end
+
+    classDef bad fill:#ffdce0,stroke:#e08a98,stroke-width:1px,color:#1f2328
+    classDef good fill:#d7f0e0,stroke:#7cc59b,stroke-width:1px,color:#1f2328
+    class R1,R2,R3 bad
+    class B1,B2,B3 good
+    style REF fill:#fbeef0,stroke:#e0b3bd,color:#1f2328
+    style BIN fill:#eaf6ee,stroke:#a9d9bd,color:#1f2328
 ```
 
 - One-line rule: **CLAUDE.md points at a tool that must already be there; `bin/`
