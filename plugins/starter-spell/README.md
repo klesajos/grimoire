@@ -1,7 +1,9 @@
 # starter-spell 🪄
 
-The **copy-me template**. It ships one example of every Claude Code plugin
-component, so you can see each format and keep only the ones you need.
+The **copy-me template**. It ships one example of every file-based Claude Code
+plugin component (①–⑩), so you can see each format and keep only the ones you need
+— plus four more manifest-level capabilities documented at the end (⑪–⑭: user
+config, channels, dependencies, default settings).
 
 ## What's inside
 
@@ -72,6 +74,19 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
 - **Make it yours:** edit `SKILL.md`. The `description` frontmatter is what the
   model matches on — make it specific (include trigger phrases). Add supporting
   files (`reference.md`, `scripts/`) in the same folder if needed.
+- **Modern skill formats** (all current — worth knowing):
+  - **Dynamic context injection:** a line like `` !`git diff HEAD` `` runs the
+    command and inlines its output into the skill *before* Claude reads it — so
+    the skill arrives pre-filled with live data.
+  - **Arguments:** `$ARGUMENTS` = everything typed after the command; `$0`/`$1`
+    (or `$ARGUMENTS[0]`) = positional; declare named ones with
+    `arguments: [issue, branch]` then use `$issue` / `$branch`. `argument-hint`
+    shows an autocomplete hint.
+  - **Invocation control:** `disable-model-invocation: true` (only you can run it,
+    not Claude), `user-invocable: false` (hide from the `/` menu — background
+    knowledge only).
+  - **Run in isolation:** `context: fork` runs the skill in a forked subagent;
+    `allowed-tools` / `disallowed-tools` / `model` / `effort` scope it while active.
 - **To remove:** delete `skills/hello-grimoire/` (or the whole `skills/` folder).
 - **vs CLAUDE.md:** A skill wins when the guidance is long, only sometimes
   relevant (loaded on demand, so it doesn't bloat every prompt), reusable across
@@ -424,6 +439,95 @@ flowchart TB
   CLAUDE.md telling Claude to run it is fine. Reach for `bin/` when you want to
   **bundle, distribute, and version** the tool with the plugin and call it by a
   clean bare name everywhere.
+
+---
+
+## Beyond the ten components — what else a plugin can ship
+
+The ten above are *file-based components* (each is a file/folder Claude Code
+auto-discovers). A plugin's `plugin.json` manifest unlocks four more capabilities.
+These are **documented here, not scaffolded as live files**, because each one acts
+on enable — it prompts you, pulls in another plugin, or needs a secret — so a
+template shouldn't turn them on by default. Copy the snippet into your own
+`plugin.json` (or `settings.json`) when you need it.
+
+### ⑪ User config — ask the user for values at enable time
+
+When your plugin needs an API key, an endpoint, or a path, don't make people
+hand-edit settings. Declare `userConfig` and Claude Code **prompts them when the
+plugin is enabled**, then makes the value available everywhere.
+
+```json
+{
+  "userConfig": {
+    "api_endpoint": { "type": "string", "title": "API endpoint", "description": "Your team's API base URL" },
+    "api_token":    { "type": "string", "title": "API token", "description": "Auth token", "sensitive": true }
+  }
+}
+```
+
+- Use the value as `${user_config.api_token}` inside MCP/LSP/hook/monitor configs,
+  or as the `CLAUDE_PLUGIN_OPTION_API_TOKEN` env var in your scripts.
+- Types: `string`, `number`, `boolean`, `directory`, `file`. `sensitive: true`
+  masks input and stores it in the OS keychain (not plain settings). **This is the
+  right way to handle secrets — never hardcode a token in `.mcp.json`.**
+
+### ⑫ Channels — let an outside service message the conversation
+
+A **channel** injects messages from Telegram / Slack / Discord-style services into
+the session (so you can drive Claude from your phone, or have it react to inbound
+messages). Each channel binds to one of the plugin's own MCP servers.
+
+```json
+{
+  "channels": [
+    {
+      "server": "telegram",
+      "userConfig": {
+        "bot_token": { "type": "string", "title": "Bot token", "description": "Telegram bot token", "sensitive": true },
+        "owner_id":  { "type": "string", "title": "Owner ID", "description": "Your Telegram user ID" }
+      }
+    }
+  ]
+}
+```
+
+- `server` must match a key in the plugin's `mcpServers` (the channel is powered by
+  that MCP server). Scaffold a ready-made one with `claude plugin init <name> --with channel`.
+
+### ⑬ Dependencies — build on other plugins
+
+A plugin can require others. Claude Code installs/enables them with it and can pin
+versions with semver, so an update to a dependency can't silently break you.
+
+```json
+{
+  "dependencies": [
+    "helper-lib",
+    { "name": "secrets-vault", "version": "~2.1.0" }
+  ]
+}
+```
+
+- Cross-marketplace dependencies must be allow-listed by the marketplace
+  (`allowCrossMarketplaceDependenciesOn`). Use this to split shared logic into one
+  plugin that several of yours reuse.
+
+### ⑭ Default settings — `settings.json`
+
+A plugin-root `settings.json` applies default Claude Code settings while the plugin
+is enabled. Today only two keys are supported: `agent` (default subagent config)
+and `subagentStatusLine` (the status line shown for subagents).
+
+```json
+{
+  "subagentStatusLine": { "type": "command", "command": "echo '🔮 grimoire subagent'" }
+}
+```
+
+> Want a scaffold of any of these instead of a snippet? Run
+> `claude plugin init <name> --with skills agents hooks mcp lsp output-style channel`
+> — the official scaffolder writes starter files for each component you list.
 
 ## Conjure a new plugin from this template
 
