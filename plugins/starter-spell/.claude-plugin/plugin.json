@@ -1,0 +1,11 @@
+{
+  "name": "starter-spell",
+  "description": "Reference template — copy this folder to conjure a new plugin.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Josef Klesa"
+  },
+  "homepage": "https://github.com/klesajos/grimoire",
+  "license": "MIT",
+  "keywords": ["template", "starter", "example"]
+}

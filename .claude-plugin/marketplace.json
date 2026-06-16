@@ -1,0 +1,20 @@
+{
+  "name": "grimoire",
+  "owner": {
+    "name": "Josef Klesa"
+  },
+  "description": "A grimoire of leverage — spells (skills), incantations (commands), and familiars (agents) that move the work. Public collection of original and forked Claude Code plugins.",
+  "plugins": [
+    {
+      "name": "starter-spell",
+      "source": "./plugins/starter-spell",
+      "description": "Reference template — copy this folder to conjure a new plugin (ships one spell + one incantation).",
+      "version": "0.1.0",
+      "author": {
+        "name": "Josef Klesa"
+      },
+      "category": "template",
+      "keywords": ["template", "starter", "example"]
+    }
+  ]
+}
