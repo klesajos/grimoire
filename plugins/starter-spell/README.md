@@ -39,6 +39,23 @@ by default).
 Activate a dormant component by **renaming** it (drop `.example`). Remove any
 component by **deleting** its file/folder. Details per component below.
 
+## Component, or just a CLAUDE.md line?
+
+Before building anything, ask whether plain text would do. A `CLAUDE.md` rule is
+always-on context the model *should* follow — cheap, but only a request.
+
+- **Instruction components** (skill, command, agent, output style) are, at heart,
+  text the model reads — so CLAUDE.md *can* sometimes replace them. Reach for the
+  component only when the guidance is long, relevant only sometimes (load it on
+  demand instead of bloating every prompt), reusable across projects, or must be
+  explicitly triggered.
+- **Capability components** (hook, MCP, LSP, monitor, theme, bin) can **never** be
+  replaced by CLAUDE.md. They *do* things text can't: run code deterministically,
+  connect to external systems, render UI. If you need a guarantee or an external
+  action, CLAUDE.md is never enough.
+
+Each section below ends with a **vs CLAUDE.md** note marking where the line falls.
+
 ---
 
 ## ① Spell — `skills/hello-grimoire/SKILL.md`
@@ -54,6 +71,10 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
   model matches on — make it specific (include trigger phrases). Add supporting
   files (`reference.md`, `scripts/`) in the same folder if needed.
 - **To remove:** delete `skills/hello-grimoire/` (or the whole `skills/` folder).
+- **vs CLAUDE.md:** A skill wins when the guidance is long, only sometimes
+  relevant (loaded on demand, so it doesn't bloat every prompt), reusable across
+  projects, or ships scripts/reference files. CLAUDE.md is enough for a short,
+  always-true project rule (e.g. "use strict types").
 
 ## ② Incantation — `commands/cast.md`
 
@@ -68,6 +89,10 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
   rewrite the body. Use `$ARGUMENTS` for input; declare `argument-hint` /
   `allowed-tools` in frontmatter.
 - **To remove:** delete the `.md` file (or the whole `commands/` folder).
+- **vs CLAUDE.md:** A command is *triggered on demand* by typing `/x` — CLAUDE.md
+  can't be invoked, it's passive context. Use a command for an explicit,
+  parameterized, repeatable action; use CLAUDE.md when you just want default
+  behavior to always apply.
 
 ## ③ Familiar — `agents/familiar.md`
 
@@ -84,6 +109,10 @@ task. Safe to ship live — it only runs when invoked.
   `isolation: worktree`). Write a sharp system prompt in the body. Note: plugin
   agents may **not** declare `hooks`, `mcpServers`, or `permissionMode`.
 - **To remove:** delete the `.md` file (or the whole `agents/` folder).
+- **vs CLAUDE.md:** An agent gives you an isolated context, its own model/tools,
+  and parallel dispatch. CLAUDE.md can describe a role, but it all runs in one
+  context window. Reach for an agent when you need separation or parallelism —
+  not just instructions.
 
 ## ④ Ward — `hooks/hooks.json.example` + `scripts/ward.sh`
 
@@ -103,6 +132,10 @@ that's the power and the risk.
   `UserPromptSubmit`, `Stop`, …) and `matcher` (e.g. `"Write|Edit"`); rewrite the
   script. Hook types: `command`, `http`, `mcp_tool`, `prompt`, `agent`.
 - **To remove:** delete `hooks/` and `scripts/ward.sh`.
+- **vs CLAUDE.md:** **Never** CLAUDE.md. A CLAUDE.md rule is a request the model
+  may forget or skip; a hook is deterministic harness enforcement that fires
+  every time, regardless of the model. If it *must* always happen (format, block,
+  log), it's a hook.
 
 ## ⑤ Conduit — `.mcp.json.example`
 
@@ -121,6 +154,9 @@ demo server (a real, runnable MCP server fetched via `npx`).
 - **Caution:** an active MCP server **spawns a process every session** it's
   enabled. Leave it dormant until you need it.
 - **To remove:** delete `.mcp.json.example` (and `.mcp.json` if you renamed it).
+- **vs CLAUDE.md:** **Never** CLAUDE.md — text can't connect to anything. An MCP
+  server is capability, not instruction. If Claude needs to read or write an
+  external system, only an MCP server (or equivalent tool) can do it.
 
 ## ⑥ LSP — `.lsp.json.example`
 
@@ -140,6 +176,8 @@ and find-references while editing. The example wires up
 - **Make it yours:** swap `command` and `extensionToLanguage` for your language
   (e.g. `gopls`, `pyright`, `rust-analyzer`).
 - **To remove:** delete `.lsp.json.example` (and `.lsp.json` if you renamed it).
+- **vs CLAUDE.md:** **Never** CLAUDE.md — it can't produce compiler diagnostics
+  or resolve symbols. Pure capability.
 
 ---
 
@@ -157,6 +195,9 @@ and reshapes how Claude writes (tone, length, format) across the whole session.
 - **Make it yours:** edit the frontmatter (`name`, `description`) and the body,
   which is appended to Claude's system prompt. The filename is the style's id.
 - **To remove:** delete the file (or the whole `output-styles/` folder).
+- **vs CLAUDE.md:** Biggest overlap of all. Use an output style when you want it
+  toggleable and reusable across projects (switch via `/output-style`). CLAUDE.md
+  is enough for a fixed, project-specific "write like this" rule.
 
 ## ⑧ Theme — `themes/grimoire-dark.json`
 
@@ -173,6 +214,8 @@ option but does nothing until *you* select it (safe; passive).
   of color tokens (`claude`, `success`, `error`, …). Themes are an experimental
   component — schema may shift between releases.
 - **To remove:** delete the `.json` (or the whole `themes/` folder).
+- **vs CLAUDE.md:** **Never** CLAUDE.md — a theme is pure UI, not an instruction
+  at all.
 
 ## ⑨ Monitor — `monitors/monitors.json.example`
 
@@ -191,6 +234,8 @@ logs, deploys, or polled status.
   `${CLAUDE_PROJECT_DIR}` / `${user_config.*}`), and `description`. Optional
   `when`: `"always"` (default) or `"on-skill-invoke:<skill>"`.
 - **To remove:** delete the file (or the whole `monitors/` folder).
+- **vs CLAUDE.md:** **Never** CLAUDE.md — text can't watch a process or poll an
+  endpoint over a whole session. Capability, not instruction.
 
 ## ⑩ Executable — `bin/starter-spell-tool`
 
@@ -205,6 +250,9 @@ bare command. Shipped **live** — it only runs when invoked.
 - **Make it yours:** replace with a real helper and give it a **distinctive
   name** so it can't shadow a system command (e.g. `git`, `ls`).
 - **To remove:** delete the file (or the whole `bin/` folder).
+- **vs CLAUDE.md:** Close call. If the script already lives in the repo, CLAUDE.md
+  can just tell Claude to run it. Use `bin/` when you want to *bundle and
+  distribute* the tool with the plugin and call it as a clean bare command.
 
 ## Conjure a new plugin from this template
 
