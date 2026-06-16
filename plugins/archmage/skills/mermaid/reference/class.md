@@ -86,8 +86,6 @@ Valid values: `1`, `0..1`, `1..*`, `*`, `n`, `0..n`, `1..n`.
 <details open>
 <summary>Mermaid class diagram — members and the main relationship types (rendered by GitHub from the source below)</summary>
 
-<!-- render: images/mermaid-class.png -->
-
 ```mermaid
 classDiagram
   direction LR

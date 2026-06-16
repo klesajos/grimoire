@@ -66,7 +66,7 @@ The 3.2 spec lists **23** example viewpoints, grouped as below.
 
 **Strategy:** Strategy, Capability Map, Outcome Realization, Resource Map.
 
-**Implementation & Migration:** Project (a.k.a. Implementation and Migration), Migration, Implementation and Migration.
+**Implementation & Migration:** Project (a.k.a. Work Package), Migration, Implementation and Migration.
 
 (Tooling sometimes labels the I&M set slightly differently; the conceptual set is Project/Work-package, Plateau-Migration, and a combined Implementation-and-Migration view.)
 

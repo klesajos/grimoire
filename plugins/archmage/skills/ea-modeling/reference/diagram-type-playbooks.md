@@ -46,7 +46,7 @@ flowchart TD
 - Add **attributes** (`create_or_update_attributes`) and **operations** (`create_or_update_operations`) by owning element ID, after the class exists.
 - Connectors: `Association` (with `sourceCardinality`/`targetCardinality` for multiplicity),
   `Aggregation` (set composite kind for composition — verify the flag), `Generalization` (child→parent),
-  `Realization` (class→interface, verify), `Dependency`.
+  `Realization` (class→interface), `Dependency`.
 - Place classes in a grid (x/y > 10), `layout_connectors`, render.
 
 ## Use case diagram

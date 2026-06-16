@@ -64,8 +64,6 @@ Mermaid has native class diagrams. (It approximates association classes as a nor
 <details open>
 <summary>Class diagram — a small library-loans domain (rendered by GitHub from the source below)</summary>
 
-<!-- render: images/uml-class-library-loans.png -->
-
 ```mermaid
 classDiagram
     class Searchable {
@@ -126,5 +124,5 @@ classDiagram
 
 - Diagram `type`: **"Class"** (confirmed).
 - Element `type`: **"Class"**, **"Interface"** (use stereotype/keyword for enumeration: verify in live EA).
-- Connector `type`: **"Association"**, **"Aggregation"** (set the composition flag/`«composite»` for filled diamond — verify in live EA), **"Generalization"**, **"Realisation"/"Realization"** (verify spelling in live EA), **"Dependency"**.
+- Connector `type`: **"Association"**, **"Aggregation"** (for composition use **"Aggregation"** with the composite aggregation kind for the filled diamond — verify the exact flag in live EA), **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
 - Attributes/operations go through `enterprise-architect:create_or_update_attributes` / `…create_or_update_operations`. For the build sequence see the **`ea-modeling`** skill and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

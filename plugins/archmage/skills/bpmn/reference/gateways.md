@@ -92,9 +92,11 @@ happens first**. Each outgoing flow leads to a **catching intermediate event**
 when one of those events fires, that branch is taken and the others are
 discarded.
 
-- Two flavours: the normal **exclusive** event-based gateway (one event wins), and
-  it can also act as a **parallel** instantiating start when used to *start* a
-  process on the first of several events.
+- Two flavours, both available as **instantiating** gateways that *start* a
+  process: the **exclusive** event-based gateway (the **first** event to occur
+  wins and creates the instance), and the **parallel** event-based gateway
+  (the instance is created only after **all** of its events have occurred).
+  The everyday mid-process use is the exclusive one — "whichever happens first".
 
 *When:* "wait for the customer's reply OR a 24-hour timeout, whichever first".
 *Mistake:* putting tasks (other than receive) or gateways directly after it — its

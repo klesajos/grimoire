@@ -33,14 +33,16 @@ A **behavior** diagram describing the lifecycle of **one** object/classifier as 
 
 ## Worked example — order lifecycle
 
-States: `New`, `Paid`, `Shipped`, `Delivered`, `Cancelled`.
+States: `Placed`, `Paid`, `Preparing`, `Shipped`, `Delivered`, `Cancelled`.
 
-- ● → `New`
-- `New` —`pay [funds ok] / capture()`→ `Paid`
-- `New` —`cancel`→ `Cancelled`
-- `Paid` —`ship / book courier`→ `Shipped`
-- `Shipped` —`confirmDelivery`→ `Delivered` → ◉
+- ● → `Placed`
+- `Placed` —`pay [funds ok] / capture()`→ `Paid`
+- `Placed` —`cancel`→ `Cancelled`
+- `Paid` —`confirm / pickItems()`→ `Preparing`
 - `Paid` —`cancel / refund()`→ `Cancelled` → ◉
+- `Preparing` —`dispatch / bookCourier()`→ `Shipped`
+- `Preparing` —`cancel / refund()`→ `Cancelled`
+- `Shipped` —`confirmDelivery`→ `Delivered` → ◉
 - `Delivered` has `entry / sendReceipt`.
 
 ## Mermaid

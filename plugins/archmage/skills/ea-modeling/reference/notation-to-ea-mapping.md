@@ -23,13 +23,15 @@ and `archimate` spells.
 | Activity diagram | `Activity` | `Action`, `Decision` (diamond), initial/final `StateNode`; edges `ControlFlow` |
 | State machine diagram | `StateMachine` | `State`, initial/final `StateNode`; transitions `StateFlow` |
 | Requirements | `Requirements` | `Requirement` (verify in live EA); realise with `Realization`/`Dependency` |
-| Object diagram | `Object` (verify) | `Object` instances; `Association`/links |
-| Component diagram | `Component` (verify) | `Component`, `Interface`; `Dependency`/`Realization` |
-| Deployment diagram | `Deployment` (verify) | `Node`, `Component`, `Artifact`; `Dependency` |
+| Object diagram | `Object` | `Object` instances; `Association`/links |
+| Component diagram | `Component` | `Component`, `Interface`; `Dependency`/`Realization` |
+| Deployment diagram | `Deployment` | `Node`, `Device`, `Artifact`, `Component`; `Dependency` |
 | Package diagram | `Package` (verify) | packages; `Dependency`/«import» |
 
 Confirmed diagram `type` strings: `Class`, `Use Case`, `Sequence`, `Activity`, `StateMachine`,
-`Requirements`. The rest are EA's standard names — **verify in live EA** before relying on them.
+`Requirements`, `Object`, `Component`, `Deployment`, `Composite Structure`, `Profile`. The
+`Package` diagram type is EA's standard name but is not yet hand-confirmed — **verify in live EA**
+before relying on it.
 
 ## BPMN → EA
 
@@ -53,16 +55,20 @@ General shape (verify strings):
 
 ## ArchiMate → EA
 
-EA models ArchiMate via the **ArchiMate 3 MDG technology**. Elements/relationships are UML
-elements carrying ArchiMate stereotypes (e.g. `«ArchiMate_BusinessProcess»`,
-`«ArchiMate_ApplicationComponent»`, `«ArchiMate_Serving»`). These stereotype strings are
-**"verify in live EA"** — confirm them against a live repo. Build from the `archimate` spell's
-layer/element/relationship catalog; its `ea-bridge.md` carries the candidate strings.
+EA models ArchiMate via the **ArchiMate 3 MDG technology**. Elements and relationships are created
+with **fully-qualified `type` strings** (not a bare stereotype field): elements use
+`ArchiMate3::ArchiMate_<Name>` (capital M — e.g. `ArchiMate3::ArchiMate_BusinessProcess`,
+`ArchiMate3::ArchiMate_ApplicationComponent`, `ArchiMate3::ArchiMate_Node`) and connectors use
+`ArchiMate3::ArchiMate_<Rel>` (e.g. `ArchiMate3::ArchiMate_Serving`,
+`ArchiMate3::ArchiMate_Assignment`, `ArchiMate3::ArchiMate_Realization`). These strings are
+**confirmed live** through the MCP against a real repository. Build from the `archimate` spell's
+layer/element/relationship catalog; its `ea-bridge.md` carries the confirmed strings.
 
 ## What "verify in live EA" means here
 
-The confirmed UML strings were hand-verified through the MCP against a real repository. The MDG
-strings (BPMN, ArchiMate) and the less-common UML diagram types were not. To verify one:
+The confirmed UML strings and the ArchiMate 3 MDG strings were hand-verified through the MCP
+against a real repository. The BPMN MDG strings and the `Package` UML diagram type were not. To
+verify one:
 1. On a `ZZ_Verify` throwaway package, create one element/connector/diagram of the kind in question.
 2. Read it back with `get_elements_information` / `get_connectors_information` /
    `get_diagrams_information` and note the exact `type`/stereotype EA stored.

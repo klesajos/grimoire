@@ -19,7 +19,7 @@ erDiagram
   CUSTOMER ||--o{ ORDER : places
 ```
 
-`places` is the relationship label and is required when the relationship is written.
+`places` is the relationship label. It is optional in the current spec (only the first entity is mandatory), but supply a short word or `"quoted phrase"` anyway — pinned/older renderers can choke on a bare relationship, and a labelled edge reads better.
 
 ## Cardinality (crow's foot)
 
@@ -32,7 +32,7 @@ Each relationship has a cardinality marker at **each end**. Left-side and right-
 | Zero or more | `}o` | `o{` |
 | One or more | `}|` | `|{` |
 
-So `CUSTOMER ||--o{ ORDER` reads "exactly one CUSTOMER to zero-or-more ORDER". Word aliases also work in place of glyphs (`one or more`, `zero or many`, `only one`, etc.) but the glyph form is the norm.
+So `CUSTOMER ||--o{ ORDER` reads "exactly one CUSTOMER to zero-or-more ORDER". Word aliases also work in place of glyphs (`one or many`, `zero or many`, `only one`, `one or zero`, etc.) but the glyph form is the norm.
 
 ## Identifying vs non-identifying
 
@@ -109,7 +109,7 @@ erDiagram
 
 ## Pitfalls
 
-- A relationship line needs a **label after the colon**; omit it and parsing can fail (use a short word or `"quoted phrase"`).
+- The relationship label after the colon is **optional** in the current spec, but omitting it can fail on pinned/older renderers — keep a short word or `"quoted phrase"` for safety and readability.
 - The two cardinality markers are **direction-sensitive** — `|o` is a *left* marker, `o|` is its *right* mirror. Don't write `o|--|o` expecting "zero-or-one to zero-or-one"; that's `o|`…`|o` (correct), whereas swapping them looks wrong.
 - Connector glyphs run **together** with no spaces: `||--o{`, not `|| -- o{`.
 - Attribute lines are `type name`, not `name: type` — type comes first.

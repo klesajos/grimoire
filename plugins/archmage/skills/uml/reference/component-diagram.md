@@ -59,6 +59,6 @@ A **structure** diagram showing **components** — modular, replaceable units of
 
 ## EA bridge
 
-- Diagram `type`: EA **"Component"** diagram (mark **verify in live EA**).
-- Element `type`: **"Component"**, **"Interface"**, **"Port"**, **"Artifact"** — **verify in live EA**.
-- Connector `type`: **"Realisation"/"Realization"** (component → provided interface), **"Dependency"** (component → required interface, or `«use»`), **"Assembly"** connector and **"Manifest"** dependency — **verify in live EA**. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+- Diagram `type`: EA **"Component"** diagram (confirmed).
+- Element `type`: **"Component"**, **"Interface"**, **"Artifact"** (confirmed); **"Port"** — verify in live EA.
+- Connector `type`: **"Realization"** (component → provided interface, confirmed), **"Dependency"** (component → required interface, or `«use»`, confirmed); **"Assembly"** connector and **"Manifest"** dependency — verify in live EA. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

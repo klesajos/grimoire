@@ -101,8 +101,6 @@ A small class diagram tying these conventions together — the four visibility m
 <details open>
 <summary>UML notation basics — visibility, an «interface», an «abstract» class, and a multiplicity-bearing association (rendered by GitHub from the source below)</summary>
 
-<!-- render: images/uml-notation-basics.png -->
-
 ```mermaid
 classDiagram
     class Repository~T~ {
@@ -134,7 +132,7 @@ classDiagram
 
 ### Multiplicity
 
-Written as `lower..upper` on an association end, attribute, or part. `*` means unbounded (so `0..*` = "zero or more"; `*` alone is shorthand for `0..*`). Examples: `1` (exactly one), `0..1` (optional), `1..*` (one or more), `2..4`. Multiplicity may carry `{ordered}`, `{unordered}`, `{unique}`, `{nonunique}` property strings — e.g. `[0..*] {ordered, unique}` is the default-set semantics for a sequence.
+Written as `lower..upper` on an association end, attribute, or part. `*` means unbounded (so `0..*` = "zero or more"; `*` alone is shorthand for `0..*`). Examples: `1` (exactly one), `0..1` (optional), `1..*` (one or more), `2..4`. Multiplicity may carry `{ordered}`, `{unordered}`, `{unique}`, `{nonunique}` property strings. The four combinations name a collection kind: `{unordered, unique}` is a **Set** (the UML default for a multivalued end), `{ordered, unique}` an **OrderedSet**, `{unordered, nonunique}` a **Bag**, and `{ordered, nonunique}` a **Sequence** — e.g. `[0..*] {ordered}` for an ordered, possibly-repeating collection.
 
 ### Name strings, roles, qualifiers
 

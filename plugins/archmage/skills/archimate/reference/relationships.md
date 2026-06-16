@@ -155,7 +155,7 @@ Core idea: a chain of **structural and dependency** relationships in the same di
 
 > If element **a** has a relationship to **b**, and **b** has a relationship to **c**, and both are in the permitted "potential derivation" set, then a valid derived relationship exists directly from **a** to **c**, of the *weakest* of the two types.
 
-Example: a Business Process is *assigned to* a Business Role, the Role is *assigned to* a Business Service via the process realizing it… more practically: `Node —assigned to→ System Software —realizes→ Technology Service —serving→ Application Function` can be derived into `Node —serving→ Application Function`. This is exactly what a **Layered Viewpoint** exploits to show "Technology serves Application serves Business" without every intermediate hop.
+Example: `Node —assigned to→ System Software —realizes→ Technology Service —serving→ Application Function` can be derived into `Node —serving→ Application Function` (Serving is the weakest type in the chain). This is exactly what a **Layered Viewpoint** exploits to show "Technology serves Application serves Business" without every intermediate hop.
 
 ArchiMate 3.2 adds explicit derivation rules for **Grouping** (a relationship to a grouping can be derived to its members). Derivation is **normative** for the structural+dependency chains; use it to justify the lines you draw in summary views.
 

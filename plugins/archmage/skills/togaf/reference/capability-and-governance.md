@@ -55,7 +55,7 @@ The **Architecture Board** is the cross-organization body accountable for govern
 
 An **Architecture Contract** is a joint, signed agreement between development partners and sponsors on the deliverables, quality, and fitness-for-purpose of an architecture. They make governance *enforceable*. Two main uses:
 
-- Between the **architecture function and the business** (statement of architecture work era).
+- Between the **architecture function and the business** (typically the **Statement of Architecture Work**, agreed in Phase A).
 - Between the **architecture function and implementers** in **Phase G** — the development organization commits to building in conformance with the Target Architecture, which the Architecture Board then monitors.
 
 ## Architecture Compliance

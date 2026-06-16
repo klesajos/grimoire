@@ -29,26 +29,25 @@ A **behavior** diagram that captures the **functional scope** of a system: the *
 
 Direction is the classic trap: **`«include»`** points *from base to the part it includes*; **`«extend»`** points *from the optional extension back to the base*. The base names an **extension point** (a labeled location) that the `«extend»` may reference with a condition `{condition}`.
 
-## Worked example — online store
+## Worked example — library system
 
 ![Use case diagram — a library system with «include» and «extend»](images/uml-use-case-library.png)
 
 *Rendered in Sparx Enterprise Architect.*
 
-- **Actors**: `Customer`, `Payment Gateway` (external system), `Admin`. `Admin` is a generalization of `Customer` (inherits its use cases).
-- **Use cases** inside the boundary `Online Store`: *Browse Catalog*, *Place Order*, *Make Payment*, *Track Shipment*, *Apply Coupon*.
-- *Place Order* `«include»` *Make Payment* (you always pay to order).
-- *Apply Coupon* `«extend»` *Place Order* at extension point *PriceCalc*, condition `{customer has coupon}`.
-- `Customer` ── *Browse Catalog*, *Place Order*, *Track Shipment*; `Payment Gateway` ── *Make Payment*.
+- **Actors**: `Member`, `Librarian`.
+- **Use cases** for the `Library` system: *Search Catalogue*, *Borrow Book*, *Check Membership*, *Return Book*, *Pay Fine*.
+- *Borrow Book* `«include»` *Check Membership* (borrowing always verifies membership).
+- *Pay Fine* `«extend»` *Return Book* (an overdue return *conditionally* adds the fine; the extending use case points back at the base).
+- `Member` ── *Search Catalogue*, *Borrow Book*, *Return Book*; `Librarian` ── *Borrow Book*, *Return Book*.
 
 ```
-            ┌──────────────── Online Store ────────────────┐
-            │   (Browse Catalog)                           │
- Customer ──┼── (Place Order) ┄┄«include»┄┄▶ (Make Payment)┼── Payment Gateway
-   ▲        │        ▲                                     │
-   │ gen    │        ┊ «extend» {has coupon}               │
- Admin      │   (Apply Coupon)        (Track Shipment) ────┼── Customer
-            └───────────────────────────────────────────────┘
+            ┌──────────────────── Library ────────────────────┐
+            │   (Search Catalogue)                            │
+ Member ────┼── (Borrow Book) ┄┄«include»┄┄▶ (Check Membership)┼
+   │        │                                                 │
+ Librarian ─┼── (Return Book) ◀┄┄«extend»┄┄  (Pay Fine)        │
+            └─────────────────────────────────────────────────┘
 ```
 
 ## Mermaid

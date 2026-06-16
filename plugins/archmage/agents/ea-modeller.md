@@ -17,8 +17,9 @@ defensible interpretation and flag the assumption in your report.
 
 ## Operating rules (non-negotiable)
 
-Follow the `ea-modeling` spell's workflow and the EA type strings in the shared
-`ea-type-cheatsheet.md`. Use **fully-qualified** tool names. The traps that will bite you:
+Follow the `ea-modeling` spell's workflow and the EA type strings in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`. Use **fully-qualified** tool names.
+The traps that will bite you:
 
 1. **Confirm the target first.** Call `enterprise-architect:get_packages_information` and verify
    the parent package's name + ID. Two projects can both have a "Model" root at packageID 1 —

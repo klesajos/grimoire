@@ -150,14 +150,21 @@ flowchart LR
 EA models BPMN through its **BPMN 2.0 MDG technology**. The element/connector
 **stereotypes differ from plain UML** types — they are BPMN-profile stereotypes
 (e.g. `«BPMN2.0::Activity»`, `«BPMN2.0::Event»`, pools as `«BPMN2.0::Pool»`,
-sequence/message flow stereotypes). These specific MDG type/stereotype strings are
-**NOT in the confirmed-strings list — verify each in live EA** before relying on
-it.
+sequence/message flow stereotypes).
 
-**Likely mapping (all MDG strings: verify in live EA):**
+> **Confirmed limitation: BPMN is NOT creatable via the
+> `enterprise-architect:create_or_update_elements` MCP tool.** A type string
+> like `"BPMN2.0::Activity"` errors, and the `stereotype` field strips the BPMN
+> profile, so the created element is a plain UML element, not a real BPMN one.
+> Treat the mapping below as reference for what the MDG concepts are called —
+> **not** as a build recipe to attempt through the MCP. To author real BPMN,
+> use EA's own BPMN toolbox/UI. The Mermaid approximations in these reference
+> files exist precisely because of this limitation.
 
-| BPMN concept | EA MDG element/connector (verify in live EA) |
-|--------------|----------------------------------------------|
+**MDG concept reference (informational — not MCP-creatable, see above):**
+
+| BPMN concept | EA MDG element/connector |
+|--------------|--------------------------|
 | Task / Sub-Process | `«BPMN2.0::Activity»` element; `activityType` tagged value selects Task vs. SubProcess, and `taskType` selects User/Service/Send/etc. |
 | Event (start/intermediate/end) | `«BPMN2.0::Event»` element; tagged values set position (`eventType`) and trigger (`trigger`) |
 | Gateway | `«BPMN2.0::Gateway»` element; `gatewayType` tagged value = Exclusive/Parallel/Inclusive/EventBased/Complex |
@@ -167,28 +174,22 @@ it.
 | Association / Data Association | `«BPMN2.0::Association»` connector |
 | Data Object / Data Store | `«BPMN2.0::DataObject»` / `«BPMN2.0::DataStore»` element |
 
-The BPMN flavour (Process vs. Collaboration) and the diagram type are also MDG
-strings — **verify in live EA**. The trigger/marker selections are usually driven
-by **tagged values**, not by distinct element types.
+The trigger/marker selections in real EA BPMN are driven by **tagged values**,
+not by distinct element types — but again, you cannot set these by creating BPMN
+elements through the MCP create tool (see the limitation above).
 
-**Build flow — do NOT reconstruct it here.** Use the **`ea-modeling`** skill for
-the actual sequence:
-`enterprise-architect:create_or_update_package` → `…create_or_update_elements`
-→ `…create_or_update_connectors` → `…create_or_update_diagram` →
-`…place_elements_on_diagram` → `…layout_connectors` → `…get_diagram_image`.
-See also `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
-
-**EA gotchas to remember (full detail in `ea-modeling`):**
-- `taggedValues` is an **ARRAY** of `{name, value}` objects — this is how you set
-  BPMN `eventType` / `trigger` / `gatewayType` / `taskType` / `activityType`.
+**EA gotchas (these apply to plain-UML modeling via the MCP, where the build
+flow lives in the `ea-modeling` skill):**
+- `taggedValues` is an **ARRAY** of `{name, value}` objects.
 - Connector `direction:"Source -> Destination"` **FAILS** — use
-  `direction:"Unspecified"`. (Sequence/message-flow direction is the line's own
-  source→target, not this field.)
+  `direction:"Unspecified"`. (Flow direction is the line's own source→target, not
+  this field.)
 - `place_elements_on_diagram` needs **x/y > 10** (values ≤ 10 are rejected/ignored).
 - Open the diagram (`enterprise-architect:open_diagrams`) before adding ordered
   artifacts, per `ea-modeling`.
 
-Because the MDG strings are unverified, when building a real BPMN model in EA:
-create one element of each kind first, inspect it with
-`enterprise-architect:get_elements_information`, confirm the actual stereotype and
-tagged-value names, then proceed.
+See also `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+
+Bottom line: to convey BPMN through this plugin's MCP path, use the **Mermaid
+approximations** above; to author genuine BPMN, build it in EA's BPMN toolbox by
+hand.

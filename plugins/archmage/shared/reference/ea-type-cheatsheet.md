@@ -13,6 +13,7 @@
 - [Connector `type` strings](#connector-type-strings)
 - [Stereotypes that change meaning](#stereotypes-that-change-meaning)
 - [Schema shapes & hard rules](#schema-shapes--hard-rules)
+- [Exact payload field names](#exact-payload-field-names-confirmed-from-the-live-tool-schemas)
 - [The canonical build order](#the-canonical-build-order)
 
 ---
