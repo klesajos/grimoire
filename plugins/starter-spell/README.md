@@ -83,6 +83,12 @@ matches the task, or you run it as `/starter-spell:hello-grimoire`.
 **What it is:** a slash command. Runs only when the user types
 `/starter-spell:cast`.
 
+> **Current model:** commands are now just **skills in flat-file form** — a
+> `commands/cast.md` and a `skills/cast/SKILL.md` both create the same command.
+> `commands/` still works and is fully supported; `skills/` is recommended for new
+> ones (it also allows supporting files). This template ships one of each (① and
+> ②) so you see both forms.
+
 - **Use it for:** Productivity — `/standup`: paste yesterday's notes, get a
   formatted update. Coding — `/scaffold-endpoint Orders`: generate a Laravel
   controller + service + test in your house conventions.
