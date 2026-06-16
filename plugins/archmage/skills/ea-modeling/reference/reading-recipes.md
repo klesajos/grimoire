@@ -3,6 +3,11 @@
 Repeatable read flows for exploring an existing repository. All tools are read-only (no
 `-enableEdit` needed). Tool reference: `ea-mcp`'s `tool-catalog-read.md`.
 
+Tool names in the recipe blocks below are written **bare** (`get_root_packages`); every one is the
+EA MCP tool `enterprise-architect:get_root_packages`. In prose they are qualified. The full
+tool-name convention (and the invokable `mcp__enterprise-architect__<tool>` form) lives in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+
 ## Contents
 - [Recipe: orient in an unfamiliar model](#recipe-orient-in-an-unfamiliar-model)
 - [Recipe: summarise a package/subsystem](#recipe-summarise-a-packagesubsystem)
@@ -34,7 +39,8 @@ Then write the summary from the rendered diagrams + element detail — don't sum
 ## Recipe: render a diagram as an image
 
 ```
-find_... or get_diagrams_information        # get the diagramID
+get_diagrams_information                    # get the diagramID (by package), or
+find_element_in_diagrams(elementId)         # the diagrams a known element appears on
   → get_diagram_image(diagramId)             # returns a PNG
 ```
 Use this whenever the user asks "show me / what does X look like". Rendering is also the

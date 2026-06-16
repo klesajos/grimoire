@@ -181,7 +181,7 @@ markers.
 
 ```mermaid
 flowchart TD
-  S((Start)) --> X{XOR: in stock?}
+  S((Start)) --> X{"XOR: in stock?"}
   X -- No --> D((End))
   X -- Yes --> AS{AND split}
   AS --> T1[Reserve stock]

@@ -69,17 +69,17 @@ UML 2.5.1 diagrams
 
 ## 4. Picking a diagram type
 
-- *What things exist and how they relate?* → **Class** (types) or **Object** (a concrete instance snapshot).
-- *Who uses the system and for what?* → **Use Case**.
-- *What is the step-by-step process / algorithm / business flow?* → **Activity**.
-- *How does one object react to events over its lifetime?* → **State Machine**.
-- *In what order do objects talk to do one scenario?* → **Sequence** (time emphasis) or **Communication** (structure emphasis).
-- *How does a signal/value change against real time?* → **Timing**.
-- *How do several scenarios string together at a high level?* → **Interaction Overview**.
-- *How is the code organized into modules with interfaces?* → **Component**; *how is the build laid into folders/namespaces?* → **Package**.
-- *What runs on what hardware?* → **Deployment**.
-- *What is the internal wiring of a classifier?* → **Composite Structure**.
-- *Inventing your own modeling vocabulary on top of UML?* → **Profile**.
+- *What things exist and how they relate?* → **Class** (types) or **Object** (a concrete instance snapshot, instance specifications, slots, links).
+- *Who uses the system and for what?* → **Use Case** (actors, goals).
+- *What is the step-by-step process / algorithm / business flow / workflow?* → **Activity**.
+- *How does one object react to events over its lifetime (states, lifecycle, status flow)?* → **State Machine**.
+- *In what order do objects talk to do one scenario?* → **Sequence** (time emphasis, lifelines, messages) or **Communication** (same interaction, structure/link emphasis).
+- *How does a signal/value change against real time (time axis)?* → **Timing**.
+- *How do several scenarios / interactions string together at a high level?* → **Interaction Overview**.
+- *How is the code organized into modules with interfaces?* → **Component**; *how is the build laid into folders/namespaces, grouped into packages?* → **Package**.
+- *What runs on what hardware (nodes, devices, artifacts)?* → **Deployment**.
+- *What is the internal wiring (parts, ports, connectors) of a classifier?* → **Composite Structure**.
+- *Inventing your own modeling vocabulary / stereotypes / tagged values on top of UML?* → **Profile**.
 
 ## 5. Cross-cutting notation
 

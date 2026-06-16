@@ -110,7 +110,7 @@ erDiagram
 ## Pitfalls
 
 - The relationship label after the colon is **optional** in the current spec, but omitting it can fail on pinned/older renderers — keep a short word or `"quoted phrase"` for safety and readability.
-- The two cardinality markers are **direction-sensitive** — `|o` is a *left* marker, `o|` is its *right* mirror. Don't write `o|--|o` expecting "zero-or-one to zero-or-one"; that's `o|`…`|o` (correct), whereas swapping them looks wrong.
+- The two cardinality markers are **direction-sensitive** and mirror: the *left* zero-or-one marker is `|o`, the *right* is `o|`. A zero-or-one to zero-or-one relationship is `|o--o|`. Writing `o|--|o` puts the markers on the wrong sides.
 - Connector glyphs run **together** with no spaces: `||--o{`, not `|| -- o{`.
 - Attribute lines are `type name`, not `name: type` — type comes first.
 - Phrases with spaces (labels, comments) must be in `"double quotes"`.

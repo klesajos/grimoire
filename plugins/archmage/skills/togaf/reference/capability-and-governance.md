@@ -49,7 +49,7 @@ The **Architecture Board** is the cross-organization body accountable for govern
 
 - **Responsibilities** — oversee ADM implementation; ensure consistency between sub-architectures; approve/monitor dispensations; enforce compliance; resolve ambiguities/conflicts; provide advice, guidance, and the locus of decision-making for architecture.
 - **Membership** — representatives from across the enterprise stakeholders; typically a small body (e.g. 4–5 members) meeting regularly.
-- It operates the **Governance Repository** (compliance records, dispensations, contracts) — see `reference/content-framework.md`.
+- It operates the **Governance Repository** (compliance records, dispensations, contracts) — see `content-framework.md#the-architecture-repository`.
 
 ## Architecture Contracts
 
@@ -70,7 +70,7 @@ The **Enterprise Continuum** is a classification model / "view" of the Architect
   **Foundation Architectures → Common Systems Architectures → Industry Architectures → Organization-Specific Architectures** (decreasing generality).
 - **Solutions Continuum** — the corresponding concrete realizations (SBBs): **Foundation Solutions → Common Systems Solutions → Industry Solutions → Organization-Specific Solutions**.
 
-Movement **left→right** (generic→specific) is how reusable assets get adapted into a specific deployment; movement right→left feeds reusable assets back. The **TRM** sits at the foundation end of the Architecture Continuum; the **III-RM** is an example of a common-systems-level model (see `reference/content-framework.md`).
+Movement **left→right** (generic→specific) is how reusable assets get adapted into a specific deployment; movement right→left feeds reusable assets back. The **TRM** sits at the foundation end of the Architecture Continuum; the **III-RM** is an example of a common-systems-level model (see `content-framework.md#the-architecture-repository`).
 
 ## Architecture Partitioning
 

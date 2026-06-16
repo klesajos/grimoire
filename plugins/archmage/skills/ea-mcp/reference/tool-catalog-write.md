@@ -1,7 +1,10 @@
 # EA MCP — write tool catalog
 
 Write tools load **only** when `MCP3.exe` runs with `-enableEdit` and the client was restarted
-(see `setup-and-connection.md`). All names are fully qualified as `enterprise-architect:<tool>`.
+(see `setup-and-connection.md`). The bare names in the tables and flow below are each the EA MCP
+tool `enterprise-architect:<tool>` (documentation shorthand for the invokable
+`mcp__enterprise-architect__<tool>`) — see the tool-name convention in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
 
 ## Contents
 - [The contract every create/update tool shares](#the-contract-every-createupdate-tool-shares)

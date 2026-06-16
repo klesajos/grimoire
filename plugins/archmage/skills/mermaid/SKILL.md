@@ -1,6 +1,6 @@
 ---
 name: mermaid
-description: Reference for Mermaid diagram-as-code syntax across all current diagram types - flowchart, sequenceDiagram, classDiagram, stateDiagram-v2, erDiagram, gantt, timeline, pie, journey, quadrantChart, requirementDiagram, gitGraph, mindmap, c4, and the beta types (sankey, xychart, block, packet, kanban, architecture) - with per-type syntax, rules, and examples. Use when the user wants to write, fix, or generate a Mermaid diagram, asks for "diagram as text/code", or wants a flowchart/sequence/class/ER/gantt/state diagram in Markdown.
+description: Reference for Mermaid diagram-as-code syntax across all current diagram types - flowchart, sequenceDiagram, classDiagram, stateDiagram-v2, erDiagram, gantt, timeline, pie, journey, quadrantChart, requirementDiagram, gitGraph, mindmap, c4, and the beta types (sankey, xychart, block, packet, kanban, architecture) - with per-type syntax, rules, and examples. Use when the user wants to write, fix, or generate a Mermaid diagram, asks for "diagram as text/code", or wants a flowchart/sequence/class/ER (entity-relationship/data-model)/gantt/state diagram in Markdown.
 ---
 
 # Mermaid Diagram-as-Code
@@ -14,6 +14,7 @@ Mermaid is a **rolling release** with no spec version — there is no "Mermaid 1
 - **Use this** for quick diagram-as-code embedded in Markdown, READMEs, PR descriptions, issues, MkDocs/Docusaurus pages, ADRs — anything where a lightweight text diagram beats a drawing tool.
 - **NOT for modeling in Enterprise Architect** — for building/querying a real EA repository, use the `ea-modeling` skill instead.
 - **NOT the place for formal notation rules** — Mermaid's class/state/ER/C4 syntax is a loose approximation of UML/BPMN/C4. For correct UML semantics use the `uml` skill; for correct BPMN use the `bpmn` skill. Mermaid here is about *rendering*, not notational correctness.
+- **Tie-break for an unqualified diagram request** — if the user just says "draw a class/sequence/state diagram" without naming Mermaid/Markdown or asking for "diagram as text/code", default to the **`uml`** skill (notation-correct); route here only when they want a lightweight text sketch, name Mermaid, or target Markdown/GitHub/an issue/PR.
 
 ## Diagram type status (as of 2026 snapshot)
 
