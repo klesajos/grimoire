@@ -33,8 +33,10 @@ starter-spell/
 
 **Live** = loads and works the moment the plugin is enabled (safe; only acts
 when invoked). **Dormant** = ships as a `.example` file that Claude Code ignores
-until you activate it (these three have side effects on enable, so they're off
-by default).
+until you activate it. The five dormant ones are off by default because they'd
+otherwise change your setup on enable — hooks/MCP/monitor have side effects (run
+shell, spawn processes), LSP errors without its binary, and an output style would
+clutter your style picker.
 
 Activate a dormant component by **renaming** it (drop `.example`). Remove any
 component by **deleting** its file/folder. Details per component below.
@@ -160,99 +162,230 @@ demo server (a real, runnable MCP server fetched via `npx`).
 
 ## ⑥ LSP — `.lsp.json.example`
 
-**What it is:** a Language Server config — gives Claude diagnostics, go-to-def,
-and find-references while editing. The example wires up
-`typescript-language-server`.
+**What it actually is:** a **Language Server** is a separate program that deeply
+understands one programming language — the same engine that powers the red error
+squiggles, autocomplete, and "Go to definition" in editors like VS Code. This file
+doesn't contain that engine; it just tells Claude Code **how to start the language
+server and talk to it**. (You install the engine separately — see Setup.)
 
-- **Use it for:** Coding (only) — real-time type errors and go-to-definition
-  while editing TS/Go/Python. Claude sees compiler diagnostics after each edit
-  and makes far fewer broken changes. No productivity use — it's purely code
-  intelligence.
+**How it works:** every time Claude edits a file, the language server re-analyzes
+it and reports back. Claude reads that report and corrects course — before the code
+is ever run.
+
+```mermaid
+flowchart LR
+    A[Claude edits a file] --> B[Language server<br/>re-analyzes the code]
+    B --> C{Findings}
+    C -->|errors & warnings| D[Claude sees the real<br/>compiler diagnostics]
+    C -->|types & definitions| D
+    D --> E[Claude fixes it<br/>immediately]
+    E --> A
+```
+
+Without LSP, Claude only *guesses* from the text in front of it. With LSP it gets
+**compiler-grade facts**: it stops inventing methods that don't exist, catches a
+wrong argument type the instant it's written, and can find **every** caller of a
+function before renaming it.
+
+- **Use it for (coding only):** any typed codebase where you want Claude to make
+  fewer broken edits. Install the engine for your language:
+
+  | Language | Install this binary | What it gives Claude |
+  | --- | --- | --- |
+  | **PHP** | `intelephense` (or `phpactor`) | unknown-method / wrong-arg-type errors in Laravel/Symfony |
+  | **Java** | `jdtls` (Eclipse JDT Language Server) | full Spring Boot type awareness, find-references |
+  | **Kotlin** | `kotlin-language-server` | null-safety + type info for Kotlin/Spring |
+  | **C / C++** | `clangd` | compiler-grade diagnostics, `#include` resolution, go-to-definition |
+  | **TypeScript** (bundled example) | `typescript-language-server` + `typescript` | type errors across `.ts` / `.tsx` |
+
 - **Activate:** `mv .lsp.json.example .lsp.json`
-- **Setup (required):** install the language-server binary yourself — it is
-  **not** bundled. For the example:
-  `npm install -g typescript-language-server typescript`. Without it you'll see
-  `Executable not found in $PATH` in the `/plugin` Errors tab.
-- **Make it yours:** swap `command` and `extensionToLanguage` for your language
-  (e.g. `gopls`, `pyright`, `rust-analyzer`).
+- **Setup (required):** install the language-server **binary yourself** — it is
+  **not** bundled. Example: `npm install -g typescript-language-server typescript`;
+  for PHP: `npm install -g intelephense`. If the binary isn't on your PATH you'll
+  see `Executable not found in $PATH` in the `/plugin` Errors tab.
+- **Make it yours:** set `command` (the binary), its `args`, and
+  `extensionToLanguage` (which file types it handles). One `.lsp.json` can list
+  several languages at once.
 - **To remove:** delete `.lsp.json.example` (and `.lsp.json` if you renamed it).
-- **vs CLAUDE.md:** **Never** CLAUDE.md — it can't produce compiler diagnostics
-  or resolve symbols. Pure capability.
+- **vs CLAUDE.md:** **Never** CLAUDE.md — text can't run a type-checker or resolve
+  symbols. You *could* write "this project is PHP 8.3" in CLAUDE.md, but only an LSP
+  gives Claude live, line-by-line type feedback. Pure capability.
 
 ---
 
 ## ⑦ Output style — `output-styles/terse.md.example`
 
-**What it is:** an output style. While the plugin is enabled it **auto-applies**
-and reshapes how Claude writes (tone, length, format) across the whole session.
+**What it actually is:** an output style **rewrites Claude's system prompt** — the
+core instructions that define how Claude behaves and "who it is" — and it applies
+to **every single response** for the whole session. It changes *role, tone, and
+format*, not knowledge.
 
-- **Use it for:** Productivity — a `brief` style enforcing "minimum necessary
-  words" on every reply. Coding — a style that forces conventional-commit
-  messages and a fixed PR-description structure across the session.
-- **Activate:** `mv output-styles/terse.md.example output-styles/terse.md`
-- **Caution:** because it applies automatically on enable, it's shipped dormant —
-  an active style changes *every* response, not just invoked ones.
-- **Make it yours:** edit the frontmatter (`name`, `description`) and the body,
-  which is appended to Claude's system prompt. The filename is the style's id.
+**The sharp difference from CLAUDE.md** (the thing people get wrong):
+
+```mermaid
+flowchart TB
+    subgraph SP[Claude's system prompt]
+      direction TB
+      B[Built-in coding instructions:<br/>how to scope changes, comment, verify]
+      O["+ your output-style instructions<br/>(added here, EVERY turn — and CAN<br/>switch the coding instructions OFF)"]
+    end
+    SP --> R[Every response]
+    CM[CLAUDE.md] -. added as a note AFTER the prompt — only ADDS .-> R
+
+    style B fill:#fde2e2
+    style O fill:#e2ecfd
+```
+
+- **CLAUDE.md** is a note attached *after* the system prompt. It can only **ADD**
+  facts ("also know: this project uses Laravel"). It can never switch off Claude's
+  built-in behavior.
+- **An output style edits the system prompt itself.** A custom style even **drops
+  Claude Code's built-in software-engineering instructions** (how it scopes work,
+  writes comments, verifies changes) — unless you set `keep-coding-instructions:
+  true`. **CLAUDE.md literally cannot do that.**
+- One-line rule: **CLAUDE.md adds knowledge; an output style changes who Claude is.**
+
+**Built-in styles** (switch anytime, for reference): **Default** (normal coding),
+**Proactive** (acts without pausing to ask), **Explanatory** (adds teaching
+"Insights" — this very session uses it), **Learning** (asks you to write some code
+yourself).
+
+- **Use it for:** Productivity — a writing-assistant style that **drops** coding
+  instructions so Claude acts like an editor, not an engineer. Coding — a
+  "diagrams-first" style that **keeps** coding instructions but makes Claude open
+  every explanation with a diagram.
+- **Activate:** `mv output-styles/terse.md.example output-styles/terse.md`, then
+  select it in **`/config` → Output style**.
+- **Make it yours:** edit the frontmatter (`name`, `description`,
+  `keep-coding-instructions`) and the body (your added instructions). To make a
+  *plugin* style apply automatically for everyone who enables the plugin, add
+  `force-for-plugin: true` — otherwise it merely *appears as an option*.
+- **Why dormant:** without `force-for-plugin` a plugin style isn't forced on you,
+  but it still clutters your `/config` picker the moment it exists. Shipped as
+  `.example` so it stays out of your list until you write a real one.
 - **To remove:** delete the file (or the whole `output-styles/` folder).
-- **vs CLAUDE.md:** Biggest overlap of all. Use an output style when you want it
-  toggleable and reusable across projects (switch via `/output-style`). CLAUDE.md
-  is enough for a fixed, project-specific "write like this" rule.
+- **vs CLAUDE.md:** Biggest overlap of all — but not the same thing. Use an output
+  style to change Claude's *whole manner* and toggle it across projects via
+  `/config`. Use CLAUDE.md for a fixed, project-specific "also write briefly" rule.
 
 ## ⑧ Theme — `themes/grimoire-dark.json`
 
-**What it is:** a color theme. Shipped **live** — it shows up in `/theme` as an
-option but does nothing until *you* select it (safe; passive).
+**What it actually is:** a theme changes **the colors of the Claude Code interface
+itself** — the program you're typing into. That's *all* it does: the color of
+Claude's text, the red of errors, the green of successes, the colors inside a diff.
 
-- **Use it for:** Productivity — a red-tinted theme you switch to in
-  client/production repos so you never mistake them for a sandbox. Coding — a
-  distinct per-stack theme so you instantly know which project's terminal you're
-  in.
+**"Pure UI" means exactly this — the colors of Claude Code's own screen, nothing
+else.** What a theme paints, and what it does *not* touch:
+
+```
+┌─ Claude Code window ─────────────────────────────────┐
+│  assistant text, code, diffs   ← THEME colors these   │
+│  errors (red) / success (green) ← THEME colors these  │
+│                                                       │
+│  > your prompt input                                  │
+│  ──────────────────────────────────────────────────  │
+│  [Opus] 📁 my-repo  ⎇ main  42% context  $0.12        │ ← NOT the theme.
+└───────────────────────────────────────────────────────┘   This bottom bar is
+                                                             the STATUS LINE.
+```
+
+To answer the obvious questions directly — a theme **cannot**:
+- ❌ change the prompt text or inject context info,
+- ❌ show the current directory or git branch,
+- ❌ change prompt / command **autocompletion**.
+
+Those are *different* features:
+- Showing **directory, git branch, model, context %, cost** = the **status line**
+  (set it up with `/statusline`; it runs a small shell script along the bottom bar).
+- Autocompletion behavior isn't something a plugin configures.
+
+- **Use it for:** color-code your environments — e.g. switch to a red theme inside
+  client/production repos so you can never confuse them with a sandbox at a glance.
 - **Setup:** none. Auto-discovered from `themes/`. Run `/theme` and pick
   "Grimoire Dark".
-- **Make it yours:** set `base` (`dark` / `light`) and a sparse `overrides` map
-  of color tokens (`claude`, `success`, `error`, …). Themes are an experimental
-  component — schema may shift between releases.
+- **Make it yours:** set `base` (`dark` / `light`) and a sparse `overrides` map of
+  color tokens (`claude`, `success`, `error`, …). Themes are an experimental
+  component — the schema may shift between releases.
 - **To remove:** delete the `.json` (or the whole `themes/` folder).
-- **vs CLAUDE.md:** **Never** CLAUDE.md — a theme is pure UI, not an instruction
-  at all.
+- **vs CLAUDE.md:** **Never** CLAUDE.md — a theme is pure visual styling of the
+  app, not an instruction to Claude at all.
 
 ## ⑨ Monitor — `monitors/monitors.json.example`
 
-**What it is:** a background monitor. Runs a shell command for the whole session
-and streams each stdout line to Claude as a notification — useful for watching
-logs, deploys, or polled status.
+**What it actually is:** a background watcher. The plugin runs a shell command that
+keeps running for the whole session, and **every line that command prints becomes a
+notification to Claude**. So Claude finds out about events *as they happen* —
+without you stopping to ask it to check.
 
-- **Use it for:** Coding — `tail -F` the test-watch or dev-server log so Claude
-  reacts to failures the moment they appear. Productivity — poll a CI/deploy
-  status endpoint and get notified when it finishes.
+**How it works:**
+
+```mermaid
+flowchart LR
+    M["Background command<br/>(e.g. tail -F laravel.log)"] -->|prints a line| N[Claude Code turns the<br/>line into a notification]
+    N --> C[Claude in your MAIN session<br/>sees it and can react]
+```
+
+**Where it runs — important:** a monitor feeds your **main interactive session**
+(the conversation you're in), *not* subagents. It works **only in the interactive
+CLI** (not in headless `-p` runs) and runs **unsandboxed**, at the same trust level
+as hooks. Use it when *you* are working alongside Claude and want it to react to
+live events instead of you polling.
+
+- **Use it for (real day-to-day examples):**
+  - `tail -F storage/logs/laravel.log` → Claude sees a Laravel exception the moment
+    it's logged and can offer a fix.
+  - your `npm run dev` / Vite output → Claude reacts to a compile/build error live.
+  - `php artisan queue:work` output → Claude notices a failed job as it fails.
+  - a script polling your CI or deploy status → Claude tells you the moment the
+    deploy finishes (or breaks).
 - **Activate:** `mv monitors/monitors.json.example monitors/monitors.json`
-- **Caution:** it **auto-starts a process on enable** and emits notifications, so
-  it's shipped dormant. Requires Claude Code v2.1.105+; interactive CLI only;
-  runs unsandboxed at hook trust level.
+- **Caution:** it **auto-starts the process when the plugin is enabled** and emits
+  notifications, so it's shipped dormant. Requires Claude Code v2.1.105+.
 - **Make it yours:** set `name`, `command` (supports `${CLAUDE_PLUGIN_ROOT}` /
-  `${CLAUDE_PROJECT_DIR}` / `${user_config.*}`), and `description`. Optional
-  `when`: `"always"` (default) or `"on-skill-invoke:<skill>"`.
+  `${CLAUDE_PROJECT_DIR}` / `${user_config.*}`), and `description`. Optional `when`:
+  `"always"` (start at session start — the default) or `"on-skill-invoke:<skill>"`
+  (only start watching once a particular skill of yours runs — e.g. start the log
+  watcher only when your `debug` skill fires).
 - **To remove:** delete the file (or the whole `monitors/` folder).
 - **vs CLAUDE.md:** **Never** CLAUDE.md — text can't watch a process or poll an
-  endpoint over a whole session. Capability, not instruction.
+  endpoint across a session. Capability, not instruction.
 
 ## ⑩ Executable — `bin/starter-spell-tool`
 
-**What it is:** a bundled executable. While the plugin is enabled, `bin/` is
-added to the Bash tool's `PATH`, so Claude can call `starter-spell-tool` as a
-bare command. Shipped **live** — it only runs when invoked.
+**What it actually is:** any program or script you drop in `bin/`. While the plugin
+is enabled, Claude Code adds this `bin/` folder to the **PATH of its Bash tool** —
+so Claude can run your program as a **bare command** (`starter-spell-tool`) inside
+any Bash call, in **any project**, without knowing where the file lives.
 
-- **Use it for:** Coding — bundle a project CLI (codegen, `db-seed`) Claude can
-  call as a bare command. Productivity — a `report-export` / `invoice-gen` script
-  Claude runs as one step inside a larger workflow.
+**How it differs from just referencing a script in CLAUDE.md or a skill** (your
+question): it comes down to *where the tool lives* and *whether it travels with
+you*.
+
+```mermaid
+flowchart TB
+    subgraph REF["Reference a path in CLAUDE.md / a skill"]
+      R1[Script must already exist<br/>at that path in THIS repo] --> R2[Open another project →<br/>the script is gone]
+      R2 --> R3[Claude must know &amp;<br/>type the full path]
+    end
+    subgraph BIN["Ship it in the plugin's bin/"]
+      B1[Tool travels WITH the plugin,<br/>installed to the plugin cache] --> B2[Available in EVERY project<br/>the plugin is enabled in]
+      B2 --> B3[Called by short name, no path,<br/>versioned with the plugin]
+    end
+```
+
+- One-line rule: **CLAUDE.md points at a tool that must already be there; `bin/`
+  brings the tool with it, everywhere.**
+- **Use it for:** Coding — bundle a project CLI (a code generator, a `db-seed`
+  helper) so Claude can call it anywhere. Productivity — a `report-export` /
+  `invoice-gen` script Claude runs as one step inside a larger workflow.
 - **Setup:** make it executable — `chmod +x bin/starter-spell-tool`.
-- **Make it yours:** replace with a real helper and give it a **distinctive
-  name** so it can't shadow a system command (e.g. `git`, `ls`).
+- **Make it yours:** replace with a real helper and give it a **distinctive name**
+  so it can't shadow a system command (don't name it `git` or `ls`).
 - **To remove:** delete the file (or the whole `bin/` folder).
-- **vs CLAUDE.md:** Close call. If the script already lives in the repo, CLAUDE.md
-  can just tell Claude to run it. Use `bin/` when you want to *bundle and
-  distribute* the tool with the plugin and call it as a clean bare command.
+- **vs CLAUDE.md:** Close call by design. If the script already lives in the repo,
+  CLAUDE.md telling Claude to run it is fine. Reach for `bin/` when you want to
+  **bundle, distribute, and version** the tool with the plugin and call it by a
+  clean bare name everywhere.
 
 ## Conjure a new plugin from this template
 
