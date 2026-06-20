@@ -26,7 +26,7 @@ A **behavior** diagram describing the lifecycle of **one** object/classifier as 
   - **Choice**: diamond ◇ — dynamic branch evaluated *after* prior effects (guards on outgoing edges).
   - **Junction**: small filled circle — static merge/branch of transitions.
   - **History**: shallow `(H)` restores the last active substate of a composite; deep `(H*)` restores the full nested configuration.
-  - **Fork/Join** bars, **entry/exit points**, **terminate** (X), **junction** as above.
+  - **Fork/Join** bars, **entry/exit points**, **terminate** (X).
 - A **composite state** nests a sub-state-machine; a state with **two or more regions** separated by a dashed line is **orthogonal** (concurrent) — the object is in one substate of *each* region simultaneously.
 - A **submachine state** (`stateName : SubMachine`) references a reusable state machine.
 - A **completion transition** (no trigger) fires when the source state finishes its `do`/substate activity.

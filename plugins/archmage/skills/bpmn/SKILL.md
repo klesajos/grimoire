@@ -48,7 +48,7 @@ flowchart LR
 - Choosing the right element: which event trigger, which gateway, task vs.
   sub-process, pool vs. lane, sequence vs. message flow.
 - Explaining BPMN execution semantics (tokens, splits/joins, exceptions).
-- Checking a model for well-formedness / common modelling mistakes.
+- Checking a model for well-formedness / common modeling mistakes.
 
 ## When NOT to use (route elsewhere)
 

@@ -1,7 +1,7 @@
 {
   "name": "archmage",
   "description": "Model Sparx Enterprise Architect through the enterprise-architect MCP, with reference spells for UML 2.5.1, BPMN 2.0.2, ArchiMate 3.2, the TOGAF Standard 10th Edition, and Mermaid.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Josef Klesa"
   },

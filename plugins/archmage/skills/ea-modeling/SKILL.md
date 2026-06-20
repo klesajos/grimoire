@@ -47,7 +47,7 @@ create_or_update_package        # parent first → capture packageID
   → get_diagram_image           # VERIFY — render the PNG and check it
 ```
 
-![The build-and-verify modelling workflow](images/ea-modeling-workflow.png)
+![The build-and-verify modeling workflow](images/ea-modeling-workflow.png)
 
 <details>
 <summary>Mermaid source</summary>
@@ -55,7 +55,7 @@ create_or_update_package        # parent first → capture packageID
 <!-- render: images/ea-modeling-workflow.png -->
 
 ```mermaid
-flowchart LR
+flowchart TB
     A["create_or_update_package"]
     B["create_or_update_elements"]
     C["attributes / operations"]

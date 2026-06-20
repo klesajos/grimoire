@@ -8,7 +8,8 @@ and forked. Platform-agnostic in spirit, Claude-native in practice.
 
 This is the **public** grimoire. Its private counterpart,
 [`grimoire-arcana`](https://github.com/klesajos/grimoire-arcana) — *the restricted
-section* — holds personal and internal spells.
+section* — holds personal and internal spells. (It's private: that link returns a
+404 unless you have access.)
 
 ## The lexicon
 
