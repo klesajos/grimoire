@@ -141,7 +141,7 @@ Numbering `1`, `1.1`, `2`, `3` encodes the same order as the sequence diagram ab
 - Trying to show many alternative branches — communication diagrams handle complex control flow poorly; use a sequence diagram with combined fragments.
 
 ### EA bridge
-- Diagram `type`: EA **"Communication"** diagram (mark **verify in live EA**).
+- Diagram `type`: EA **"Communication"** diagram (confirmed).
 - Element: reuse class/object lifelines; **"Association"** links carry the messages. Message sequence numbers are set on the message properties — **verify in live EA**. See **`ea-modeling`**.
 
 ---
@@ -187,7 +187,7 @@ WalkSignal    Walk  ┤──────┐ {15..20s}
 - Omitting **duration/time constraints**, which are the whole reason to use this diagram.
 
 ### EA bridge
-- Diagram `type`: EA **"Timing"** diagram (mark **verify in live EA**).
+- Diagram `type`: EA **"Timing"** diagram (confirmed).
 - Element `type`: state/value **lifeline** with a **state timeline**; transitions/time points set on the lifeline — **verify in live EA**. See **`ea-modeling`**.
 
 ---
@@ -241,6 +241,6 @@ Each `ref` frame links to a full sequence diagram; the diamond and edges are pur
 - Putting guards on fork edges instead of decision edges (same rule as activity diagrams).
 
 ### EA bridge
-- Diagram `type`: EA **"Interaction Overview"** diagram (mark **verify in live EA**).
+- Diagram `type`: EA **"Interaction Overview"** diagram (confirmed).
 - Element `type`: **"InteractionOccurrence"/"InteractionFragment"** (the `ref` frames), plus activity control nodes (**"Decision"**, **"StateNode"** for initial/final, fork/join) — **verify in live EA**.
 - Connector `type`: **"ControlFlow"** for the edges between interaction frames. See **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

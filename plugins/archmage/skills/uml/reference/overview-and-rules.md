@@ -81,7 +81,7 @@ flowchart **approximation**, or none (build in EA).
 | 11 | Sequence | Behavior · Interaction | `Sequence` | `sequenceDiagram` | `interaction-diagrams.md` |
 | 12 | Communication | Behavior · Interaction | `Communication` | — | `interaction-diagrams.md` |
 | 13 | Timing | Behavior · Interaction | `Timing` | — | `interaction-diagrams.md` |
-| 14 | Interaction Overview | Behavior · Interaction | `Interaction Overview` *(verify)* | — | `interaction-diagrams.md` |
+| 14 | Interaction Overview | Behavior · Interaction | `Interaction Overview` | — | `interaction-diagrams.md` |
 
 For side-by-side **worked examples** of the four Mermaid-capable types built in both EA and Mermaid
 (with the exact recipe for each tool), see

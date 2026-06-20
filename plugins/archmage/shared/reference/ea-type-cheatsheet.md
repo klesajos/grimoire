@@ -150,6 +150,7 @@ These are the traps that cause **silent corruption or tool errors**. They are re
 5. **`place_elements_on_diagram` needs x and y > 10.** Smaller coordinates are rejected/clipped.
 6. **Sequence messages require the diagram OPEN.** Call `enterprise-architect:open_diagrams` first. If you call `create_or_update_messages` on a hidden diagram it errors ("Selection information is unavailable on hidden diagrams") **but still creates the connectors** — a naive retry DUPLICATES. Verify with `get_diagram_image` before retrying; delete dupes with `delete_connectors_or_messages`.
 7. **There is NO delete tool for packages or elements** (only `delete_connectors_or_messages`). Name throwaways `ZZ_*` and delete them manually in EA.
+8. **`Port` and `ObjectNode` must be owned by an element** (pass `owningElementID`), not a package — the MCP errors "Invalid parent for `<type>` (Package)".
 
 ## Exact payload field names (confirmed from the live tool schemas)
 
