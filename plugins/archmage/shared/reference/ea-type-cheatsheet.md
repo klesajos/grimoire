@@ -78,7 +78,7 @@ Passed to `enterprise-architect:create_or_update_elements` as `type`.
 | Activity action | `Action` | |
 | Decision / merge | `Decision` | Diamond — used for both branch and merge. |
 | State | `State` | State Machine states. |
-| Initial / final node | `StateNode` | Naming it (e.g. "start"/"end") may auto-retype to `Pseudostate`. Used for both Activity initial/final and State initial/final. |
+| Initial / final node | `StateNode` | Used for both Activity initial/final and State initial/final. The MCP creates these with `Subtype=0`, so they render **invisibly** (transitions point at empty space). Set `Subtype=100` (initial) / `101` (final) via the EA COM bridge (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) to make them visible. |
 | Component | `Component` | Confirmed. |
 | Node (deployment) | `Node` | Confirmed. |
 | Device (deployment) | `Device` | Confirmed. Renders «device». |
@@ -109,7 +109,7 @@ Passed to `enterprise-architect:create_or_update_connectors` as `type`.
 | --- | --- | --- |
 | Association | `Association` | Plain line; add multiplicity via source/target role ends. |
 | Aggregation | `Aggregation` | Hollow diamond. |
-| Composition | `Aggregation` | Use `Aggregation` for the line; the filled (composite) diamond is **GUI-only** — the MCP create tool exposes no aggregation-kind field (a passed `aggregation` value on the end is ignored), so set composite in the EA GUI (or accept a shared/hollow diamond). |
+| Composition | `Aggregation` | Use `Aggregation` for the line; the MCP create tool exposes no aggregation-kind field (a passed `aggregation` value on the end is ignored). Make it a filled (composite) diamond by setting the aggregate end's `Aggregation=2` via the EA COM bridge (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) — or set composite in the EA GUI. |
 | Generalization (inheritance) | `Generalization` | Hollow triangle, child → parent. |
 | Dependency | `Dependency` | Dashed arrow. |
 | «include» (use case) | `Dependency` | + `stereotypes:"include"`. Confirmed. |
@@ -126,6 +126,10 @@ Passed to `enterprise-architect:create_or_update_connectors` as `type`.
 `ArchiMate3::ArchiMate_<Relationship>` — e.g. `ArchiMate3::ArchiMate_Assignment`,
 `…_Realization`, `…_Serving` (and `…_Composition`, `…_Aggregation`, `…_Triggering`, `…_Flow`,
 `…_Access`, `…_Specialization`, `…_Influence`, `…_Association` follow the same pattern).
+
+**Display fixes the MCP can't do** — navigability arrows on associations, headless-connector
+heads, filled (composite) diamonds, visible initial/final nodes, swimlanes, and PNG export are all
+done via the EA COM bridge: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
 
 ## Stereotypes that change meaning
 

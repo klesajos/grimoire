@@ -142,6 +142,7 @@ Notes:
 - **Access mode** (read/write/read-write/access) and **Influence sign** (+/-) are usually set as a connector **property or tagged value** in EA, not as a distinct type — verify the exact `taggedValues` name/value the MDG expects.
 - **Junction** in EA is typically a small **element** (the AND/OR connector node) that relationships route through, not a connector type — model it as an `ArchiMate3::ArchiMate_Junction` element and connect the branches to it.
 - Direction/semantics still follow ArchiMate (see `relationships.md`): keep the source/target consistent with the arrowhead conventions even though EA stores `direction: "Unspecified"`.
+- **Open-arrow relationships render HEADLESS via the MCP** (confirmed against live EA). Because the MCP leaves direction unspecified, **Serving** — and other open-arrow dependency-style relationships — draws as a plain line with no open arrowhead. Fix it by setting the connector's Direction to `"Source -> Destination"` via the EA COM bridge (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) so the arrowhead draws. **Assignment** (ball+arrow) and **Realization** (hollow triangle) render their heads intrinsically and do **not** need this.
 
 ## Building an ArchiMate view in EA
 
@@ -168,7 +169,7 @@ Lay layers top-to-bottom (Business high, Technology low) so the Serving/Realizat
 These are confirmed against live EA (restated from the shared cheatsheet and `ea-modeling`):
 
 1. **`taggedValues` is an ARRAY of `{name, value}` objects** — never a `{key: value}` map (a map errors). Use this for Access-mode and Influence-sign properties.
-2. **Connector `direction: "Source -> Destination"` FAILS** — use `"Unspecified"` (or omit).
+2. **Connector `direction: "Source -> Destination"` FAILS** — use `"Unspecified"` (or omit). Trade-off: open-arrow relationships (Serving etc.) then render **headless**; set Direction afterward via the EA COM bridge (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) to draw the arrowhead. Assignment/Realization heads are intrinsic.
 3. **`create_*` tools take ARRAYS and RETURN the new IDs** — create the **package first**, capture its `packageID`, then create elements under it and capture element IDs before connecting.
 4. **`place_elements_on_diagram` needs x and y > 10** — smaller coordinates are rejected/clipped.
 5. **No transaction / no rollback** — a timeout mid-build leaves a partial model; `create_baseline` before a big ArchiMate build.

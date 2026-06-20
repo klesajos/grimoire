@@ -44,9 +44,13 @@ flowchart TD
 
 - Diagram `type: "Class"`. Elements `Class`/`Interface`.
 - Add **attributes** (`create_or_update_attributes`) and **operations** (`create_or_update_operations`) by owning element ID, after the class exists.
-- Connectors: `Association` (set multiplicity via `sourceEnd.multiplicity` / `targetEnd.multiplicity`),
-  `Aggregation` (for composition the filled diamond is **GUI-only** — the MCP exposes no aggregation-kind field; set composite in the EA GUI), `Generalization` (child→parent),
+- Connectors: `Association` (set multiplicity via `sourceEnd.multiplicity` / `targetEnd.multiplicity`;
+  the MCP leaves the line plain with no navigability arrow — set `Direction` on the connector via the
+  EA COM bridge to draw it),
+  `Aggregation` (for composition, set the aggregate end's `Aggregation=2` via the EA COM bridge to get the
+  filled diamond — the MCP exposes no aggregation-kind field; the EA GUI also works), `Generalization` (child→parent),
   `Realization` (class→interface), `Dependency`.
+  COM-bridge recipes: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
 - Place classes in a grid (x/y > 10), `layout_connectors`, render.
 
 ## Use case diagram
@@ -100,15 +104,20 @@ call needs neither).
 ## Activity diagram
 
 - Diagram `type: "Activity"`. Nodes: `Action`, `Decision` (diamond, for branch **and** merge),
-  initial/final as `StateNode` (naming may auto-retype to `Pseudostate`).
+  initial/final as `StateNode`. The MCP creates `StateNode` with `Subtype=0`, so initial/final render
+  **invisibly** (control flows point at empty space) — set `Subtype=100` (initial) / `101` (final) via
+  the EA COM bridge (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) to make them visible.
 - Edges are `ControlFlow`. Put the **guard** on the control flow leaving a `Decision`.
 - For object/data flow, use object nodes (verify type) with `ObjectFlow` (verify).
-- Forks/joins: use the synchronization bar (verify EA type) — or model parallelism with multiple
-  outgoing/incoming control flows on a fork node.
+- Forks/joins: element `type: "Synchronization"` (the synchronization bar) — or model parallelism with
+  multiple outgoing/incoming control flows on a fork node.
 
 ## State machine diagram
 
-- Diagram `type: "StateMachine"` (no space). Nodes: `State`, initial/final `StateNode`.
+- Diagram `type: "StateMachine"` (no space). Nodes: `State`, initial/final `StateNode`. As on activity
+  diagrams, the MCP creates `StateNode` with `Subtype=0` so initial/final render **invisibly** — set
+  `Subtype=100` (initial) / `101` (final) via the EA COM bridge
+  (`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`) to make them visible.
 - Transitions are `StateFlow`. Put `trigger [guard] / effect` on the transition.
 - Composite/nested states: create child states inside the composite (verify nesting via the parent
   element ID).

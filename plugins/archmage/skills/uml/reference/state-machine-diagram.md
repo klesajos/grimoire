@@ -87,4 +87,5 @@ stateDiagram-v2
 
 - Diagram `type`: **"StateMachine"** (confirmed).
 - Element `type`: **"State"**, **"StateNode"** for initial/final/history/choice pseudostates (verify the specific pseudostate subtype in live EA).
+- **Initial/final nodes render invisibly:** the MCP creates them as `StateNode` with `Subtype=0`, so they don't draw at all (transitions point at empty space). Set `Subtype=100` (initial, filled circle) / `Subtype=101` (final, bullseye) via the COM bridge — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
 - Connector `type`: **"StateFlow"** for transitions (set trigger/guard/effect on the transition's properties). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
