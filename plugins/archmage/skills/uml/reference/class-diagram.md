@@ -130,5 +130,7 @@ classDiagram
 
 - Diagram `type`: **"Class"** (confirmed).
 - Element `type`: **"Class"**, **"Interface"** (use stereotype/keyword for enumeration: verify in live EA).
-- Connector `type`: **"Association"**, **"Aggregation"** (for composition the filled diamond is **GUI-only** — the MCP exposes no aggregation-kind field; set composite in the EA GUI), **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
+- Connector `type`: **"Association"**, **"Aggregation"**, **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
+- **Associations draw no navigability arrow:** the MCP leaves them as plain lines. Set the connector `Direction` via the COM bridge to draw the arrow at the target — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
+- **Composition (filled diamond):** no longer GUI-only — set the aggregate end's `Aggregation=2` via the COM bridge to promote an Aggregation's hollow diamond to a filled composite one — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
 - Attributes/operations go through `enterprise-architect:create_or_update_attributes` / `…create_or_update_operations`. For the build sequence see the **`ea-modeling`** skill and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.

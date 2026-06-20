@@ -81,6 +81,10 @@ flowchart TB
 **Always finish with `get_diagram_image`.** Building blind is how silent errors (duplicate
 messages, missed placements, wrong target package) survive. Render and look.
 
+The display fixes the MCP can't do (navigability arrows, filled composite diamonds, visible
+initial/final nodes, swimlanes) and PNG export live in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
+
 ## Before you write: confirm the target
 
 Two different projects can both have a root package named "Model" with `packageID 1`. Writing into
