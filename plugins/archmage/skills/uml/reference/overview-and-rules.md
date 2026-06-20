@@ -28,45 +28,64 @@ The 14 diagrams split into two families:
 - **Structure diagrams (7)** show the static things in a system and their relationships: **Class, Object, Package, Composite Structure, Component, Deployment, Profile.**
 - **Behavior diagrams (7)** show dynamics over time: **Use Case, Activity, State Machine**, plus the four **Interaction** diagrams (a sub-family of Behavior): **Sequence, Communication, Timing, Interaction Overview.**
 
-```
-UML 2.5.1 diagrams
-├── Structure (7)
-│   ├── Class
-│   ├── Object
-│   ├── Package
-│   ├── Composite Structure
-│   ├── Component
-│   ├── Deployment
-│   └── Profile
-└── Behavior (7)
-    ├── Use Case
-    ├── Activity
-    ├── State Machine
-    └── Interaction (sub-family)
-        ├── Sequence
-        ├── Communication
-        ├── Timing
-        └── Interaction Overview
+![The UML 2.5.1 diagram taxonomy — 14 types in two families](images/uml-diagram-taxonomy.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+<!-- render: images/uml-diagram-taxonomy.png -->
+
+```mermaid
+mindmap
+  root((UML 2.5.1))
+    Structure 7
+      Class
+      Object
+      Package
+      Composite Structure
+      Component
+      Deployment
+      Profile
+    Behavior 7
+      Use Case
+      Activity
+      State Machine
+      Interaction
+        Sequence
+        Communication
+        Timing
+        Interaction Overview
 ```
 
-## 3. The 14 diagram types
+</details>
 
-| # | Diagram | Family | What it captures | Mermaid? |
-| --- | --- | --- | --- | --- |
-| 1 | Class | Structure | Classifiers, attributes, operations, relationships | Yes (`classDiagram`) |
-| 2 | Object | Structure | A snapshot of instances and their links | No |
-| 3 | Package | Structure | Grouping of model elements into namespaces | No |
-| 4 | Composite Structure | Structure | Internal parts, ports, connectors of a classifier | No |
-| 5 | Component | Structure | Components and their provided/required interfaces | No |
-| 6 | Deployment | Structure | Hardware nodes and the artifacts deployed on them | No |
-| 7 | Profile | Structure | Extensions to UML via stereotypes | No |
-| 8 | Use Case | Behavior | System scope, actors, and their goals | No |
-| 9 | Activity | Behavior | Workflow / control & object flow | Yes (via `flowchart`) |
-| 10 | State Machine | Behavior | States of one object and event-driven transitions | Yes (`stateDiagram-v2`) |
-| 11 | Sequence | Behavior/Interaction | Time-ordered messages between lifelines | Yes (`sequenceDiagram`) |
-| 12 | Communication | Behavior/Interaction | Same interaction, emphasizing links/structure | No |
-| 13 | Timing | Behavior/Interaction | State/value of lifelines against a time axis | No |
-| 14 | Interaction Overview | Behavior/Interaction | Activity-style flow whose nodes are interactions | No |
+## 3. The 14 diagram types — reference & completeness table
+
+Every type maps to one reference file (the four **Interaction** diagrams share `interaction-diagrams.md`).
+EA diagram `type` strings are confirmed live except where noted; full status in the
+[EA type cheatsheet](../../../shared/reference/ea-type-cheatsheet.md). Mermaid column: native support,
+flowchart **approximation**, or none (build in EA).
+
+| # | Diagram | Family | EA diagram `type` | Mermaid | Reference file |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Class | Structure | `Class` | `classDiagram` | `class-diagram.md` |
+| 2 | Object | Structure | `Object` | — | `object-diagram.md` |
+| 3 | Package | Structure | `Package` | approx. (`flowchart`) | `package-diagram.md` |
+| 4 | Composite Structure | Structure | `Composite Structure` | — | `composite-structure-diagram.md` |
+| 5 | Component | Structure | `Component` | — | `component-diagram.md` |
+| 6 | Deployment | Structure | `Deployment` | — | `deployment-diagram.md` |
+| 7 | Profile | Structure | `Profile` | — | `profile-diagram.md` |
+| 8 | Use Case | Behavior | `Use Case` | — | `use-case-diagram.md` |
+| 9 | Activity | Behavior | `Activity` | approx. (`flowchart`) | `activity-diagram.md` |
+| 10 | State Machine | Behavior | `StateMachine` | `stateDiagram-v2` | `state-machine-diagram.md` |
+| 11 | Sequence | Behavior · Interaction | `Sequence` | `sequenceDiagram` | `interaction-diagrams.md` |
+| 12 | Communication | Behavior · Interaction | `Communication` | — | `interaction-diagrams.md` |
+| 13 | Timing | Behavior · Interaction | `Timing` | — | `interaction-diagrams.md` |
+| 14 | Interaction Overview | Behavior · Interaction | `Interaction Overview` *(verify)* | — | `interaction-diagrams.md` |
+
+For side-by-side **worked examples** of the four Mermaid-capable types built in both EA and Mermaid
+(with the exact recipe for each tool), see
+[`shared/reference/worked-examples.md`](../../../shared/reference/worked-examples.md).
 
 ## 4. Picking a diagram type
 
