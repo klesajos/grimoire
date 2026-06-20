@@ -48,11 +48,11 @@ A **behavior** diagram modeling **workflow** as a graph of **actions** connected
 
 ## Worked example — process an order
 
-![Activity diagram — order processing with a decision and a parallel fork/join, built in Sparx EA](images/uml-activity-process-order.png)
+![Activity diagram — order processing across Customer/Sales/Warehouse swimlanes with a decision and a parallel fork/join, built in Sparx EA](images/uml-activity-process-order.png)
 
-*Rendered in Sparx Enterprise Architect — initial ●, the `valid?` decision with guarded branches, a **fork/join** around the concurrent* Reserve Stock *∥* Charge Card *steps, and two activity-final ◉ nodes. (Swimlane notation is covered under **Partitions** above; here the responsible partition is annotated per step.)*
+*Rendered in Sparx Enterprise Architect — three **swimlanes** (Customer, Sales, Warehouse), an initial ●, the `valid?` decision with guarded branches, a **fork/join** around the concurrent* Reserve Stock *∥* Charge Card *steps, and two activity-final ◉ nodes.*
 
-Responsibilities — **Customer**, **Sales**, **Warehouse**:
+Lanes — **Customer**, **Sales**, **Warehouse**:
 
 1. ● → *Submit Order* (Customer)
 2. → *Validate Order* (Sales) → ◇ `[valid]` / `[else → Notify Rejection → ◉]`
