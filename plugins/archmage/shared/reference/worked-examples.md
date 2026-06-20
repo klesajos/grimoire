@@ -43,8 +43,9 @@ Shows generalization, association with multiplicities, and composition.
 4. `enterprise-architect:create_or_update_connectors`:
    - `type:"Generalization"` Customer→Person.
    - `type:"Association"` Customer→Order (`name:"places"`), with `sourceEnd:{relatedElementID,multiplicity:"1"}` / `targetEnd:{relatedElementID,multiplicity:"0..*"}`.
-   - `type:"Aggregation"` Order→OrderLine (`1` : `1..*`). **Note:** the **filled composite diamond is GUI-only** — the MCP can't set the aggregation kind, so it renders as a hollow (shared) diamond; set composite in the EA GUI if you need it.
+   - `type:"Aggregation"` Order→OrderLine (`1` : `1..*`), then upgrade to a **filled composite diamond** at the Order (whole) end. The MCP can't set the aggregation kind, so do it via EA COM — set `Aggregation = 2` on the connector end attached to the whole (`connector.SupplierEnd.Aggregation = 2; connector.Update()`) — or in the EA GUI.
    - `type:"Association"` OrderLine→Product (`0..*` : `1`) and Order→Payment (`1` : `0..1`, `name:"paid by"`).
+   - **Navigability:** give each association a navigability arrow at the target end (matching Mermaid's directed `-->`). The MCP leaves `direction:"unspecified"` (a plain line); set `connector.Direction = "Source -> Destination"` via EA COM to draw the arrow.
 5. `enterprise-architect:create_or_update_diagram` `type:"Class"`, then `place_elements_on_diagram` (x/y > 10), `layout_connectors`, `get_diagram_image` to verify.
 
 ### In Mermaid
@@ -112,7 +113,7 @@ Mermaid approximates them.
 
 **What was used:**
 1. `create_or_update_elements`: `type:"State"` for `New, Paid, Shipped, Delivered, Cancelled`; **two**
-   `type:"StateNode"` (initial + final — naming an initial/final node may auto-retype it to `Pseudostate`, which is fine).
+   `type:"StateNode"` (initial + final). **Gotcha:** the MCP creates these with `Subtype = 0`, so they render **invisibly** (transitions then point at empty space). Fix via EA COM: `element.Subtype = 100` for the initial (filled circle) and `= 101` for the final (bullseye), then `Update()`; also make sure both are placed on the diagram.
 2. `create_or_update_connectors` `type:"StateFlow"` for every transition; put the **trigger** in the
    connector `name` (e.g. `"pay"`, `"dispatch"`, `"cancel / refund"`); the initial→first and last→final flows are unnamed.
 3. `create_or_update_diagram` `type:"StateMachine"` (no space), place, `layout_connectors`, verify.
@@ -212,7 +213,8 @@ a backorder; both paths notify the customer. Shows actions, a decision/merge, an
 
 **What was used:**
 1. `create_or_update_elements`: `type:"Action"` for each step; `type:"Decision"` for `in stock?`
-   (the diamond — also serves as the merge); two `type:"StateNode"` for the initial/final nodes.
+   (the diamond — also serves as the merge); two `type:"StateNode"` for the initial/final nodes. **Same
+   gotcha as the state machine:** set `Subtype = 100` (initial) / `101` (final) via EA COM or they render invisibly.
 2. `create_or_update_connectors` `type:"ControlFlow"` for every edge; put the **guard** in the
    connector `name` on the decision's outgoing edges (`"[in stock]"`, `"[else]"`).
 3. `create_or_update_diagram` `type:"Activity"`, place, `layout_connectors`, verify.
