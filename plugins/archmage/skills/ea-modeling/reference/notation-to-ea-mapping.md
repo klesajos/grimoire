@@ -10,7 +10,6 @@ and `archimate` spells.
 - [UML → EA](#uml--ea)
 - [BPMN → EA](#bpmn--ea)
 - [ArchiMate → EA](#archimate--ea)
-- [What "verify in live EA" means here](#what-verify-in-live-ea-means-here)
 
 ## UML → EA
 
@@ -22,22 +21,20 @@ and `archimate` spells.
 | Sequence diagram | `Sequence` | lifeline element `Sequence`; messages via `create_or_update_messages` (open the diagram first!) |
 | Activity diagram | `Activity` | `Action`, `Decision` (diamond), initial/final `StateNode`; edges `ControlFlow` |
 | State machine diagram | `StateMachine` | `State`, initial/final `StateNode`; transitions `StateFlow` |
-| Requirements | `Requirements` (confirmed) | `Requirement` (verify in live EA — the UML element is unconfirmed even though the diagram type is; not the ArchiMate `ArchiMate3::ArchiMate_Requirement`); realise with `Realization`/`Dependency` |
+| Requirements | `Requirements` (confirmed) | `Requirement` (confirmed — the UML element, distinct from the ArchiMate `ArchiMate3::ArchiMate_Requirement`); realise with `Realization`/`Dependency` |
 | Object diagram | `Object` | `Object` instances; `Association`/links |
 | Component diagram | `Component` | `Component`, `Interface`; `Dependency`/`Realization` |
 | Deployment diagram | `Deployment` | `Node`, `Device`, `Artifact`, `Component`; `Dependency` |
-| Package diagram | `Package` (verify) | packages; `Dependency`/«import» |
+| Package diagram | `Package` (confirmed) | packages; `Dependency`/«import» |
 
 Confirmed diagram `type` strings (all hand-verified live): `Class`, `Use Case`, `Sequence`,
 `Activity`, `StateMachine`, `Requirements`, `Object`, `Component`, `Deployment`,
 `Composite Structure`, `Profile`, `Package`, `Communication`, `Timing` — i.e. every UML diagram type.
 
-Two **element** strings on otherwise-confirmed diagrams are still unconfirmed: the UML `Requirement`
-element (hosted on the confirmed `Requirements` diagram) and EA's package-on-diagram constructs.
-The confirmed `Requirements` *diagram* type does **not** imply its `Requirement` element string is
-confirmed — they were verified separately, and only the diagram was. Note also that the UML
-`Requirement` element is distinct from the confirmed ArchiMate `ArchiMate3::ArchiMate_Requirement`
-(see the `archimate` spell's `ea-bridge.md`); one being confirmed says nothing about the other.
+The UML `Requirement` **element** string and the `Package` diagram type are also **confirmed live**
+through the MCP. Note that the UML `Requirement` element is distinct from the ArchiMate
+`ArchiMate3::ArchiMate_Requirement` (see the `archimate` spell's `ea-bridge.md`) — both are
+confirmed, but they are different MDG types.
 
 ## BPMN → EA
 
@@ -82,18 +79,6 @@ lowercase `m`, so the real view FQN is probably `Archimate3::<ViewName>` — unc
 directly; the `ArchiMate3::ArchiMate_*` elements above still render with full ArchiMate notation on
 it. See the diagram-`type` table in `ea-type-cheatsheet.md`.
 
-## What "verify in live EA" means here
-
-The confirmed UML strings and the ArchiMate 3 MDG strings were hand-verified through the MCP
-against a real repository. Two UML strings were not: the `Package` diagram type and the
-`Requirement` element type (BPMN is a separate, *settled* case — see the BPMN section above — and
-is not creatable via the MCP, so there is nothing to verify there). To verify them, run the
-standard `ZZ_` smoke test:
-1. On a `ZZ_Verify` throwaway package, create a diagram with `type:"Package"`, and create an
-   element with `type:"Requirement"` (host it on a `Requirements` diagram, which is already
-   confirmed).
-2. Read them back with `get_diagrams_information` / `get_elements_information` and note the exact
-   `type` EA stored.
-3. Update `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` with the confirmed
-   string(s), and flip the rows here to Confirmed.
-4. Delete the `ZZ_Verify` package manually in EA (no MCP delete for packages or elements).
+The one EA string still **not** confirmed live is the **ArchiMate view diagram-type FQN**
+(`Archimate3::<ViewName>`) — documented above: host ArchiMate views on a `Class` diagram until that
+string is resolved. Every UML diagram type and element string in this file is confirmed.

@@ -50,7 +50,7 @@ Applied in a model:
 ```
 
 - `«stereotype» BusinessProcess` **extends** `«metaclass» Activity` (filled-triangle extension — every model `Activity` may now carry the `BusinessProcess` stereotype).
-- `«stereotype» ManualStep` is a **generalization** of `BusinessProcess` (hollow triangle — a specialized stereotype that inherits the extension).
+- `«stereotype» ManualStep` is a **specialization** of `BusinessProcess` (hollow triangle — a specialized stereotype that inherits the extension).
 - A user package does `«apply» BPM Profile` and then stereotypes an `Activity` such as `ProcessRefund` as `«BusinessProcess»` with concrete tag values.
 
 ## Mermaid

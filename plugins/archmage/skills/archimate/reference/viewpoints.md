@@ -52,9 +52,9 @@ The spec also groups the **basic** viewpoints by the **relationship direction** 
 
 ## The standard (example) viewpoints
 
-The 3.2 spec lists **23** example viewpoints, grouped as below.
+The 3.2 spec lists **25** example viewpoints, grouped as below.
 
-**Basic — Composition:** Organization, Information Structure, Technology, Layered, Physical.
+**Basic — Composition:** Organization, Application Structure, Information Structure, Technology, Layered, Physical.
 
 **Basic — Support:** Product, Application Usage, Technology Usage.
 
@@ -64,11 +64,11 @@ The 3.2 spec lists **23** example viewpoints, grouped as below.
 
 **Motivation:** Stakeholder, Goal Realization, Requirements Realization, Motivation.
 
-**Strategy:** Strategy, Capability Map, Outcome Realization, Resource Map.
+**Strategy:** Strategy, Capability Map, Value Stream, Outcome Realization, Resource Map.
 
-**Implementation & Migration:** Project (a.k.a. Work Package), Migration, Implementation and Migration.
+**Implementation & Migration:** Project, Migration, Implementation and Migration.
 
-(Tooling sometimes labels the I&M set slightly differently; the conceptual set is Project/Work-package, Plateau-Migration, and a combined Implementation-and-Migration view.)
+(Counts per ArchiMate 3.2 Appendix C: 13 Basic + 4 Motivation + 5 Strategy + 3 Implementation & Migration = 25. The Application Structure (Composition) and Value Stream (Strategy) viewpoints are easy to miss — older third-party summaries predate them.)
 
 ## Key viewpoints worth knowing
 

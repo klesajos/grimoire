@@ -49,7 +49,7 @@ The **Architecture Board** is the cross-organization body accountable for govern
 
 - **Responsibilities** — oversee ADM implementation; ensure consistency between sub-architectures; approve/monitor dispensations; enforce compliance; resolve ambiguities/conflicts; provide advice, guidance, and the locus of decision-making for architecture.
 - **Membership** — representatives from across the enterprise stakeholders; typically a small body (e.g. 4–5 members) meeting regularly.
-- It operates the **Governance Repository** (compliance records, dispensations, contracts) — see `content-framework.md#the-architecture-repository`.
+- It operates the **Governance Log** (compliance records, dispensations, contracts) — see `content-framework.md#the-architecture-repository`.
 
 ## Architecture Contracts
 

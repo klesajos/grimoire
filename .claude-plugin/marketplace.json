@@ -19,8 +19,8 @@
     {
       "name": "archmage",
       "source": "./plugins/archmage",
-      "description": "Sparx Enterprise Architect modeling via MCP, plus UML 2.5.1 / BPMN 2.0.2 / ArchiMate 3.2 / TOGAF 10 / Mermaid notation reference spells.",
-      "version": "0.1.0",
+      "description": "Sparx Enterprise Architect modeling via MCP, plus UML 2.5.1 / BPMN 2.0.2 / ArchiMate 3.2 / TOGAF Standard, 10th Edition / Mermaid notation reference spells.",
+      "version": "0.1.1",
       "author": {
         "name": "Josef Klesa"
       },

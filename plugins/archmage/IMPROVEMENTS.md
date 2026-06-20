@@ -1,16 +1,17 @@
-# archmage — review backlog
+# archmage — review log (resolved)
 
 Output of a **40-agent review + test pass** over the `archmage` plugin (20 partitioned
 review-and-fix agents → 20 read-only skill-trial agents → synthesis). Straightforward fixes were
-applied in-place during the review (commit `0a0d279`); the remaining improvements are tracked as
-GitHub issues below. This file is the index.
+applied in-place during the review (commit `0a0d279`); the deeper improvements were filed as GitHub
+issues #3–#21 and have since been **resolved** (closed via #23 / the `feat/archmage-ea-plugin`
+merge). This file is kept as a historical index of what the review found and fixed.
 
 ## Already resolved in this pass
 - **Generate missing rendered PNGs** for authored render markers (bpmn approximations, `ea-build-steps`) — re-rendered; image health verified (no broken links, no marker without a PNG).
 - **Remove stale render markers** from the 3 GitHub-native (no-PNG) class diagrams — all three cleaned.
 - The 20-agent fix phase also flipped the confirmed **ArchiMate MDG strings** (`ArchiMate3::ArchiMate_*`) from "verify in live EA", corrected UML 2.5.1 collection-kind semantics, and confirmed EA type strings (Realization, Object, Part, Composite Structure, Device, Artifact, …) across ~28 files.
 
-## Open improvements (filed as issues)
+## Resolved improvements (issues #3–#21 — all CLOSED)
 
 ### High priority
 | Issue | Title | Area |
@@ -44,4 +45,4 @@ GitHub issues below. This file is the index.
 | [#21](https://github.com/klesajos/grimoire/issues/21) | Tighten correctness nits across UML/BPMN behaviour & worked-example files | docs · uml · bpmn · archimate |
 
 ---
-*Generated 2026-06-16 from a multi-agent review of `plugins/archmage`. The fix phase landed in commit `0a0d279`; the 19 open items above are filed as issues #3–#21.*
+*Generated 2026-06-16 from a multi-agent review of `plugins/archmage`. The fix phase landed in commit `0a0d279`; the 19 items above were filed as issues #3–#21 and are now all closed (resolved via #23).*

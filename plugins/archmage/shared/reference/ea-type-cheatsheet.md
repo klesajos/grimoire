@@ -60,7 +60,7 @@ Passed to `enterprise-architect:create_or_update_diagram` as `type`.
 | UML Communication | `Communication` | Confirmed |
 | UML Timing | `Timing` | Confirmed |
 | ArchiMate 3 view | `Class` (use this) | **Falls back to Class** — the view FQN appears to be `Archimate3::<ViewName>` (the live `create_or_update_diagram` schema gives `Archimate3::Application` as its example, lowercase `m`), but only the bare layer name `ArchiMate3::Layered` was tried in testing and it silently created a `Class` diagram. The resolving view string is unconfirmed, so use `Class` directly — ArchiMate elements still render with full ArchiMate notation on it. To probe the FQN, retry `Archimate3::Application`/`Business`/`Technology` on a `ZZ_` throwaway and read it back. |
-| BPMN 2.0 process | (BPMN MDG diagram) | Verify in live EA — see the `bpmn` spell |
+| BPMN 2.0 process | (BPMN MDG diagram) | **Not creatable via MCP** — author in the EA GUI toolbox; the create tool rejects the BPMN2.0 MDG strings (see the element table below and the `bpmn` spell). |
 
 EA accepts these case-sensitively; copy them exactly (note the space in `Use Case`, no space in `StateMachine`).
 

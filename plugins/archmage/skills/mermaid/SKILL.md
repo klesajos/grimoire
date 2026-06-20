@@ -1,6 +1,6 @@
 ---
 name: mermaid
-description: Reference for Mermaid diagram-as-code syntax across all current diagram types - flowchart, sequenceDiagram, classDiagram, stateDiagram-v2, erDiagram, gantt, timeline, pie, journey, quadrantChart, requirementDiagram, gitGraph, mindmap, c4, and the beta types (sankey, xychart, block, packet, kanban, architecture) - with per-type syntax, rules, and examples. Use when the user wants to write, fix, or generate a Mermaid diagram, asks for "diagram as text/code", or wants a flowchart/sequence/class/ER (entity-relationship/data-model)/gantt/state diagram in Markdown.
+description: Reference for Mermaid diagram-as-code syntax across all current diagram types - flowchart, sequenceDiagram, classDiagram, stateDiagram-v2, erDiagram, gantt, timeline, pie, journey, quadrantChart, requirementDiagram, gitGraph, mindmap, c4, and the beta types (sankey, xychart, block, packet, kanban, architecture, radar, treemap) - with per-type syntax, rules, and examples. Use when the user wants to write, fix, or generate a Mermaid diagram, asks for "diagram as text/code", or wants a flowchart/sequence/class/ER (entity-relationship/data-model)/gantt/state diagram in Markdown.
 ---
 
 # Mermaid Diagram-as-Code
@@ -18,7 +18,9 @@ Mermaid is a **rolling release** with no spec version — there is no "Mermaid 1
 
 ## Diagram type status (as of 2026 snapshot)
 
-**Stable** — safe to emit: `flowchart`, `sequenceDiagram`, `classDiagram`, `stateDiagram-v2`, `erDiagram`, `gantt`, `pie`, `journey` (user journey), `quadrantChart`, `requirementDiagram`, `gitGraph`, `zenuml`.
+**Stable** — safe to emit: `flowchart`, `sequenceDiagram`, `classDiagram`, `stateDiagram-v2`, `erDiagram`, `gantt`, `pie`, `journey` (user journey), `quadrantChart`, `requirementDiagram`, `gitGraph`.
+
+**⚠️ External diagram (not bundled)** — `zenuml`: although its *syntax* is stable, ZenUML is an **external** diagram shipped as a separate package (`@mermaid-js/mermaid-zenuml`). It is **not** in core Mermaid and only renders after `mermaid.registerExternalDiagrams([zenuml])`; it fails on GitHub and default renderers with `UnknownDiagramError`. Do **not** emit it freely — warn the user it needs the package registered.
 
 **Stable syntax but officially "experimental" label** (core syntax is settled; only icon integration is experimental) — safe in practice: `timeline`, `mindmap`.
 

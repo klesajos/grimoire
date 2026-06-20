@@ -48,11 +48,13 @@ Two aspects span all layers and are usually drawn as their own areas:
 - **Motivation** — stakeholders, drivers, assessments, goals, outcomes, principles, requirements, constraints, meaning, value. *Why the architecture is shaped the way it is.*
 - **Implementation & Migration** — work packages, deliverables, implementation events, plateaus, gaps. *How you get from baseline to target architecture (the bridge to programs/projects and to TOGAF's Phases E–F).*
 
-## The Full Framework grid
+## The Full Framework
+
+A concrete **layered view** first (how the layers stack in a real model), then the layers×aspects grid that underpins it:
 
 ![A layered view — Business (yellow), Application (cyan), and Technology (green) layers](images/archimate-layered-view.png)
 
-*Rendered in Sparx Enterprise Architect.*
+*A layered-view example, rendered in Sparx Enterprise Architect — not the framework grid itself; the grid is below.*
 
 The ArchiMate 3.2 "Full Framework" places layers (rows) against aspects (columns). Motivation and Implementation & Migration sit as bands across the top/bottom.
 

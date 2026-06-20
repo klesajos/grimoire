@@ -13,10 +13,11 @@ The **Architecture Content Framework** defines *what* the ADM produces and how t
 flowchart TB
   subgraph Repo["Architecture Repository"]
     AR["Architecture Repository"]
+    AR --> AMM["Architecture Metamodel"]
     AR --> AL["Architecture Landscape"]
     AR --> RL["Reference Library<br/>(TRM, III-RM)"]
     AR --> SIB["Standards Information Base"]
-    AR --> GR["Governance Repository"]
+    AR --> GL["Governance Log"]
     AR --> AC["Architecture Capability"]
   end
 
@@ -89,7 +90,7 @@ The Architecture Repository is the enterprise's structured store of all architec
 | **Architecture Landscape** | The architectural representations of assets in use / planned, held at **three levels of granularity**: **Strategic, Segment, Capability** architectures (see partitioning in `capability-and-governance.md`). |
 | **Reference Library** | Guidelines, templates, patterns, and **reference models** available for reuse — including the **Technical Reference Model (TRM)** and the **Integrated Information Infrastructure Reference Model (III-RM)**. |
 | **Standards Information Base (SIB)** | The standards (legal/regulatory, industry, and internal) with which new architecture must comply. |
-| **Governance Repository** | Records of governance activity: compliance assessments, dispensations, capability assessments, Architecture Contracts, and audit information. |
+| **Governance Log** | Records of governance activity: compliance assessments, dispensations, capability assessments, Architecture Contracts, and audit information. |
 | **Architecture Capability** | The parameters, structures, and processes that run the architecture function itself (skills, roles, organization). |
 
 ### The two TOGAF reference models in the Reference Library

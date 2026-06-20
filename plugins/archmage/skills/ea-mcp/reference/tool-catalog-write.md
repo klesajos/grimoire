@@ -21,7 +21,7 @@ tool `enterprise-architect:<tool>` (documentation shorthand for the invokable
 <!-- render: images/ea-mcp-build-order.png -->
 
 ```mermaid
-flowchart LR
+flowchart TB
     A["create_or_update_package"]
     B["create_or_update_elements"]
     C["attributes / operations"]

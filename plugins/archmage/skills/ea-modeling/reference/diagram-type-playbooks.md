@@ -115,9 +115,8 @@ call needs neither).
 
 ## Requirements diagram
 
-- Diagram `type: "Requirements"` (confirmed). Elements `Requirement` — **verify the element string
-  in live EA**: the diagram type is confirmed but the UML `Requirement` element is not (they were
-  verified separately). This UML `Requirement` is **not** the confirmed ArchiMate
-  `ArchiMate3::ArchiMate_Requirement` — different MDG type; see the `archimate` spell.
+- Diagram `type: "Requirements"` (confirmed). Elements `Requirement` (confirmed). This UML
+  `Requirement` is **not** the confirmed ArchiMate `ArchiMate3::ArchiMate_Requirement` — a
+  different MDG type; see the `archimate` spell.
 - Link requirements to design elements with `Realization` (element realises requirement) or
   `Dependency`/«trace». Hierarchy via `Aggregation`/nesting.

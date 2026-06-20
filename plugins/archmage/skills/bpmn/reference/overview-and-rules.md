@@ -22,9 +22,12 @@ monitor — while remaining precise enough to be executable.
 
 - **Version covered:** BPMN **2.0.2**, OMG document **formal/13-12-09**,
   published **January 2014**.
-- **ISO equivalence:** BPMN 2.0.2 was adopted verbatim by ISO/IEC as
+- **ISO equivalence:** OMG BPMN was adopted by ISO/IEC as
   **ISO/IEC 19510:2013** *Information technology — Object Management Group
-  Business Process Model and Notation*.
+  Business Process Model and Notation*, prepared from **BPMN 2.0.1** under the
+  PAS procedure. 2.0.2 is a later errata-level revision that is technically
+  near-identical, so the ISO text and BPMN 2.0.2 are equivalent for modeling
+  purposes.
 - 2.0.2 is a minor (errata) revision over 2.0 / 2.0.1; the notation and
   metamodel are those of BPMN 2.0. "BPMN 2.0" in everyday speech means this.
 
@@ -44,7 +47,7 @@ BPMN defines three diagram types built from the same vocabulary:
 | **Choreography** | The ordered message exchanges *between* participants, with no single controlling process. | Niche; rarely tool-supported. Mentioned for completeness in `pools-lanes-collaboration.md`. |
 
 (A "conversation" diagram is an informal overview of collaborations; not a core
-modelling target.)
+modeling target.)
 
 ## 3. Conformance classes
 
@@ -55,7 +58,7 @@ manageable subset. From the specification:
   task, (collapsed) sub-process, call activity, start/end events, none /
   message / timer / terminate events, sequence/message flow, data object/store,
   exclusive & parallel gateways, association, group, text annotation. Good
-  "first-level" modelling vocabulary.
+  "first-level" modeling vocabulary.
 - **Analytic** — Descriptive **plus** the full event set on intermediate and
   boundary positions, event sub-processes, inclusive & event-based gateways,
   send/receive/user/service/business-rule/script/manual task types, and markers.
