@@ -14,8 +14,9 @@ A **structure** diagram that groups model elements into **packages** (namespaces
 
 ## Notation rules
 
-- A **package** is a tabbed folder: a small tab on top of a larger rectangle. The name goes in the tab if contents are shown inside the body, otherwise in the body.
+- A **package** is a tabbed folder: a small tab on top of a larger rectangle. The name placement has three forms: **(a)** name in the tab when members are drawn inside the body; **(b)** name in the body (large rectangle) when members are not shown; **(c)** name in the tab with members shown *outside* the body, attached by the nesting lines below.
 - **Nesting** is shown either by drawing one package inside another, or by a line from the container to contained packages with a circle-plus ⊕ ("containment") symbol on the container end.
+- A model element is owned **directly by at most one** package; that owning package defines its **namespace**. An element's name need only be unique within its own namespace, so the same simple name may recur in different packages (e.g. `P1::C` and `P2::C` are distinct).
 - Fully-qualified names use `::` — e.g. `Web::Controllers::LoginController`.
 - A **package dependency** is a dashed arrow from the dependent (client) package to the one it depends on (supplier).
 
@@ -27,6 +28,8 @@ A **structure** diagram that groups model elements into **packages** (namespaces
 | `«access»` | private import: names usable inside the importing package but **not** re-exported. |
 | `«merge»` | package merge: target's contents are conceptually combined into the source (used in metamodels/profiles). |
 | `«use»` | generic dependency (default when unlabeled). |
+
+Only members that are **publicly visible** in the target can be imported or accessed. After an `«import»`/`«access»`, the imported element's name is added to the importer's namespace and can be referenced **without qualification** (`Account` rather than `Domain::Account`) — provided no name clash; a clash forces continued use of the qualified name.
 
 ## Worked example — layered web app
 
