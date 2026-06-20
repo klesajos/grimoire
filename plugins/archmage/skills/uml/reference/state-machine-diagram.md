@@ -22,11 +22,11 @@ A **behavior** diagram describing the lifecycle of **one** object/classifier as 
 - A **transition** is a solid arrow between states labeled `trigger [guard] / effect` — any part optional. The **trigger** is an event (call, signal, change `when(cond)`, or time `after(2s)` / `at(...)`); the **guard** `[ ]` must be true; the **effect** runs during the transition.
 - A **final state** is a circle-in-ring ◉ → the enclosing state machine (or region) completes. Despite the notation it is **not** a pseudostate — UML 2.5.1 makes `FinalState` a subclass of `State`.
 - **Pseudostates** (transient):
-  - **Initial**: filled circle ● → the default starting state.
+  - **Initial**: filled circle ● → the default starting state. Its single outgoing transition is a **completion transition** — it carries no trigger (and normally no guard), only an optional effect; the lone exception is the event that *creates* the object (`new()` / `create()`).
   - **Choice**: diamond ◇ — dynamic branch evaluated *after* prior effects (guards on outgoing edges).
   - **Junction**: small filled circle — static merge/branch of transitions.
   - **History**: shallow `(H)` restores the last active substate of a composite; deep `(H*)` restores the full nested configuration.
-  - **Fork/Join** bars, **entry/exit points**, **terminate** (X).
+  - **Fork/Join** bars, **entry/exit points**, **terminate** (X) — reaching a terminate pseudostate ends the whole state machine and **destroys the modelled object**; contrast the final state, where the object lives on and only the machine (or region) completes.
 - A **composite state** nests a sub-state-machine; a state with **two or more regions** separated by a dashed line is **orthogonal** (concurrent) — the object is in one substate of *each* region simultaneously.
 - A **submachine state** (`stateName : SubMachine`) references a reusable state machine.
 - A **completion transition** (no trigger) fires when the source state finishes its `do`/substate activity.
@@ -81,6 +81,7 @@ stateDiagram-v2
 - Confusing a **choice** pseudostate (evaluated *after* the incoming effect, so it can branch on freshly-computed values) with a **junction** (guards evaluated statically before the transition runs).
 - Using a **fork/join** (concurrency) when you meant **orthogonal regions**, or modeling concurrency that the object can't actually exhibit.
 - Mixing **internal transition** (`event / action`, no state change, entry/exit *not* re-run) with a **self-transition** (arrow back to the same state, which *does* re-run exit then entry).
+- Confusing a **change event** `when(cond)` (a *trigger* whose boolean expression is monitored **continuously**, firing the instant it goes false→true) with a **guard** `[cond]` (evaluated **only** when its transition's trigger fires — a guard that becomes true on its own never starts a transition).
 
 ## EA bridge
 

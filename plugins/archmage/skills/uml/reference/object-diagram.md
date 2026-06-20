@@ -18,6 +18,7 @@ A **structure** diagram that shows a **snapshot** of a system at one moment: con
 - The second compartment lists **slots**: `attributeName = value` (no visibility/types needed; they come from the class).
 - A **link** is a solid line between two objects — an instance of an association. Links have **no** multiplicities (each end is a single object) and **no** navigability arrows by convention, though role names may appear.
 - Objects may be tagged with `«instanceOf»` or carry a constraint, but generally stay minimal.
+- Each object has its own **identity**: two objects of the same class with *identical* slot values are still two distinct objects (and must be drawn as two boxes, e.g. `maxMiller1` and `maxMiller2`). Identity, not attribute values, is what individuates an object.
 
 ## Worked example — one library loan snapshot
 

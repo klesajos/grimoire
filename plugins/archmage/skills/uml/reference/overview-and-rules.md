@@ -6,6 +6,7 @@ Contents:
 3. The 14 diagram types (table)
 4. Picking a diagram type
 5. Cross-cutting notation
+   - The diagram frame and name tag
    - Visibility
    - Multiplicity
    - Name strings, roles, qualifiers
@@ -84,6 +85,20 @@ UML 2.5.1 diagrams
 ## 5. Cross-cutting notation
 
 These conventions apply across many diagrams; the per-diagram files assume them.
+
+### The diagram frame and name tag
+
+Any diagram may be enclosed in a **frame** — a rectangle with a **name tag** (a small pentagon, dog-eared on its lower-right) in the top-left corner. The name tag holds an optional **kind prefix** plus the diagram name, and may carry **parameters** after the name. Common kind prefixes:
+
+| Prefix | Diagram | Prefix | Diagram |
+| --- | --- | --- | --- |
+| `cd` | Class | `sd` | Sequence / Interaction Overview |
+| `pkg` | Package | `comm` | Communication |
+| `uc` | Use Case | `td` | Timing |
+| `act` | Activity | `cmp` | Component |
+| `stm` | State Machine | `dep` | Deployment |
+
+e.g. `cd University` or `sd Registration(course, date)`. The frame is mandatory when the diagram must be referenced from elsewhere (an interaction `ref`, a frame gate, a contained diagram) and otherwise optional; the per-diagram files note where it is load-bearing.
 
 ### Visibility
 

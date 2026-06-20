@@ -29,7 +29,7 @@ A **behavior/interaction** diagram showing a time-ordered exchange of **messages
   - **Synchronous call**: solid line, **filled** arrowhead ►. Caller waits.
   - **Reply/return**: dashed line, open arrowhead ⇠. Optional but recommended for sync calls.
   - **Asynchronous**: solid line, **open** arrowhead →. Caller does not wait.
-  - **Create message**: dashed arrow with `«create»` to the *head* of a newly created lifeline (drawn lower).
+  - **Create message**: dashed arrow with an **open** arrowhead, labelled with the keyword `new` (the older `«create»` stereotype is also seen), pointing to the *head* of a newly created lifeline (drawn lower, where it is created).
   - **Destroy**: a message ending in a large **X** on the destroyed lifeline.
   - **Self/recursive message**: arrow looping back to the same lifeline (nested activation).
 - A **found** message starts from a filled circle (sender outside scope); a **lost** message ends at a filled circle.
@@ -40,19 +40,21 @@ A **behavior/interaction** diagram showing a time-ordered exchange of **messages
 | `seq` | weak sequencing (default composition) |
 | `alt` | alternatives; one operand whose `[guard]` is true runs (if/else) |
 | `opt` | optional; runs iff its `[guard]` is true |
-| `loop` | repeat; `loop(min,max)` or `loop [guard]` |
+| `loop` | repeat; `loop(min,max)`, `loop(n)` (exactly *n*), or bare `loop` = `loop(0,*)`. A `[guard]` is re-checked after the `min` iterations and stops the loop once false |
 | `par` | parallel; operands interleave concurrently |
 | `strict` | strict sequencing across operands |
 | `critical` | atomic region; no interleaving allowed |
 | `break` | if guard holds, run the operand and abandon the rest of the enclosing interaction |
 | `neg` | the operand shows an **invalid** (forbidden) trace |
-| `assert` | the operand is the **only** valid continuation |
+| `assert` | the operand's traces are **mandatory** (required) — the only valid continuation at that point |
 | `ignore` | listed messages may occur and are ignored |
 | `consider` | only the listed messages are significant here |
 
-- An **interaction use** (`ref` frame) references another sequence diagram by name. A **gate** is a message endpoint on a frame boundary.
-- A **state invariant** (`{condition}` on a lifeline) asserts the lifeline's state at that point.
-- The whole diagram sits in a frame labeled `sd InteractionName`.
+- A **coregion** marks a span on a **single** lifeline whose messages may occur in **any order** — the per-lifeline equivalent of `par`. Notated by bracketing that part of the lifeline (the line is covered) or, in some tools, drawn as a `par` fragment over one lifeline; the two are semantically identical.
+- An **interaction use** (`ref` frame) references another sequence diagram by name, optionally with arguments and a `: returnValue`. A **gate** is a named (or implicit) message endpoint **on a frame boundary**, letting a message cross into/out of the referenced interaction or combined fragment. A **continuation marker** (rounded-corner box with a name) inside an `alt` lets an operand hand off to a matching continuation in another interaction.
+- A **state invariant** asserts a lifeline's state/condition at a point. Three equivalent forms: a **state symbol** on the lifeline, a `{condition}` in braces on the lifeline, or a **note** attached to it.
+- **Time and duration constraints** sit in `{ }`: a **duration** spans two events (`{15..20s}`, or a lower/upper bound), a **time constraint** pins an event to an absolute (`{at(12:00)}`) or relative (`{after(5sec)}`) time, and `t=now` captures the current time into a variable for later expressions (`{t..t+5}`). A short horizontal **timing mark** anchors a duration to an event.
+- The whole diagram sits in a frame labeled `sd InteractionName`; a small pentagon in the top-left holds the name and any **parameters** `(p1, p2)`.
 
 ### Worked example — ATM withdrawal
 Lifelines: `:Customer`, `:ATM`, `:Bank`.
@@ -98,6 +100,7 @@ sequenceDiagram
 - Misreading the **vertical axis as duration** — it is order, not elapsed time (that's a *timing* diagram).
 - Abusing `alt`/`opt` for sequencing — those frames model choice, not steps.
 - Forgetting `[guard]`s on `alt`/`opt`/`loop`, making the fragment ambiguous.
+- Assuming order is preserved **across** fragment operands. The default composition is `seq` (**weak sequencing**): events on the *same* lifeline keep their order, but events on *different* lifelines in adjacent operands may interleave. Use `strict` when one operand must fully finish before the next begins.
 
 ### EA bridge
 - Diagram `type`: **"Sequence"** (confirmed).
