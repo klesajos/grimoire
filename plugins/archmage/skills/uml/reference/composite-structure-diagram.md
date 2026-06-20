@@ -64,5 +64,5 @@ A `Car` classifier composed of parts wired through ports:
 ## EA bridge
 
 - Diagram `type`: EA **"Composite Structure"** diagram (confirmed).
-- Element `type`: **"Part"** (confirmed — set `owningElementID` to the structured `Class` so the part nests inside it), **"Class"** (the enclosing classifier, confirmed); **"Port"**, **"Collaboration"** — verify in live EA. Ports/parts are usually added as properties of the owning element.
+- Element `type`: **"Part"** (confirmed — set `owningElementID` to the structured `Class` so the part nests inside it), **"Class"** (the enclosing classifier, confirmed); **"Port"** (confirmed — owned by the enclosing class, so pass `owningElementID`, not a package); **"Collaboration"** — verify in live EA. Ports/parts are usually added as properties of the owning element.
 - Connector `type`: **"Connector"** (confirmed — assembly/delegation line between parts; set role), interface realization shown as provided/required interface on the port. Build sequence: **`ea-modeling`** skill + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
