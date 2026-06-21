@@ -22,33 +22,39 @@ A **structure** diagram showing the **internal structure** of a classifier: the 
 - A **connector** is a line joining two parts/ports that may communicate at runtime. An **assembly connector** joins a required socket to a compatible provided lollipop; a **delegation connector** forwards a port of the whole to a port of an internal part.
 - A **collaboration** is a dashed ellipse containing roles; a **collaboration use** (`:CollaborationName`) binds roles to concrete parts via dashed role-binding lines.
 
-## Worked example — `Car` internal structure
+## Worked example — `Order Processing` internal structure
 
-![Composite structure — a class's internal parts and connectors](images/uml-composite-structure.png)
+![Composite structure — the Order Processing classifier's internal parts, boundary ports and provided/required interfaces, built in Sparx EA](images/uml-composite-structure.png)
 
 *Rendered in Sparx Enterprise Architect.*
 
-A `Car` classifier composed of parts wired through ports:
+An `Order Processing` classifier decomposed into the runtime **parts** that
+collaborate to handle an order, with its contract surface exposed through two
+boundary **ports**:
 
 ```
-┌──────────────────────────── Car ─────────────────────────────┐
-│                                                               │
-│   ┌──────────────┐   drives   ┌──────────────┐               │
-│   │ e : Engine   │○──────────⊂│ t : Transmission │           │
-│   └──────┬───────┘            └──────┬───────┘               │
-│          │ powers                    │                        │
-│          ▼                           ▼                        │
-│   ┌──────────────┐            ┌──────────────┐               │
-│   │ fl : Wheel   │            │ fr : Wheel   │  (parts [4])   │
-│   └──────────────┘            └──────────────┘               │
-│                                                               │
-│  ▢ fuelPort  ──○ IFuelSupply        ▢ diagPort ──⊂ IOBD2     │
-└───────────────────────────────────────────────────────────────┘
+        ┌─────────────────────── Order Processing ───────────────────────┐
+        │                                                                 │
+ ○──▢───┼ validator:Validator ─ calc:PriceCalculator ─ router:OrderRouter ┼───▢──⊂
+IOrderIntake│  intake                                              dispatch  │ IFulfilment
+ (provided) └─────────────────────────────────────────────────────────────┘ (required)
 ```
 
-- `Engine` **provides** `IFuelSupply` via a lollipop; `Transmission` **requires** drive via a socket; the assembly connector wires them.
-- `fuelPort` is a boundary **port**; a **delegation connector** forwards it to the engine's internal fuel port.
-- `fl/fr : Wheel [4]` are owned parts with multiplicity.
+- Three owned **parts** — `validator : Validator`, `calc : PriceCalculator`,
+  `router : OrderRouter` — are wired in sequence by **connectors** (an order is
+  validated, then priced, then routed).
+- `intake` and `dispatch` are boundary **ports**. The `intake` port **provides**
+  `IOrderIntake` (the contract for submitting an order); the `dispatch` port
+  **requires** `IFulfilment` (the downstream service it depends on).
+- **Delegation connectors** forward the `intake` port inward to `validator`, and
+  `router` outward to the `dispatch` port — the boundary ports relay interactions
+  to and from the internal parts.
+
+> EA draws the provided/required interfaces in the **expanded** form — a
+> **Realization** (hollow triangle) to the provided `IOrderIntake` and a
+> **Dependency** (dashed arrow) to the required `IFulfilment` — rather than the
+> compact lollipop/socket glyphs, which it does not render through automation.
+> Both are equivalent UML notations for the same provided/required contract.
 
 ## Mermaid
 
