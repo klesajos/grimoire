@@ -128,9 +128,4 @@ classDiagram
 
 ## EA bridge
 
-- Diagram `type`: **"Class"** (confirmed).
-- Element `type`: **"Class"**, **"Interface"** (use stereotype/keyword for enumeration: verify in live EA).
-- Connector `type`: **"Association"**, **"Aggregation"**, **"Generalization"**, **"Realization"** (confirmed), **"Dependency"**.
-- **Associations draw no navigability arrow:** the MCP leaves them as plain lines. Set the connector `Direction` via the COM bridge to draw the arrow at the target — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
-- **Composition (filled diamond):** no longer GUI-only — set the aggregate end's `Aggregation=2` via the COM bridge to promote an Aggregation's hollow diamond to a filled composite one — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
-- Attributes/operations go through `enterprise-architect:create_or_update_attributes` / `…create_or_update_operations`. For the build sequence see the **`ea-modeling`** skill and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings and the COM display fixes (navigability arrows, composite diamonds) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

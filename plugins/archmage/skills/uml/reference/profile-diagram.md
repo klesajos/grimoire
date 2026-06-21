@@ -66,6 +66,4 @@ Applied in a model:
 
 ## EA bridge
 
-- Diagram `type`: **"Profile"** (confirmed). EA also offers dedicated MDG/UML-Profile authoring tooling for packaging a profile as a deployable technology.
-- Element `type`: **"Class"** with `stereotypes:"stereotype"` for the stereotype box and **"Class"** with `stereotypes:"metaclass"` for the metaclass box (confirmed — there is **no** `Stereotype` element type; passing it errors).
-- Connector `type`: **"Extension"** (stereotype → metaclass, the filled-triangle relationship) and **"Generalization"** (stereotype → stereotype, as `ManualStep` → `BusinessProcess` above) — both confirmed. Note that Generalization is *not* a substitute for Extension between a stereotype and its metaclass; that link must be an Extension. Tagged values map to EA `taggedValues` (remember: an **array** of `{name,value}`). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the `Class`+`stereotypes:"stereotype"/"metaclass"` boxes (no `Stereotype` type), the `Extension` (filled triangle) vs `Generalization`, and the COM `Direction` fix for the Extension head — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

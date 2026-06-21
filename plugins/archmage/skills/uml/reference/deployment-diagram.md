@@ -63,7 +63,4 @@ A **structure** diagram showing the **physical/runtime architecture**: the hardw
 
 ## EA bridge
 
-- Diagram `type`: EA **"Deployment"** diagram (confirmed).
-- Element `type`: **"Node"** (confirmed), **"Device"** (confirmed — a dedicated type that renders «device»; for `executionEnvironment` use a `Node` with that stereotype), **"Artifact"** (confirmed).
-- Connector `type`: **"Dependency"** with `stereotypes:"deploy"` (artifact → node, confirmed) or `"manifest"` (verify in live EA); communication path is an **"Association"** (confirmed) / **"CommunicationPath"** (confirmed — node↔node) between nodes. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
-- **Headless connector (confirmed in live EA).** The MCP creates the `«deploy»` **Dependency** (artifact → node) with direction unspecified, so it renders **headless** — no arrow. Set the connector's `Direction` via the EA COM bridge to draw the arrow: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings (Device, executionEnvironment, CommunicationPath), deploy-by-containment z-order, and the COM display fixes (headless «deploy» arrow) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

@@ -95,6 +95,4 @@ flowchart TD
 
 ## EA bridge
 
-- Diagram `type`: EA uses a **"Package"** diagram (confirmed).
-- Element: packages are created with `enterprise-architect:create_or_update_package` (not `…_elements`); a package can also appear **on** a diagram as a Package element. Verify the on-diagram package element in live EA.
-- Connector `type`: **"Dependency"**, with `stereotypes:"import"` / `"access"` / `"merge"` for the labeled variants; **"Package"** / "PackageImport" connector — **verify in live EA**. Build sequence: see **`ea-modeling`** and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the `Package` diagram, packages via `create_or_update_package`, and `Dependency`+`stereotypes:"import"/"access"/"merge"` — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

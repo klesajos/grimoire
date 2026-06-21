@@ -59,7 +59,4 @@ A **structure** diagram showing **components** — modular, replaceable units of
 
 ## EA bridge
 
-- Diagram `type`: EA **"Component"** diagram (confirmed).
-- Element `type`: **"Component"**, **"Interface"**, **"Artifact"** (confirmed); **"Port"** (confirmed — owned by the component/class, so pass `owningElementID`; a Port parented to a package errors "Invalid parent for Port (Package)").
-- Connector `type`: **"Realization"** (component → provided interface, confirmed), **"Dependency"** (component → required interface, or `«use»`, confirmed); **"Assembly"** connector (confirmed); **"Manifest"** dependency — verify in live EA. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
-- **Headless connectors (confirmed in live EA).** The MCP creates the **Realization** (component → provided interface, hollow triangle) and **Dependency** (component → required interface, open arrow) connectors with direction unspecified, so both render **headless** — no triangle, no arrowhead. Set each connector's `Direction` via the EA COM bridge to draw the head: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`. (Generalization triangles render intrinsically and need no fix.)
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings (Port, Assembly, Manifest) and the COM display fixes (headless realization/dependency heads) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

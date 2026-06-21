@@ -105,8 +105,4 @@ flowchart TD
 
 ## EA bridge
 
-- Diagram `type`: **"Activity"** (confirmed).
-- Element `type`: **"Action"**, **"Decision"** (the diamond — also serves as merge), **"StateNode"** for the initial/final nodes, fork/join via a **"Synchronization"** node (confirmed). Object nodes via **"ObjectNode"** (confirmed — but it must be owned by the **Activity** element, so pass `owningElementID`, not a package; the MCP errors "Invalid parent for ObjectNode (Package)"). Central buffer / data store and exception/interruptible regions are usually a stereotype or property on an ObjectNode / Region rather than a distinct type (verify in live EA).
-- **Initial/final nodes render invisibly:** the MCP creates them as `StateNode` with `Subtype=0`, so they don't draw at all (edges point at empty space). Set `Subtype=100` (initial, filled circle) / `Subtype=101` (final, bullseye) via the COM bridge — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
-- **Swimlanes/partitions:** do **not** place `ActivityPartition` elements as separate boxes — they render as cluttered overlapping bands. Use the diagram's native swimlanes (`SwimlaneDef`) via the COM bridge instead — see `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
-- Connector `type`: **"ControlFlow"** for activity edges (confirmed; set the guard as the connector's guard property), **"ObjectFlow"** for data edges (confirmed). Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings and the COM display fixes (visible initial/final nodes, native swimlanes) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

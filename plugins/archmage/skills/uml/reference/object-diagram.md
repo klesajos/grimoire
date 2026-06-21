@@ -62,6 +62,4 @@ This snapshot must satisfy every class-diagram multiplicity (e.g. `loan99` links
 
 ## EA bridge
 
-- Diagram `type`: EA models these on an **"Object"** diagram (confirmed — the canonical Class diagram with instance elements also works).
-- Element `type`: **"Object"** (confirmed; an instance element — name it `instance : Classifier` and set its **classifier** to the typing class so slots inherit). Verify slot/run-state entry in live EA.
-- Connector `type`: **"Association"** used as a link between objects (no multiplicities). For the build sequence and run-state values see the **`ea-modeling`** skill and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the `Object` element + `Association` links and the COM `RunState` recipe for slot values — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.
