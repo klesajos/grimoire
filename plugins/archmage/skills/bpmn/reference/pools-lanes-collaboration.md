@@ -160,6 +160,13 @@ sequence/message flow stereotypes).
 > **not** as a build recipe to attempt through the MCP. To author real BPMN,
 > use EA's own BPMN toolbox/UI. The Mermaid approximations in these reference
 > files exist precisely because of this limitation.
+>
+> The EA **COM** API doesn't help either (confirmed against live EA with the
+> BPMN2.0 MDG v1.0.7 installed): a BPMN *diagram* type IS settable —
+> `Diagrams.AddNew(name, "BPMN2.0::BusinessProcess")` sets its `MetaType` — but
+> BPMN *element* stereotypes **revert**: setting `Stereotype` / `StereotypeEx` to
+> `"BPMN2.0::Activity"` (or passing the FQN to `Elements.AddNew`) falls back to a
+> plain `Activity`. So the GUI toolbox stays the only path to real BPMN elements.
 
 **MDG concept reference (informational — not MCP-creatable, see above):**
 
