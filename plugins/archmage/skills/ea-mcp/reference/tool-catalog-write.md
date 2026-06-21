@@ -13,35 +13,9 @@ tool `enterprise-architect:<tool>` (documentation shorthand for the invokable
 - [Diagrams & layout](#diagrams--layout)
 - [Delete, clone, baseline](#delete-clone-baseline)
 
-![The canonical create/update build order](images/ea-mcp-build-order.png)
-
-<details>
-<summary>Mermaid source</summary>
-
-<!-- render: images/ea-mcp-build-order.png -->
-
-```mermaid
-flowchart TB
-    A["create_or_update_package"]
-    B["create_or_update_elements"]
-    C["attributes / operations"]
-    D["create_or_update_connectors"]
-    E["create_or_update_diagram"]
-    F["open_diagrams"]
-    G["place_elements_on_diagram"]
-    H["layout_connectors"]
-    I["get_diagram_image (verify)"]
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-```
-
-</details>
+These tools are used in a fixed order — the canonical build order lives once in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` › "The canonical build order" (with the
+rendered workflow diagram in the `ea-modeling` spell). This catalog is the per-tool contract.
 
 ## The contract every create/update tool shares
 
@@ -90,12 +64,6 @@ See `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the exact
 | `apply_baseline` | Restore/merge from a baseline. | |
 | `import_element_linked_documents` | Push a linked (rich-text) document into an element. | Counterpart of `export_element_linked_documents`. |
 
-## The build order these tools are meant to follow
-
-```
-create_or_update_package → create_or_update_elements → (attributes/operations)
-  → create_or_update_connectors → create_or_update_diagram → open_diagrams
-  → place_elements_on_diagram → layout_connectors → get_diagram_image (verify)
-```
-
-Full mechanics and per-diagram playbooks are in the `ea-modeling` spell.
+The order these tools follow is the canonical build order in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`; full mechanics and per-diagram
+playbooks are in the `ea-modeling` spell.

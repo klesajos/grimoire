@@ -66,19 +66,21 @@ Run the `/archmage:ea-doctor` command for an automated pass through this checkli
 | `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/setup-and-connection.md` | Installing/configuring the server, writing `.mcp.json`, enabling write tools. |
 | `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/tool-catalog-read.md` | You need to know which **read** tool to call and its purpose. |
 | `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/tool-catalog-write.md` | You need a **write** tool and its array-in / IDs-out contract. |
-| `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/schema-gotchas.md` | A tool errors on its payload, or before writing anything (the load-bearing traps). |
+| `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/schema-gotchas.md` | Recovering from a partial/timed-out build, the no-delete undo path, and the auto-retype / IDs-vs-GUIDs behaviours (the hard-rule list itself is in the cheatsheet). |
 | `${CLAUDE_PLUGIN_ROOT}/skills/ea-mcp/reference/troubleshooting.md` | A tool failed and you need the cause→fix table. |
 
 The canonical EA **type strings** (diagram/element/connector) live once in
 `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
 
-## The five rules that prevent most damage
+## The load-bearing schema rules
 
-1. `taggedValues` is an **array of `{name,value}`**, never a map.
-2. Connector `direction: "Source -> Destination"` **fails** → use `"Unspecified"`.
-3. `create_or_update_*` take **arrays** and **return IDs** → create the parent package first.
-4. `place_elements_on_diagram` needs **x/y > 10**.
-5. There is **no delete tool for packages/elements** → name throwaways `ZZ_*`.
+The payload traps that cause silent corruption or tool errors — `taggedValues` array, connector
+`direction:"Unspecified"`, arrays-in/IDs-out (parent first), x/y > 10, no element delete → `ZZ_*`,
+the sequence-message open-first trap — are listed **once** in
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` › "Schema shapes & hard rules"; read
+it before your first write. This spell is setup, connection, troubleshooting, and the tool catalog —
+the build rules belong to `ea-modeling`; recovering from a partial/timed-out build is in
+`reference/schema-gotchas.md`.
 
 Always use **fully-qualified** tool names (`enterprise-architect:get_root_packages`,
 `enterprise-architect:create_or_update_elements`, …) so the right server is targeted.
