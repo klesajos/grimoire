@@ -59,6 +59,7 @@ Passed to `enterprise-architect:create_or_update_diagram` as `type`.
 | UML Package | `Package` | Confirmed |
 | UML Communication | `Communication` | Confirmed |
 | UML Timing | `Timing` | Confirmed |
+| UML Interaction Overview | `Interaction Overview` | Confirmed |
 | ArchiMate 3 view | `Class` (use this) | **Falls back to Class** — the view FQN appears to be `Archimate3::<ViewName>` (the live `create_or_update_diagram` schema gives `Archimate3::Application` as its example, lowercase `m`), but only the bare layer name `ArchiMate3::Layered` was tried in testing and it silently created a `Class` diagram. The resolving view string is unconfirmed, so use `Class` directly — ArchiMate elements still render with full ArchiMate notation on it. To probe the FQN, retry `Archimate3::Application`/`Business`/`Technology` on a `ZZ_` throwaway and read it back. |
 | BPMN 2.0 process | (BPMN MDG diagram) | **Not creatable via MCP** — author in the EA GUI toolbox; the create tool rejects the BPMN2.0 MDG strings (see the element table below and the `bpmn` spell). |
 
@@ -85,6 +86,11 @@ Passed to `enterprise-architect:create_or_update_elements` as `type`.
 | Artifact | `Artifact` | Confirmed. |
 | Object / instance | `Object` | Confirmed. Name as `instance : Classifier` to show the classifier. |
 | Part (composite structure) | `Part` | Confirmed. Set `owningElementID` to the structured class so the part nests inside it on the diagram. |
+| Port (composite structure / component) | `Port` | Confirmed. Owned by the class/component — pass `owningElementID`, not a package (rule 8). Add it to the diagram explicitly (it does not auto-place); position it on the boundary. |
+| Use-case system boundary | `Boundary` | Confirmed. Labelled rectangle enclosing the use cases; send it to the back (high `DiagramObject.Sequence`) via the EA COM bridge so the use cases draw on top. |
+| Fork / join (activity, state machine) | `Synchronization` | Confirmed. The synchronization bar; set it long-and-thin via geometry. |
+| Activity object node | `ObjectNode` | Pass `owningElementID` (the owning Activity element), not a package — rule 8. **Verify in live EA.** |
+| Interaction-overview ref/sd frame | `InteractionOccurrence` / `InteractionFragment` | The `ref`/`sd` frames on an Interaction Overview diagram; the control nodes reuse `Decision`/`StateNode`/`Synchronization`. **Verify in live EA.** |
 | Stereotype (profile) | `Class` + `stereotypes:"stereotype"` | Confirmed. A profile stereotype is a `Class` stereotyped «stereotype»; the extended metaclass is a `Class` stereotyped «metaclass». There is **no** `Stereotype` element type (it errors). |
 | Requirement | `Requirement` | Confirmed (the **UML** Requirement element, goes on a `Requirements` diagram). Do **not** confuse it with the ArchiMate `ArchiMate3::ArchiMate_Requirement` (a different MDG type). |
 | Package | — | Use `enterprise-architect:create_or_update_package`, not `create_or_update_elements`. |
@@ -117,9 +123,14 @@ Passed to `enterprise-architect:create_or_update_connectors` as `type`.
 | «deploy» (deployment) | `Dependency` | + `stereotypes:"deploy"` (artifact → node). Confirmed. |
 | Realization / implements | `Realization` | Confirmed (component→interface, class→interface). |
 | Extension (profile) | `Extension` | Confirmed. Stereotype-class → metaclass-class. |
-| Part connector (composite structure) | `Connector` | Confirmed. Assembly/delegation line between parts. |
-| Activity control flow | `ControlFlow` | Edges between `Action`/`Decision`/`StateNode` on Activity diagrams. |
+| Part connector (composite structure) | `Connector` | Confirmed. Assembly/delegation line between parts/ports. |
+| Assembly (component ball-and-socket) | `Assembly` | Confirmed. Between two components; name it with the interface to label the joint. |
+| Manifest (artifact → component) | `Manifest` | + `stereotypes:"manifest"`; set `Direction` via the COM bridge to draw the arrow. **Verify in live EA.** |
+| Communication path (deployment) | `CommunicationPath` | Confirmed. Node↔node. EA auto-fills its `Name` with "TCP/IP" — clear it via COM; keep `direction:"Unspecified"` (no arrowhead). |
+| Activity object flow | `ObjectFlow` | Edge to/from an `ObjectNode`. **Verify in live EA.** |
+| Activity control flow | `ControlFlow` | Edges between `Action`/`Decision`/`StateNode`/`Synchronization` on Activity (and the `ControlFlow` edges between frames on an Interaction Overview diagram). |
 | State transition | `StateFlow` | Edges between `State`/`StateNode` on State Machine diagrams. |
+| Communication-diagram link | `Association` | The link that carries the numbered messages on a Communication diagram. |
 | Sequence message | — | Use `enterprise-architect:create_or_update_messages` (diagram must be OPEN first). |
 
 **ArchiMate 3 relationships (confirmed):** pass the FQN as `type`, form
@@ -135,6 +146,8 @@ done via the EA COM bridge: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridg
 
 - `stereotypes:"include"` / `"extend"` on a `Dependency` → «include»/«extend» on a Use Case diagram.
 - `stereotypes:"deploy"` on a `Dependency` → «deploy» on a Deployment diagram.
+- `stereotypes:"import"` / `"access"` / `"merge"` on a `Dependency` → «import»/«access»/«merge» on a Package diagram (a dedicated `PackageImport` connector exists in EA but is unconfirmed via the MCP — **verify in live EA**).
+- `stereotypes:"manifest"` on a `Manifest` (or `Dependency`) → «manifest» from an artifact to the component it realises.
 - `stereotypes:"metaclass"` / `"stereotype"` on a `Class` → profile metaclass / stereotype boxes.
 - ArchiMate MDG types (`ArchiMate3::…`) drive the element shape/colour/icon. BPMN MDG types are **not** applyable via the MCP create tool (see the element table).
 
