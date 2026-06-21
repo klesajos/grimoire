@@ -132,10 +132,94 @@ enter the top; cross-lane edges enter the side-middle** from the source lane's d
 ceiling, and the conventional swimlane look. (Top-entry across a lane needs manual dragging in the EA
 GUI.)
 
+## Object-diagram slots (run-state)
+
+The MCP creates `Object` instances but leaves them slot-less. Set slot values via the element's
+**`RunState`** string — one `@VAR;…;@ENDVAR;` block per slot (`Op==` is the literal "equals" operator):
+
+```powershell
+$e = $repo.GetElementByID($id)
+$e.RunState = '@VAR;Variable=barcode;Value="BC-0042";Op==;@ENDVAR;@VAR;Variable=returned;Value=false;Op==;@ENDVAR;'
+$e.Update()
+```
+
+Renders the second compartment as `barcode = "BC-0042"` / `returned = false`. Quote string values to
+match UML convention; leave dates/booleans bare.
+
+## Ports (composite structure)
+
+A `Port` is an **embedded element** of the owning class, NOT a package child:
+
+```powershell
+$cls = $repo.GetElementByID($classId)
+$p = $cls.EmbeddedElements.AddNew("intake","Port"); $p.Update()
+```
+
+It does **not** auto-appear on the diagram — add it explicitly, positioned on the class boundary:
+
+```powershell
+$o = $dia.DiagramObjects.AddNew("l=52;r=72;t=-210;b=-230;",""); $o.ElementID=$p.ElementID; $o.Update()
+```
+
+Provided/required interfaces render in the **expanded** form (a `Realization` from the port to the
+provided interface = lollipop; a `Dependency` from the port to the required interface = socket) — EA
+does **not** draw the compact lollipop/socket glyphs through automation. Add a `Connector` (port → part)
+for the delegation.
+
+## Nested containment (deployment / composite) — z-order
+
+To draw a child **inside** a node/class (deployment-by-containment, parts in a class), position the
+child's rectangle inside the parent's AND give the child a **lower** `DiagramObject.Sequence` than the
+parent (lower = front; equal sequence ⇒ the parent's fill paints over the child and it vanishes):
+
+```powershell
+foreach($o in $dia.DiagramObjects){ if($o.ElementID -eq $parentId){ $o.Sequence=30 } if($o.ElementID -eq $childId){ $o.Sequence=10 }; $o.Update() }
+```
+
+`ParentID` (`$child.ParentID = $parentId; $child.Update()`) gives logical ownership; the *visual*
+containment comes from geometry + z-order. Deep nesting (device → executionEnvironment → artifact) just
+needs three sequence tiers.
+
+## ArchiMate elements & connectors via COM
+
+`Elements.AddNew` / `Connectors.AddNew` accept the **MDG FQN** directly and render full ArchiMate
+notation (even on a `Class`-hosted diagram):
+
+```powershell
+$e = $pkg.Elements.AddNew("Customer","ArchiMate3::ArchiMate_BusinessRole"); $e.Update()
+$c = $src.Connectors.AddNew("","ArchiMate3::ArchiMate_Serving"); $c.ClientID=$src.ElementID; $c.SupplierID=$tgtId
+$c.Direction="Source -> Destination"; $c.Update()   # Serving/Realization/Access need Direction for their heads
+```
+
+`element.Type` comes back as the base UML type (`Class`/`Activity`) with the ArchiMate stereotype — the
+notation still renders. **Orthogonal routing is NOT settable via COM** (`Connector.RouteStyle=3` is a
+silent no-op — routing lives in the per-diagram `DiagramLink`); apply it with the **MCP**
+`create_or_update_connectors` (`connectorStyle:"OrthogonalSquare"`, passing `connectorID` +
+`sourceEnd`/`targetEnd`), then `ReloadDiagram` + export.
+
+## Other COM-build moves
+
+- **Retype** an element in place: `$e.Type = "Device"; $e.Update()` (e.g. Node → Device) re-renders the
+  new notation. **Component Assembly** connector (`AddNew(name,"Assembly")`, name = interface) draws the
+  ball-and-socket. **Manifest**: `Dependency` with `Stereotype="manifest"` + Direction.
+- **Boundary element** (use-case system boundary): create `"Boundary"`, place with a large enclosing
+  rect, and a **high** `Sequence` so it sits behind the use cases.
+- **Delete a connector**: `Repository.DeleteConnector` does **not exist** — use the endpoint element's
+  collection: find the index in `element.Connectors` and `DeleteAt($i,$false)`. Same pattern
+  (`package.Elements.DeleteAt`) deletes elements.
+
 ## Gotchas
 
 - `Repository.SQLQuery` is **pathologically slow** under ARM64 emulation (minutes; often auto-backgrounded).
   Use `GetElementByID` / `GetConnectorByID` / `GetDiagramByID` instead.
+- **PowerShell is case-insensitive:** a `$E` hashtable and an `$e` loop variable are the **same**
+  variable — the COM object clobbers the map. Use distinct names. `$pid` / `$PID` is **reserved** (the
+  process id) and silently won't take your assignment.
+- **One fetch, then mutate+update.** `$repo.GetElementByID($id).Name="X"; $repo.GetElementByID($id).Update()`
+  updates a *second, unmodified* object — the rename is lost. Fetch once into a variable, set, `Update()`.
+- A new **`CommunicationPath`** connector auto-acquires the Name `"TCP/IP"` (shows alongside your
+  protocol stereotype) — clear it with `$c.Name=""`. A new comm path may also show a direction arrow;
+  set `$c.Direction="Unspecified"` (comm paths are headless).
 - Keep PowerShell `git commit` messages **free of double quotes** (PS 5.1 here-string quoting splits the arg).
 - **BPMN is out of scope for COM too.** A BPMN *diagram* type is settable (`Diagrams.AddNew(name,
   "BPMN2.0::BusinessProcess")` sets `MetaType`), but BPMN *element* stereotypes **revert** — setting
