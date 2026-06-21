@@ -19,10 +19,10 @@ disabled — activate it (see *Setup* below). Install the server itself from
 | Spell | What it covers |
 | --- | --- |
 | `ea-mcp` | Operate the conduit: setup, connection prerequisites, the read+write tool catalog, schema gotchas, troubleshooting. Reach for it when the MCP **misbehaves**. |
-| `ea-modeling` | Build **and** read EA models: the create→connect→diagram→place→layout→verify workflow, reading recipes, and notation→EA type mapping. |
-| `uml` | UML 2.5.1 — all 14 diagrams, notation rules, worked examples, Mermaid + EA bridges. |
-| `bpmn` | BPMN 2.0.2 — events, activities, gateways, flows, pools/lanes, token semantics. |
-| `archimate` | ArchiMate 3.2 — layers, elements, relationships, viewpoints, EA bridge. |
+| `ea-modeling` | Build **and** read EA models: the create→connect→diagram→place→layout→verify workflow, reading recipes, per-diagram playbooks, and the full notation→EA type mapping (UML/BPMN/ArchiMate). This is the one skill that owns *building in EA*. |
+| `uml` | UML 2.5.1 — all 14 diagrams, notation rules, worked examples, Mermaid renderings. (Notation only; building in EA → `ea-modeling`.) |
+| `bpmn` | BPMN 2.0.2 — events, activities, gateways, flows, pools/lanes, token semantics. (Notation only; building in EA → `ea-modeling`.) |
+| `archimate` | ArchiMate 3.2 — layers, elements, relationships, viewpoints. (Notation only; building in EA → `ea-modeling`.) |
 | `togaf` | TOGAF Standard 10th Edition — the ADM, content framework, governance, ArchiMate mapping. |
 | `mermaid` | Mermaid diagram-as-code across every current diagram type (beta types flagged). |
 
