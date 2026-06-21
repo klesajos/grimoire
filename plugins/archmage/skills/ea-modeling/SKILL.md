@@ -104,15 +104,15 @@ instance open.
 EA **type strings** live once in `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
 Tool details and troubleshooting live in the `ea-mcp` spell.
 
-## The gotchas that bite during a build (full list in build-workflow.md)
+## The dangerous gotchas (full hard-rule list in the cheatsheet)
 
-1. `taggedValues` = **array of `{name,value}`**, never a map.
-2. Connector `direction: "Source -> Destination"` **fails** → `"Unspecified"`.
-3. `create_*` take **arrays**, **return IDs** → parent package first.
-4. `place_elements_on_diagram` needs **x/y > 10**.
-5. **Sequence messages:** `open_diagrams` first or they silently duplicate.
-6. **No delete** for packages/elements → name throwaways `ZZ_*`.
-7. No transaction — a timeout leaves a partial model; `create_baseline` before big builds.
+These three cause **silent or irreversible** damage — keep them in your head while building:
+
+1. **Sequence messages:** `open_diagrams` the diagram FIRST, or `create_or_update_messages` errors yet still creates the connectors → a naive retry **duplicates** (and there is no element delete). Verify with `get_diagram_image` before any retry.
+2. `create_*` take **arrays** and **return IDs** → create the **parent package first**, capture IDs, then children — the whole workflow depends on this order.
+3. **No delete** for packages/elements → name throwaways `ZZ_*`; the only walk-back is a `create_baseline` taken *before* the edit.
+
+The full payload hard-rule list (taggedValues array, direction `"Unspecified"`, x/y > 10, no-transaction) is in `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` › "Schema shapes & hard rules".
 
 ## Working safely
 

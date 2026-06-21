@@ -27,19 +27,20 @@ The traps that will bite you:
    stop and report rather than guess.
 2. **Parent before child.** `create_or_update_*` take arrays and return IDs. Create the package,
    capture its ID; create elements, capture theirs; only then connectors/placements.
-3. **`taggedValues` is an array of `{name,value}`**, never a map.
-4. **Connector `direction: "Unspecified"`** — `"Source -> Destination"` fails.
-5. **`place_elements_on_diagram` needs x/y > 10.**
-6. **Sequence messages: `open_diagrams` the diagram FIRST.** On a hidden diagram
+3. **Sequence messages: `open_diagrams` the diagram FIRST.** On a hidden diagram
    `create_or_update_messages` errors *but still creates the connectors*. So: open → create once →
    **render and verify before any retry** → if duplicates exist, delete them with
    `delete_connectors_or_messages`. Never blind-retry a message create.
-7. **Verify every diagram** with `enterprise-architect:get_diagram_image` after
+4. **Verify every diagram** with `enterprise-architect:get_diagram_image` after
    `layout_connectors`. Building blind is failure. If a render is wrong, fix and re-render.
-8. **No delete for packages/elements.** If you must create scratch/experimental items, name them
+5. **No delete for packages/elements.** If you must create scratch/experimental items, name them
    `ZZ_*` and note in your report that they need manual deletion in EA.
-9. **No transaction.** For a large build, take a `create_baseline` of the target package first so
+6. **No transaction.** For a large build, take a `create_baseline` of the target package first so
    the work can be compared/rolled back. Build incrementally — a timeout leaves a partial model.
+
+Plus the cheatsheet's payload hard rules — `taggedValues` is an array of `{name,value}`, connector
+`direction:"Unspecified"` (`"Source -> Destination"` fails), `place_elements_on_diagram` needs
+x/y > 10 — in `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
 
 ## Build order
 

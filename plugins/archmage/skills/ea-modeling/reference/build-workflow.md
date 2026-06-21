@@ -143,13 +143,11 @@ enterprise-architect:get_diagram_image [20]   # render PNG, then LOOK at it
 If something is wrong, fix and re-render. Because creates are idempotent on ID, re-running a
 corrected create updates rather than duplicates — **except** sequence messages (see playbooks).
 
-## The gotcha list (memorize)
+## The gotcha list
 
-1. `taggedValues` = **array of `{name,value}`**, never a map.
-2. Connector `direction: "Source -> Destination"` **fails** → `"Unspecified"`.
-3. `create_*` take **arrays**, **return IDs** → create the parent package first.
-4. `place_elements_on_diagram` needs **x/y > 10**.
-5. **Sequence messages require `open_diagrams` first** or they error-but-create → duplicates.
-6. **No delete** for packages/elements → name throwaways `ZZ_*`, remove in EA.
-7. No transaction — a timeout leaves a partial model. `create_baseline` before big builds.
-8. Type strings are exact/case-sensitive (`Use Case`, `StateMachine`, `ControlFlow`).
+The load-bearing payload hard rules (taggedValues array, direction `"Unspecified"`, arrays-in/IDs-out,
+x/y > 10, the sequence-message duplicate trap, no element delete → `ZZ_*`, exact case-sensitive type
+strings) are listed **once** in `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` ›
+"Schema shapes & hard rules". The two silent/irreversible ones are reinforced at point-of-use above
+(Step 4 connectors, Step 6 messages) and in the per-diagram playbooks; recovery from a half-built
+model is in the `ea-mcp` spell's `reference/schema-gotchas.md`.
