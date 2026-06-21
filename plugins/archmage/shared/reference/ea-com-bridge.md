@@ -137,6 +137,10 @@ GUI.)
 - `Repository.SQLQuery` is **pathologically slow** under ARM64 emulation (minutes; often auto-backgrounded).
   Use `GetElementByID` / `GetConnectorByID` / `GetDiagramByID` instead.
 - Keep PowerShell `git commit` messages **free of double quotes** (PS 5.1 here-string quoting splits the arg).
+- **BPMN is out of scope for COM too.** A BPMN *diagram* type is settable (`Diagrams.AddNew(name,
+  "BPMN2.0::BusinessProcess")` sets `MetaType`), but BPMN *element* stereotypes **revert** — setting
+  `Stereotype`/`StereotypeEx` to `"BPMN2.0::Activity"` falls back to a plain `Activity`. Real BPMN
+  elements still need EA's GUI toolbox (see the `bpmn` skill).
 
 ## Full recipe — polish + export one diagram
 
