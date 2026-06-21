@@ -44,6 +44,7 @@ Refresh after new plugins are added: `/plugin marketplace update grimoire`.
 | ------ | ------------ | ------ |
 | [`starter-spell`](plugins/starter-spell) | Reference template — copy it to conjure a new plugin | template |
 | [`archmage`](plugins/archmage) | Model in Sparx Enterprise Architect via MCP, plus UML / BPMN / ArchiMate / TOGAF / Mermaid reference spells | active |
+| [`hermes-tweet`](https://github.com/Xquik-dev/hermes-tweet) | Native Hermes Agent X/Twitter plugin for read-first social monitoring and approval-gated actions | external |
 
 ## Add your own
 

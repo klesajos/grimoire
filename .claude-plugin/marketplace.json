@@ -26,6 +26,21 @@
       },
       "category": "modeling",
       "keywords": ["enterprise-architect", "sparx-ea", "uml", "bpmn", "archimate", "togaf", "mermaid", "modeling", "mcp"]
+    },
+    {
+      "name": "hermes-tweet",
+      "source": {
+        "source": "github",
+        "repo": "Xquik-dev/hermes-tweet",
+        "ref": "master"
+      },
+      "description": "Native Hermes Agent X/Twitter plugin for read-first social monitoring and approval-gated actions.",
+      "version": "0.1.6",
+      "author": {
+        "name": "Xquik"
+      },
+      "category": "social-media",
+      "keywords": ["hermes-agent", "hermes-plugin", "x-twitter", "social-media", "automation"]
     }
   ]
 }
