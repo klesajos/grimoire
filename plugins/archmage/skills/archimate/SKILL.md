@@ -1,11 +1,11 @@
 ---
 name: archimate
-description: Reference for ArchiMate 3.2 (The Open Group C226) enterprise-architecture modeling - the layered framework (Strategy, Business, Application, Technology, Physical) and aspects, the full element catalog, the relationship set with derivation rules, and viewpoints, plus a bridge to building ArchiMate models in Enterprise Architect. Use when the user asks about ArchiMate, enterprise architecture modeling, application/business/technology layers, ArchiMate elements or relationships, viewpoints, or how to model an enterprise architecture. For the TOGAF method/ADM, togaf applies instead.
+description: Reference for ArchiMate 3.2 (The Open Group C226) enterprise-architecture modeling - the layered framework (Strategy, Business, Application, Technology, Physical) and aspects, the full element catalog, the relationship set with derivation rules, and viewpoints; building ArchiMate models in Enterprise Architect is covered by the ea-modeling skill. Use when the user asks about ArchiMate, enterprise architecture modeling, application/business/technology layers, ArchiMate elements or relationships, viewpoints, or how to model an enterprise architecture. For the TOGAF method/ADM, togaf applies instead.
 ---
 
 # ArchiMate 3.2 modeling
 
-ArchiMate is The Open Group's open, vendor-neutral modeling language for enterprise architecture. This skill is a reference for **ArchiMate 3.2** (The Open Group Standard, document **C226**, published 2022 — a minor revision of 3.1/3.0). It covers the layered framework and aspects, the complete element catalog, the relationship set and derivation rules, and the viewpoint mechanism, plus a bridge for building ArchiMate models in Enterprise Architect.
+ArchiMate is The Open Group's open, vendor-neutral modeling language for enterprise architecture. This skill is a reference for **ArchiMate 3.2** (The Open Group Standard, document **C226**, published 2022 — a minor revision of 3.1/3.0). It covers the layered framework and aspects, the complete element catalog, the relationship set and derivation rules, and the viewpoint mechanism. Building ArchiMate models in Enterprise Architect is a tool task — the **`ea-modeling`** skill owns it.
 
 ArchiMate answers "what concepts exist and how do they relate"; it is the **notation/metamodel**. It is deliberately complementary to a method.
 
@@ -19,7 +19,7 @@ ArchiMate answers "what concepts exist and how do they relate"; it is the **nota
 ## When NOT to use this skill (route elsewhere)
 
 - **TOGAF method / ADM phases / architecture governance / the content framework as a *process***: that is method, not notation — use the **`togaf`** skill. (ArchiMate and TOGAF are designed to be used together: ArchiMate is the notation, TOGAF the method.)
-- **The mechanics of building the model inside Enterprise Architect** (creating packages, diagrams, connectors via the EA MCP, taggedValues, placement coordinates): the language reference here defines *what* to draw; for the *how-to-build* workflow use the **`ea-modeling`** skill. `reference/ea-bridge.md` is the thin mapping layer between the two.
+- **The mechanics of building the model inside Enterprise Architect** (creating packages, diagrams, connectors via the EA MCP, taggedValues, placement coordinates, the COM display fixes): the language reference here defines *what* to draw; the **`ea-modeling`** skill owns *how to build it*, including the full ArchiMate→EA `ArchiMate3::ArchiMate_*` type catalog in `reference/notation-to-ea-mapping.md` › "ArchiMate → EA".
 - **Notation drawing in Mermaid**: not possible — Mermaid has **no native ArchiMate notation** (no ArchiMate elements, layer colors, or relationship line styles). See `reference/viewpoints.md` for what to do instead.
 
 ## Reference files (open the one you need)
@@ -31,6 +31,10 @@ ArchiMate answers "what concepts exist and how do they relate"; it is the **nota
 | `reference/relationships.md` | The full relationship set — structural (Composition, Aggregation, Assignment, Realization), dependency (Serving, Access, Influence, Association), dynamic (Triggering, Flow), and other (Specialization, Junction). Notation, direction conventions, the **derivation rule**, valid-combination guidance, and relationship connectors (Junction). | You need to pick/validate a relationship, get its notation, or understand derivation. |
 | `reference/viewpoints.md` | The viewpoint mechanism (concern → viewpoint → view), the standard viewpoint categories (Composition/Support/Cooperation/Realization and the purpose dimension Designing/Deciding/Informing), the catalog of standard viewpoints, and the Mermaid caveat. | The user asks about viewpoints/views, or which viewpoint fits a concern/stakeholder. |
 | `reference/worked-example.md` | A concrete small enterprise (online insurance quote service) modeled end-to-end: a layered view spanning Business → Application → Technology with every element and relationship named, plus a motivation snippet. | You want a worked, copyable example to learn from or adapt. |
-| `reference/ea-bridge.md` | How Enterprise Architect represents ArchiMate (the ArchiMate 3 MDG, passing the fully-qualified `ArchiMate3::ArchiMate_*` type string directly — no UML base type, no stereotype layering), the element/relationship → EA-type mapping (**CONFIRMED against live EA**), and the EA MCP gotchas. Points to `ea-modeling`. | The user wants to build the ArchiMate model in EA, or asks how ArchiMate maps to EA types. |
+
+> **Building it in EA?** The ArchiMate→EA type catalog (`ArchiMate3::ArchiMate_*` element/relationship
+> strings, confirmed live) and the build workflow live in the **`ea-modeling`** skill
+> (`reference/notation-to-ea-mapping.md` › "ArchiMate → EA"); the COM display fixes are in
+> `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`. This skill is notation only.
 
 Authoritative source: *ArchiMate® 3.2 Specification*, The Open Group Standard C226 (https://pubs.opengroup.org/architecture/archimate32-doc/). Cite it for any normative claim.

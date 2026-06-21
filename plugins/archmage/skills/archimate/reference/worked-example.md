@@ -139,4 +139,4 @@ TECHNOLOGY    [rating.jar «Artifact»]@[App Server «Node»] ==Path/Network== [
 - **Vertical** lines are mostly **Serving** (up) and **Realization** (down) — the layered spine.
 - **Horizontal** lines within a layer are **Triggering/Flow** (behavior order) and **Access** (behavior↔data).
 - Each layer **realizes a Service** that the layer above **is served by** — if you can't trace that chain from Customer down to a Node, the model has a gap.
-- To build this for real in Enterprise Architect, see `ea-bridge.md` (and `ea-modeling` for the build workflow).
+- To build this for real in Enterprise Architect, see the **`ea-modeling`** skill (`reference/notation-to-ea-mapping.md` › "ArchiMate → EA" for the type catalog, `reference/diagram-type-playbooks.md` › "ArchiMate view" for the build quirks).

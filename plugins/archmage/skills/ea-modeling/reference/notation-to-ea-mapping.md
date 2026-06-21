@@ -41,7 +41,7 @@ through `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`.
 
 The UML `Requirement` **element** string and the `Package` diagram type are also **confirmed live**
 through the MCP. Note that the UML `Requirement` element is distinct from the ArchiMate
-`ArchiMate3::ArchiMate_Requirement` (see the `archimate` spell's `ea-bridge.md`) — both are
+`ArchiMate3::ArchiMate_Requirement` (see the "ArchiMate → EA" catalog below) — both are
 confirmed, but they are different MDG types.
 
 ## BPMN → EA
