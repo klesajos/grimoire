@@ -59,15 +59,23 @@ profile stereotypes, hosted on a BPMN business-process diagram rather than a pla
 > approximation** the `bpmn` spell produces. This matches
 > `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` and the `bpmn` spell.
 
-The table below names the EA MDG concepts for reference only — it is **not** a create recipe:
-| BPMN thing | EA MDG host | Note |
+The **EA COM** API doesn't rescue it either (confirmed, BPMN2.0 MDG v1.0.7): a BPMN *diagram* type
+IS settable (`Diagrams.AddNew(name,"BPMN2.0::BusinessProcess")` sets its `MetaType`) but BPMN
+*element* stereotypes **revert** — `Stereotype`/`StereotypeEx` set to `"BPMN2.0::Activity"` falls back
+to a plain `Activity`. So the GUI toolbox stays the only path to real BPMN elements (see
+`${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`).
+
+The table below names the EA MDG concepts for reference only — it is **not** a create recipe; the
+trigger/marker selections are driven by **tagged values**, not distinct element types:
+| BPMN thing | EA MDG stereotype | Tagged values / note |
 | --- | --- | --- |
 | Process diagram | BPMN business-process diagram | created in the EA GUI |
-| Task / Sub-Process | `«BPMN2.0::Activity»` element | task type via a tagged value |
-| Gateway (XOR/AND/OR/event-based) | `«BPMN2.0::Gateway»` element | gateway kind via a tagged value |
-| Start/Intermediate/End event | `«BPMN2.0::Event»` element | trigger via a tagged value |
-| Sequence Flow / Message Flow | BPMN connector stereotypes | direction `"Unspecified"` |
-| Pool / Lane | BPMN swimlane constructs | placed in the EA GUI |
+| Task / Sub-Process | `«BPMN2.0::Activity»` | `activityType` = Task vs SubProcess; `taskType` = User/Service/Send/Receive/Manual/Script/BusinessRule |
+| Gateway | `«BPMN2.0::Gateway»` | `gatewayType` = Exclusive/Parallel/Inclusive/EventBased/Complex |
+| Event (start/intermediate/end) | `«BPMN2.0::Event»` | `eventType` (position) + `trigger` |
+| Sequence / Message / Association flow | `«BPMN2.0::SequenceFlow»` / `«…::MessageFlow»` / `«…::Association»` connectors | direction `"Unspecified"` |
+| Data Object / Data Store | `«BPMN2.0::DataObject»` / `«…::DataStore»` | |
+| Pool / Lane | `«BPMN2.0::Pool»` / `«…::Lane»` swimlane constructs | placed in the EA GUI |
 
 ## ArchiMate → EA
 

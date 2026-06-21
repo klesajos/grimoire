@@ -225,7 +225,8 @@ approximation** — it loses BPMN semantics (token rules, event triggers,
 catch/throw, pools vs. lanes, message vs. sequence flow). Always **label such a
 sketch as "approximate BPMN, not valid notation"** and, for genuine flowchart
 needs, use the **`mermaid` skill**. For real BPMN, produce a `.bpmn` model or
-build it in Enterprise Architect (`pools-lanes-collaboration.md` › EA bridge).
+build it by hand in EA's BPMN toolbox (it is not MCP-creatable — see
+`pools-lanes-collaboration.md` §9 and the **`ea-modeling`** skill).
 
 Approximate flowchart sketch of the leave-request process (NOT valid BPMN):
 

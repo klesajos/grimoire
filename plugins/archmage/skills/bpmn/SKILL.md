@@ -1,6 +1,6 @@
 ---
 name: bpmn
-description: Reference for BPMN 2.0.2 (OMG formal/13-12-09, ISO/IEC 19510) covering events, activities/tasks, gateways, sequence and message flows, data objects, and pools/lanes/collaboration, with token-flow semantics, well-formedness rules, examples, and bridges to Mermaid and Enterprise Architect. Use when the user asks about BPMN, a business process model, process flow, swimlanes, gateways (exclusive/parallel/inclusive/event-based), start/intermediate/end events, or how to model a process or workflow in BPMN.
+description: Reference for BPMN 2.0.2 (OMG formal/13-12-09, ISO/IEC 19510) covering events, activities/tasks, gateways, sequence and message flows, data objects, and pools/lanes/collaboration, with token-flow semantics, well-formedness rules, examples, and a Mermaid bridge; building real BPMN in Enterprise Architect is covered by the ea-modeling skill. Use when the user asks about BPMN, a business process model, process flow, swimlanes, gateways (exclusive/parallel/inclusive/event-based), start/intermediate/end events, or how to model a process or workflow in BPMN.
 ---
 
 # BPMN 2.0.2 — Business Process Model and Notation
@@ -9,8 +9,9 @@ Authoring and reading **BPMN 2.0.2** process and collaboration diagrams: the
 OMG standard (document **formal/13-12-09**, January 2014), published verbatim by
 ISO as **ISO/IEC 19510:2013**. This skill covers the graphical notation, the
 token-flow execution semantics, the full element set, and well-formedness rules,
-plus bridges to Mermaid (for approximate flowcharts) and to Enterprise Architect
-(for building real BPMN models).
+plus a Mermaid bridge (for approximate flowcharts). Building real BPMN in
+Enterprise Architect is a tool task — the **`ea-modeling`** skill owns it (and BPMN
+is GUI-toolbox-only there; it is not MCP-creatable).
 
 This skill is a **router**. The body below tells you which reference file to
 open; the substance lives in `reference/*.md`. Do not paraphrase notation from
@@ -52,11 +53,11 @@ flowchart LR
 
 ## When NOT to use (route elsewhere)
 
-- **Building the BPMN model inside Enterprise Architect** (creating elements,
-  connectors, diagrams, laying out, exporting an image) — the *mechanics* live
-  in the `ea-modeling` skill. This skill only supplies the BPMN-specific
-  type/stereotype mapping; see `reference/pools-lanes-collaboration.md` ›
-  "EA bridge" and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+- **Building the BPMN model inside Enterprise Architect** — a tool task owned by
+  the **`ea-modeling`** skill (its `reference/notation-to-ea-mapping.md` › "BPMN → EA"
+  carries the MDG mapping and the key limitation: BPMN is GUI-toolbox-only, not
+  MCP-creatable). `reference/pools-lanes-collaboration.md` §9 has the one-line
+  consequence for an author.
 - **Plain flowcharts** with no BPMN semantics — use the `mermaid` skill. BPMN
   has **no native Mermaid diagram type**; any Mermaid output is an *approximation*
   (see `reference/overview-and-rules.md` › "Mermaid note").
@@ -71,7 +72,7 @@ flowchart LR
 | `reference/activities.md` | **Activities**: Task and its seven types (User, Service, Send, Receive, Manual, Script, Business Rule), Sub-Process (embedded / call / event / transaction / ad-hoc), and activity markers (loop, multi-instance, compensation). |
 | `reference/gateways.md` | **Gateways**: Exclusive (XOR), Parallel (AND), Inclusive (OR), Event-Based, Complex — split vs. join semantics, default flows, the gateway-pairing rule, deadlock/livelock traps. |
 | `reference/flows-and-data.md` | **Connecting objects** (Sequence Flow incl. conditional & default, Message Flow, Association) and **Data** (Data Object incl. collection & state, Data Store, Data Input/Output, Data Association), plus **Artifacts** (Group, Text Annotation). |
-| `reference/pools-lanes-collaboration.md` | **Swimlanes & collaboration**: Pool (participant), Lane, black-box pools, message flow between pools, choreography note — and the **Enterprise Architect bridge** (BPMN 2.0 MDG stereotypes, build flow, gotchas). |
+| `reference/pools-lanes-collaboration.md` | **Swimlanes & collaboration**: Pool (participant), Lane, black-box pools, message flow between pools, choreography note — and §9, the author-facing note that BPMN is GUI-toolbox-only in EA (the `ea-modeling` skill owns the MDG mapping). |
 
 ## Key facts to anchor on (details in the files)
 
