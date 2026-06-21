@@ -69,6 +69,4 @@ IOrderIntake│  intake                                              dispatch  �
 
 ## EA bridge
 
-- Diagram `type`: EA **"Composite Structure"** diagram (confirmed).
-- Element `type`: **"Part"** (confirmed — set `owningElementID` to the structured `Class` so the part nests inside it), **"Class"** (the enclosing classifier, confirmed); **"Port"** (confirmed — owned by the enclosing class, so pass `owningElementID`, not a package); **"Collaboration"** — verify in live EA. Ports/parts are usually added as properties of the owning element.
-- Connector `type`: **"Connector"** (confirmed — assembly/delegation line between parts; set role), interface realization shown as provided/required interface on the port. Build sequence: **`ea-modeling`** skill + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings (Part/Port with `owningElementID`, delegation `Connector`) and the fact that provided/required interfaces render expanded (no lollipop/socket via automation) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.

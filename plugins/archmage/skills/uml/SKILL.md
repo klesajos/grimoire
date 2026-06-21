@@ -1,11 +1,11 @@
 ---
 name: uml
-description: Reference for UML 2.5.1 (OMG formal/17-12-05) covering all 14 diagram types - structure (class, object, package, composite structure, component, deployment, profile) and behavior (use case, activity, state machine, and the sequence, communication, timing, and interaction overview interaction diagrams) - with notation rules, well-formedness constraints, worked examples, and bridges to Mermaid and to building each in Enterprise Architect. Use when the user asks about UML, a class/object/package/composite-structure/component/deployment/profile/use-case/activity/state-machine/sequence/communication/timing/interaction-overview diagram, UML notation, relationships, multiplicity, stereotypes, or how to model something in UML.
+description: Reference for UML 2.5.1 (OMG formal/17-12-05) covering all 14 diagram types - structure (class, object, package, composite structure, component, deployment, profile) and behavior (use case, activity, state machine, and the sequence, communication, timing, and interaction overview interaction diagrams) - with notation rules, well-formedness constraints, worked examples, and a Mermaid bridge; building each in Enterprise Architect is covered by the ea-modeling skill. Use when the user asks about UML, a class/object/package/composite-structure/component/deployment/profile/use-case/activity/state-machine/sequence/communication/timing/interaction-overview diagram, UML notation, relationships, multiplicity, stereotypes, or how to model something in UML.
 ---
 
 # UML 2.5.1
 
-Authoritative reference for the Unified Modeling Language **2.5.1** (OMG document **formal/17-12-05**, December 2017). Covers all **14** canonical diagram types, their notation rules and well-formedness constraints, with a small worked example per type. Each reference file also carries a **Mermaid** rendering where Mermaid has a native equivalent (class, sequence, state, activity-as-flowchart) and an **EA bridge** line naming the Enterprise Architect diagram/element/connector `type` strings to use.
+Authoritative reference for the Unified Modeling Language **2.5.1** (OMG document **formal/17-12-05**, December 2017). Covers all **14** canonical diagram types, their notation rules and well-formedness constraints, with a small worked example per type. Each reference file also carries a **Mermaid** rendering where Mermaid has a native equivalent (class, sequence, state, activity-as-flowchart). Building any of them in Enterprise Architect is a one-line pointer to the **`ea-modeling`** skill, which owns the EA `type` strings and the build workflow.
 
 ## When to use this skill
 
@@ -43,12 +43,6 @@ Open `overview-and-rules.md` first when the question is cross-cutting or you nee
 | `reference/state-machine-diagram.md` | States, transitions, events/guards/effects, composite & submachine states, pseudostates, regions. **Has Mermaid.** |
 | `reference/interaction-diagrams.md` | The four interaction diagrams in one file: **Sequence** (lifelines, messages, combined fragments), **Communication**, **Timing**, **Interaction Overview**. Sequence **has Mermaid**; the other three have **no native Mermaid**. |
 
-## EA bridge (shared)
+## Building in Enterprise Architect
 
-When the user wants the diagram built in Enterprise Architect:
-
-1. The per-diagram **EA bridge** line in each reference file names the diagram/element/connector `type` strings.
-2. For the full type catalog see the shared cheatsheet: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
-3. For the build workflow itself (create order, placement, opening diagrams before adding messages, baselines) use the **`ea-modeling`** skill. Do not reconstruct that workflow here.
-
-Quick reminders (full detail in `ea-modeling`): `taggedValues` must be an **array** of `{name,value}`; connector `direction:"Source -> Destination"` **fails** — use `"Unspecified"`; the element/connector/attribute/operation/message create tools take **arrays** and return new IDs, but `create_or_update_package` and `create_or_update_diagram` take a single info **object**; `place_elements_on_diagram` needs x/y **> 10**; sequence messages require the diagram **open first** (`enterprise-architect:open_diagrams`) or they silently duplicate.
+Building any of these diagrams in EA is a **tool** task, not a notation one. The **`ea-modeling`** skill owns the build workflow and per-diagram quirks; `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` is the canonical type-string + hard-rule reference; `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md` holds the COM display/export fixes. This skill does not restate them.

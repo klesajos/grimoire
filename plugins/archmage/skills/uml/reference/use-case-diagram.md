@@ -74,7 +74,4 @@ Direction is the classic trap: **`«include»`** points *from base to the part i
 
 ## EA bridge
 
-- Diagram `type`: **"Use Case"** (confirmed).
-- Element `type`: **"UseCase"**, **"Actor"**, and a **"Boundary"** element for the system boundary (confirmed).
-- Connector `type`: **"Association"** (actor↔use case — correctly a plain line, no arrowhead, as the notation requires), **"Generalization"**, **"Dependency"** with `stereotypes:"include"` or `stereotypes:"extend"` for the two factored relationships. Build sequence: **`ea-modeling`** + `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md`.
-- **Headless connectors (confirmed in live EA).** The MCP creates the `«include»` / `«extend»` **Dependency** connectors with direction unspecified, so they render **headless** — no open arrow. Set each connector's `Direction` via the EA COM bridge to draw the arrow: `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-com-bridge.md`. (Generalization triangles render intrinsically and need no fix.)
+Building this diagram in Enterprise Architect — the diagram/element/connector `type` strings (incl. the `Boundary` system boundary) and the COM display fixes (headless «include»/«extend» arrows) — is a **tool** concern. See the **`ea-modeling`** skill (`reference/diagram-type-playbooks.md` for the build quirks, `reference/notation-to-ea-mapping.md` for the type mapping) and `${CLAUDE_PLUGIN_ROOT}/shared/reference/ea-type-cheatsheet.md` for the canonical type strings.
