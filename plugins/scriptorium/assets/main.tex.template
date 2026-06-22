@@ -1,0 +1,44 @@
+% ============================================================
+% Root document skeleton for a Czech academic LaTeX compendium.
+% Copy to  main.tex,  fill in the title and the \part / \input list.
+% Build:  ./build.sh   (3× xelatex — see assets/build.sh)
+% ============================================================
+\documentclass[11pt, a4paper, oneside]{book}
+\input{preamble/preamble}
+
+\title{\Huge\bfseries TITULEK KOMPENDIA\\[0.5em]
+       \Large PODTITUL — instituce / program\\[2em]
+       \normalsize Téma A \,·\, Téma B \,·\, Téma C}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\input{chapters/00-uvod}
+
+% ============================================================
+\part{NÁZEV PRVNÍ ČÁSTI}
+% ============================================================
+% Each chapter is its own file under chapters/ and is \input here
+% in reading order. Numeric prefixes keep the files sorted on disk.
+\input{chapters/11-prvni-tema}
+\input{chapters/12-druhe-tema}
+% \input{chapters/13-...}
+
+% ============================================================
+\part{NÁZEV DRUHÉ ČÁSTI}
+% ============================================================
+\input{chapters/21-dalsi-tema}
+% \input{chapters/22-...}
+
+% ============================================================
+\part{Přílohy}
+% ============================================================
+\appendix
+\input{chapters/90-tahak}     % vzorce / cheat sheet
+\input{chapters/91-glosar}    % česko-anglický glosář
+
+\end{document}

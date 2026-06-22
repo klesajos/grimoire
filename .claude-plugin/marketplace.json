@@ -26,6 +26,17 @@
       },
       "category": "modeling",
       "keywords": ["enterprise-architect", "sparx-ea", "uml", "bpmn", "archimate", "togaf", "mermaid", "modeling", "mcp"]
+    },
+    {
+      "name": "scriptorium",
+      "source": "./plugins/scriptorium",
+      "description": "Build a Czech academic LaTeX compendium the proven way — XeLaTeX/polyglossia, the tcolorbox environment system, TikZ decision trees, a 3-pass build, and standalone per-topic volumes. Reference spell + copy-ready template assets.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Josef Klesa"
+      },
+      "category": "writing",
+      "keywords": ["latex", "xelatex", "compendium", "tcolorbox", "polyglossia", "czech", "typesetting", "book"]
     }
   ]
 }

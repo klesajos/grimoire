@@ -1,0 +1,187 @@
+% ============================================================
+% Preambule — Kompendium k přijímačkám MÚVS ČVUT
+% Engine: XeLaTeX (vyžadováno kvůli fontspec/polyglossia)
+% ============================================================
+
+% --- Jazyk a fonty ---
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{czech}
+% BasicTeX nemá fonty registrované v macOS — načítáme přímo soubory přes kpathsea
+\setmainfont{lmroman10-regular.otf}[
+  BoldFont = lmroman10-bold.otf,
+  ItalicFont = lmroman10-italic.otf,
+  BoldItalicFont = lmroman10-bolditalic.otf,
+  Ligatures = TeX ]
+\setsansfont{lmsans10-regular.otf}[
+  BoldFont = lmsans10-bold.otf,
+  ItalicFont = lmsans10-oblique.otf,
+  BoldItalicFont = lmsans10-boldoblique.otf,
+  Ligatures = TeX ]
+\setmonofont{lmmonolt10-regular.otf}[
+  BoldFont = lmmonolt10-bold.otf,
+  ItalicFont = lmmonolt10-oblique.otf ]
+
+% --- Matematika ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+% --- Rozvržení stránky ---
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\leftmark}
+\fancyhead[RO]{\small\rightmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Barvy, grafika, boxy ---
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit}
+\usepackage[skins, breakable, theorems]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[autostyle]{csquotes}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{needspace}
+
+% --- Barevná paleta ---
+\definecolor{pojemModra}{RGB}{21, 101, 192}
+\definecolor{prikladSeda}{RGB}{84, 110, 122}
+\definecolor{otazkaOranzova}{RGB}{230, 126, 34}
+\definecolor{reseniZelena}{RGB}{46, 125, 50}
+\definecolor{pozorCervena}{RGB}{198, 40, 40}
+\definecolor{kucharkaFialova}{RGB}{106, 27, 154}
+
+% ============================================================
+% Makra a prostředí (jednotný styl pro všechny kapitoly)
+% ============================================================
+
+% Anglický ekvivalent pojmu — používat při PRVNÍM výskytu každého pojmu
+% Použití: úrok\en{interest}
+\newcommand{\en}[1]{ \textit{(angl. #1)}}
+
+% Seznam symbolů po vzorci
+% Použití: \begin{kde} \item $FV$ — budoucí hodnota \en{future value} \end{kde}
+\newenvironment{kde}%
+  {\par\noindent\textit{kde:}\begin{itemize}[nosep, leftmargin=2.5em]}%
+  {\end{itemize}\medskip}
+
+% --- Pojem: definice s povinným anglickým ekvivalentem ---
+% Použití: \begin{pojem}{Úrok}{interest} ... \end{pojem}
+\newtcolorbox[auto counter, number within=chapter]{pojem}[2]{%
+  breakable, enhanced,
+  colback=pojemModra!4, colframe=pojemModra!4,
+  borderline west={3pt}{0pt}{pojemModra},
+  fonttitle=\bfseries, coltitle=pojemModra,
+  title={Pojem~\thetcbcounter: #1 \textmd{\textit{(angl. #2)}}},
+  attach title to upper={\par},
+  boxrule=0pt, frame hidden, sharp corners,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Příklad: řešený příklad krok za krokem ---
+% Použití: \begin{priklad}{Reálná úroková míra} ... \end{priklad}
+\newtcolorbox[auto counter, number within=chapter]{priklad}[1]{%
+  breakable, enhanced,
+  colback=black!3, colframe=prikladSeda,
+  fonttitle=\bfseries,
+  title={Příklad~\thetcbcounter: #1},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Testová otázka: PŘESNÉ znění otázky ze zdroje ---
+% Použití: \begin{otazka}{PF_tema_4.pdf} text otázky
+%   \begin{enumerate}[label=\alph*)] \item ... \end{enumerate}
+% \end{otazka}
+\newtcolorbox[auto counter, number within=chapter]{otazka}[1]{%
+  breakable, enhanced,
+  colback=otazkaOranzova!5, colframe=otazkaOranzova,
+  fonttitle=\bfseries,
+  title={Testová otázka~\thetcbcounter\ \ \textmd{\small(zdroj: #1)}},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Řešení: správná odpověď + proč; proč jsou distraktory špatně ---
+% Použití: \begin{reseni}{c} ... \end{reseni}   (argument = písmeno správné odpovědi)
+\newtcolorbox{reseni}[1]{%
+  breakable, enhanced,
+  colback=reseniZelena!5, colframe=reseniZelena,
+  fonttitle=\bfseries,
+  title={Řešení: správná odpověď \MakeUppercase{#1})},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Odpověď: modelová odpověď na otevřenou (kontrolní) otázku ---
+% Použití: \begin{odpoved} ... \end{odpoved}
+\newtcolorbox{odpoved}{%
+  breakable, enhanced,
+  colback=reseniZelena!5, colframe=reseniZelena,
+  fonttitle=\bfseries,
+  title={Modelová odpověď},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Pozor: chytáky a časté chyby u zkoušky ---
+\newtcolorbox{pozor}{%
+  breakable, enhanced,
+  colback=pozorCervena!5, colframe=pozorCervena,
+  fonttitle=\bfseries,
+  title={Pozor — častá chyba!},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Kuchařka: postup krok za krokem (čtení tabulek, integrační metody…) ---
+% Použití: \begin{kucharka}{Jak číst tabulku Studentova rozdělení} \begin{enumerate} ... \end{enumerate} \end{kucharka}
+\newtcolorbox[auto counter, number within=chapter]{kucharka}[1]{%
+  breakable, enhanced,
+  colback=kucharkaFialova!4, colframe=kucharkaFialova,
+  fonttitle=\bfseries,
+  title={Kuchařka~\thetcbcounter: #1},
+  boxrule=0.8pt, arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Styly uzlů pro rozhodovací stromy (TikZ) ---
+\tikzset{
+  rozhodnuti/.style={diamond, aspect=2.2, draw=kucharkaFialova, fill=kucharkaFialova!8,
+                     text width=9.2em, align=center, font=\small, inner sep=1pt},
+  vysledek/.style={rectangle, rounded corners=3pt, draw=reseniZelena, fill=reseniZelena!8,
+                   text width=10em, align=center, font=\small, inner sep=4pt},
+  sipka/.style={-{Stealth}, thick},
+  popisek/.style={font=\footnotesize\itshape, midway}
+}
+
+% --- Věta: matematická věta / tvrzení (rigorózní kurzy) ---
+% Použití: \begin{veta}{Lagrangeova věta} ... \end{veta}
+\definecolor{vetaTeal}{RGB}{0, 121, 107}
+\newtcolorbox[auto counter, number within=chapter]{veta}[1]{%
+  breakable, enhanced,
+  colback=vetaTeal!4, colframe=vetaTeal,
+  fonttitle=\bfseries, coltitle=vetaTeal,
+  title={Věta~\thetcbcounter: #1},
+  attach title to upper={\par},
+  boxrule=0pt, frame hidden, sharp corners,
+  borderline west={3pt}{0pt}{vetaTeal},
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% --- Důkaz: jednoduché prostředí s QED značkou ---
+% Použití: \begin{dukaz} ... \end{dukaz}
+\newenvironment{dukaz}%
+  {\par\medskip\noindent\textit{Důkaz.}\ }%
+  {\hfill$\square$\par\medskip}
+
+% --- Hyperref (vždy poslední) ---
+\usepackage[unicode, colorlinks=true, linkcolor=pojemModra, urlcolor=pojemModra]{hyperref}

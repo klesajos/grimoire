@@ -1,0 +1,11 @@
+{
+  "name": "scriptorium",
+  "description": "Build a Czech academic LaTeX compendium the proven way: XeLaTeX + polyglossia, a tcolorbox environment system (pojem/priklad/otazka/reseni/pozor/kucharka/veta), TikZ decision trees, a 3-pass build, and standalone per-topic volumes. Ships the latex-compendium reference spell plus copy-ready template assets.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Josef Klesa"
+  },
+  "homepage": "https://github.com/klesajos/grimoire/tree/main/plugins/scriptorium",
+  "license": "MIT",
+  "keywords": ["latex", "xelatex", "compendium", "tcolorbox", "polyglossia", "czech", "typesetting", "book"]
+}

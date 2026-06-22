@@ -1,0 +1,8 @@
+% Isolated chapter compile harness.
+% Usage (from project root):
+%   xelatex -interaction=nonstopmode -output-directory=build "\def\chapterfile{chapters/22-derivace.tex}\input{test/wrap.tex}"
+\documentclass[11pt, a4paper, oneside]{book}
+\input{preamble/preamble}
+\begin{document}
+\input{\chapterfile}
+\end{document}
