@@ -1,21 +1,26 @@
 % ============================================================
 % scriptorium — ukázkový dokument (showcase všech prostředí)
 % Engine: XeLaTeX.  Kompilace z této složky:
-%   xelatex -interaction=nonstopmode sample.tex   (2× kvůli obsahu)
+%   xelatex -interaction=nonstopmode sample.tex   (3× kvůli obsahu, seznamům a citacím)
 % Sdílená preambule: ../preamble/preamble.tex
+% Diagramy Mermaid: figures/*.pdf (viz figures/README.md)
+% Úprava dle ČSN 01 6910; citace dle ČSN ISO 690.
 % ============================================================
 \documentclass[11pt, a4paper, oneside]{book}
 \input{../preamble/preamble}
 
 \title{\Huge\bfseries Ukázkový kompendiový dokument\\[0.5em]
        \Large scriptorium — showcase všech prostředí\\[2em]
-       \normalsize pojem \,·\, příklad \,·\, otázka \,·\, řešení \,·\, pozor \,·\, kuchařka \,·\, věta \,·\, důkaz \,·\, rozhodovací strom}
+       \normalsize pojmy a vzorce \,·\, věty a důkazy \,·\, diagramy Mermaid \,·\, tabulky \,·\, citace dle ČSN ISO 690}
 \author{}
 \date{\today}
 
 \begin{document}
 \maketitle
 \tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
 
 % ============================================================
 \part{Finanční ukázka}
@@ -100,14 +105,63 @@ se už úročí i~dříve připsaný úrok — jistina proto roste exponenciáln
 \end{odpoved}
 
 % ============================================================
-\part{Matematická ukázka}
+\part{Matematický aparát}
 % ============================================================
 
-\chapter{Věty, důkazy a rozhodovací stromy}
-\label{ch:veta}
+\chapter{Definice, věty a vzorce}
+\label{ch:matematika}
 
-Pro rigoróznější kapitoly nabízí scriptorium prostředí pro matematické věty,
-důkaz se značkou QED a~styly uzlů pro rozhodovací stromy v~TikZ.
+V~rigorózních kapitolách scriptorium nabízí prostředí pro definice, matematické
+věty, důkaz se značkou QED a~přehledné sázení vzorců i~jejich variant. Podrobné
+odvození uvádí \cite{rektorys}.
+
+\section{Definice}
+
+\begin{pojem}{Limita funkce}{limit of a function}
+Číslo $L$ je limitou funkce $f$ v~bodě $x_0$, jestliže se funkční hodnoty
+$f(x)$ neomezeně blíží k~$L$, kdykoli se $x$ blíží k~$x_0$. Zapisujeme
+$\lim_{x \to x_0} f(x) = L$.
+\end{pojem}
+
+\begin{pojem}{Derivace funkce}{derivative}
+Derivace funkce $f$ v~bodě $x_0$ je limita podílu přírůstku funkce a~přírůstku
+argumentu:
+\[ f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}. \]
+\begin{kde}
+  \item $f'(x_0)$ — derivace v~bodě $x_0$ (směrnice tečny),
+  \item $h$ — přírůstek argumentu,
+  \item $f(x_0 + h) - f(x_0)$ — přírůstek funkční hodnoty.
+\end{kde}
+\end{pojem}
+
+\section{Věty a důkazy}
+
+\begin{veta}{Pythagorova věta}
+V~pravoúhlém trojúhelníku s~odvěsnami $a$, $b$ a~přeponou $c$ platí
+\[ c^2 = a^2 + b^2. \]
+\end{veta}
+
+Situaci znázorňuje vektorový obrázek~\ref{fig:pythagoras} vysázený přímo v~TikZ.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (4,0);
+  \coordinate (C) at (0,3);
+  \draw[thick, fill=pojemModra!8] (A) -- (B) -- (C) -- cycle;
+  \draw[thick] (A) ++(0.38,0) -- ++(0,0.38) -- ++(-0.38,0);
+  \node[below] at (2,-0.05) {$a$};
+  \node[left] at (-0.05,1.5) {$b$};
+  \node[above right] at (2,1.5) {$c$};
+  \node[below left] at (A) {$C$};
+  \node[below right] at (B) {$A$};
+  \node[above left] at (C) {$B$};
+\end{tikzpicture}
+\caption{Pravoúhlý trojúhelník s~odvěsnami $a$, $b$ a~přeponou $c$
+(vektorový obrázek vysázený v~TikZ).}
+\label{fig:pythagoras}
+\end{figure}
 
 \begin{veta}{Součet prvních $n$ přirozených čísel}
 Pro každé přirozené číslo $n$ platí
@@ -120,13 +174,64 @@ pozpátku, dostaneme $2S = (n+1) + (n+1) + \dots + (n+1) = n(n+1)$, odkud
 $S = \frac{n(n+1)}{2}$.
 \end{dukaz}
 
-\section{Rozhodovací strom}
+\section{Vzorce a jejich verze}
 
-Tam, kde je třeba zvolit metodu, používáme rozhodovací strom se styly uzlů
-\verb|rozhodnuti|, \verb|vysledek|, \verb|sipka| a~\verb|popisek|.
+Mnoho vzorců má obecný tvar a~několik praktických variant. Kořeny kvadratické
+rovnice $a x^2 + b x + c = 0$ dává obecný vzorec
+\[ x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}, \]
+\begin{kde}
+  \item $D = b^2 - 4ac$ — diskriminant,
+  \item $x_{1,2}$ — dvojice kořenů.
+\end{kde}
+Podle znaménka diskriminantu má vzorec tři verze:
+\[
+  D > 0:\ x_{1,2} = \frac{-b \pm \sqrt{D}}{2a}, \qquad
+  D = 0:\ x = -\frac{b}{2a}, \qquad
+  D < 0:\ x_{1,2} = \frac{-b \pm i\sqrt{-D}}{2a}.
+\]
 
-\begin{center}
-\textbf{Jak derivovat výraz?}\\[0.8em]
+Obdobně binomická věta má obecný tvar
+\[ (a+b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k \]
+a~své známé speciální verze pro $n = 2$:
+\[
+  (a+b)^2 = a^2 + 2ab + b^2, \quad
+  (a-b)^2 = a^2 - 2ab + b^2, \quad
+  (a+b)(a-b) = a^2 - b^2.
+\]
+
+\begin{table}[htbp]
+\centering
+\caption{Derivace vybraných elementárních funkcí.}
+\label{tab:derivace}
+\begin{tabular}{ll}
+\toprule
+Funkce $f(x)$ & Derivace $f'(x)$ \\
+\midrule
+$x^n$    & $n\,x^{n-1}$ \\
+$\sin x$ & $\cos x$ \\
+$\cos x$ & $-\sin x$ \\
+$e^x$    & $e^x$ \\
+$\ln x$  & $\dfrac{1}{x}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\part{Diagramy, tabulky a normy}
+% ============================================================
+
+\chapter{Rozhodovací stromy a diagramy}
+\label{ch:diagramy}
+
+Postupy volby metody znázorňujeme rozhodovacími stromy. Strom lze vysázet přímo
+v~TikZ (obrázek~\ref{fig:strom-derivace}) nebo jako diagram v~jazyce Mermaid
+vyrenderovaný do vektorového PDF (obrázky~\ref{fig:mermaid-kvadrat}
+a~\ref{fig:mermaid-rizeni}).
+
+\section{Rozhodovací strom v TikZ}
+
+\begin{figure}[htbp]
+\centering
 \begin{tikzpicture}[node distance=1.1cm and 1.8cm]
   \node[rozhodnuti] (d1) {Je to elementární funkce z~tabulky?};
   \node[vysledek, right=of d1] (r1) {použij \textbf{tabulku derivací}, např. $(x^n)' = n\,x^{n-1}$};
@@ -140,6 +245,99 @@ Tam, kde je třeba zvolit metodu, používáme rozhodovací strom se styly uzlů
   \draw[sipka] (d2) -- node[popisek, right] {ne} (d3);
   \draw[sipka] (d3) -- node[popisek, above] {ano} (r3);
 \end{tikzpicture}
-\end{center}
+\caption{Rozhodovací strom „jak derivovat výraz“ vysázený v~TikZ.}
+\label{fig:strom-derivace}
+\end{figure}
+
+\section{Diagramy Mermaid}
+
+Diagramy psané v~jazyce Mermaid renderujeme do vektorového PDF a~vkládáme
+příkazem \verb|\includegraphics|; zdrojové \texttt{.mmd} soubory jsou v~adresáři
+\texttt{figures/}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{figures/diagram-kvadraticka.pdf}
+\caption{Vývojový diagram: řešení kvadratické rovnice podle znaménka
+diskriminantu (Mermaid \texttt{flowchart}).}
+\label{fig:mermaid-kvadrat}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/diagram-prijimaci-rizeni.pdf}
+\caption{Sekvenční diagram průběhu přijímacího řízení (Mermaid
+\texttt{sequenceDiagram}).}
+\label{fig:mermaid-rizeni}
+\end{figure}
+
+\chapter{Tabulky, citace a normy ČSN}
+\label{ch:normy}
+
+\section{Tabulka}
+
+Tabulky sázíme balíčkem \texttt{booktabs} (linky \verb|\toprule|, \verb|\midrule|,
+\verb|\bottomrule|; nikdy svislé linky). Tabulka~\ref{tab:diskriminant} shrnuje
+počet a~typ kořenů kvadratické rovnice.
+
+\begin{table}[htbp]
+\centering
+\caption{Počet a typ kořenů kvadratické rovnice podle diskriminantu.}
+\label{tab:diskriminant}
+\begin{tabular}{ccl}
+\toprule
+Diskriminant & Počet reálných kořenů & Charakter kořenů \\
+\midrule
+$D > 0$ & 2 & dva různé reálné \\
+$D = 0$ & 1 & jeden dvojnásobný \\
+$D < 0$ & 0 & dva komplexně sdružené \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Citace a soulad s normami}
+
+Bibliografické citace v~tomto dokumentu dodržují normu ČSN ISO 690
+\cite{csniso690} v~číselné formě: odkaz v~textu je číslo ve hranatých
+závorkách a~plný záznam je v~seznamu literatury. Typografická úprava se řídí
+normou ČSN 01 6910 \cite{csn016910} — odtud plynou nezlomitelné mezery po
+jednoznakových předložkách (\,k, s, v, z, o, u, a, i\,), desetinná čárka,
+mezera jako oddělovač tisíců a~úzká mezera před značkou \%\ i~před jednotkou.
+Matematické vztahy vycházejí z~\cite{rektorys}, finanční z~\cite{kislingerova};
+sazbu v~\TeX{}u popisuje \cite{olsak}.
+
+\begin{pozor}
+Norma ČSN 01 6910 vyžaduje, aby jednoznaková předložka nezůstala na konci
+řádku. V~\TeX{}u to zajistíme vlnkou \verb|~| (nezlomitelná mezera), např.
+\verb|v~roce|, \verb|k~tématu|.
+\end{pozor}
+
+% ============================================================
+% Seznam literatury — ČSN ISO 690, číselná forma
+% ============================================================
+\begin{thebibliography}{9}
+
+\bibitem{rektorys}
+REKTORYS, Karel. \textit{Přehled užité matematiky}. 7.~vyd. Praha: Prometheus,
+2009. ISBN 978-80-7196-180-2.
+
+\bibitem{kislingerova}
+KISLINGEROVÁ, Eva. \textit{Manažerské finance}. 3.~vyd. Praha: C.~H.~Beck,
+2010. ISBN 978-80-7400-194-9.
+
+\bibitem{csniso690}
+ČSN ISO 690. \textit{Informace a dokumentace --- Pravidla pro bibliografické
+odkazy a citace informačních zdrojů}. Praha: Česká agentura pro standardizaci,
+2022.
+
+\bibitem{csn016910}
+ČSN 01 6910. \textit{Úprava dokumentů zpracovaných textovými procesory}.
+Praha: Úřad pro technickou normalizaci, metrologii a~státní zkušebnictví, 2014.
+
+\bibitem{olsak}
+OLŠÁK, Petr. \textit{TeXbook naruby} [online]. Brno: Konvoj, 2001
+[cit.~2026-06-29]. Dostupné z: \url{http://petr.olsak.net/tbn.html}.
+
+\end{thebibliography}
 
 \end{document}

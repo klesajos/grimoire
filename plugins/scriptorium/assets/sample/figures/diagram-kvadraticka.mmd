@@ -1,0 +1,12 @@
+---
+config:
+  theme: neutral
+  flowchart:
+    curve: basis
+---
+flowchart TD
+  A(["Kvadratická rovnice: a·x² + b·x + c = 0"]) --> B["Spočítej diskriminant D = b² − 4ac"]
+  B --> C{"Jaké je znaménko D?"}
+  C -->|"D > 0"| D["Dva různé reálné kořeny"]
+  C -->|"D = 0"| E["Jeden dvojnásobný kořen"]
+  C -->|"D < 0"| F["Žádný reálný kořen (dva komplexně sdružené)"]

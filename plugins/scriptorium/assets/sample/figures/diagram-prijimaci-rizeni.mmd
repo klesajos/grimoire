@@ -1,0 +1,14 @@
+---
+config:
+  theme: neutral
+---
+sequenceDiagram
+  actor U as Uchazeč
+  participant S as Studijní systém
+  participant K as Přijímací komise
+  U->>S: Podání přihlášky
+  S-->>U: Potvrzení o přijetí přihlášky
+  S->>K: Předání podkladů k hodnocení
+  K->>K: Oprava a bodování testů
+  K-->>S: Zápis výsledku řízení
+  S-->>U: Rozhodnutí o přijetí
