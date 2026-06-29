@@ -44,6 +44,7 @@ Refresh after new plugins are added: `/plugin marketplace update grimoire`.
 | ------ | ------------ | ------ |
 | [`starter-spell`](plugins/starter-spell) | Reference template — copy it to conjure a new plugin | template |
 | [`archmage`](plugins/archmage) | Model in Sparx Enterprise Architect via MCP, plus UML / BPMN / ArchiMate / TOGAF / Mermaid reference spells | active |
+| [`scriptorium`](plugins/scriptorium) | Build structured Czech academic / technical LaTeX documents — XeLaTeX/polyglossia setup, tcolorbox environment system, 3-pass build, copy-ready template assets | active |
 
 ## Add your own
 
