@@ -23,6 +23,11 @@ to a new study book without re-deriving it.
 - **`assets/`** — copy-ready scaffolding (verbatim from the live project):
   `preamble/preamble.tex`, `build.sh`, `build-svazek.sh`, `test/wrap.tex`,
   `main.tex.template`.
+- **`assets/sample/`** — a self-contained showcase: [`sample.pdf`](assets/sample/sample.pdf)
+  and its source [`sample.tex`](assets/sample/sample.tex) exercising every environment
+  (`pojem`, `priklad`, `otazka`, `reseni`, `odpoved`, `pozor`, `kucharka`, `veta`, `dukaz`),
+  the `\en{}` macro, a `kde` symbol list, and a TikZ decision tree. Compile it with
+  `xelatex sample.tex` (run twice for the TOC).
 
 ## The setup in one paragraph
 

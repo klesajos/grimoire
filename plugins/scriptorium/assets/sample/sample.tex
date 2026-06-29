@@ -1,0 +1,145 @@
+% ============================================================
+% scriptorium — ukázkový dokument (showcase všech prostředí)
+% Engine: XeLaTeX.  Kompilace z této složky:
+%   xelatex -interaction=nonstopmode sample.tex   (2× kvůli obsahu)
+% Sdílená preambule: ../preamble/preamble.tex
+% ============================================================
+\documentclass[11pt, a4paper, oneside]{book}
+\input{../preamble/preamble}
+
+\title{\Huge\bfseries Ukázkový kompendiový dokument\\[0.5em]
+       \Large scriptorium — showcase všech prostředí\\[2em]
+       \normalsize pojem \,·\, příklad \,·\, otázka \,·\, řešení \,·\, pozor \,·\, kuchařka \,·\, věta \,·\, důkaz \,·\, rozhodovací strom}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+% ============================================================
+\part{Finanční ukázka}
+% ============================================================
+
+\chapter{Prostředí výkladu}
+\label{ch:vyklad}
+
+Tato kapitola ukazuje všechna prostředí, která scriptorium nabízí pro výklad
+látky: definice pojmů, vzorce se seznamem symbolů, řešené příklady, varování
+před chybami a~kuchařku s~postupem krok za krokem.
+
+\section{Definice a vzorce}
+
+Začneme základním pojmem. Anglický ekvivalent připojujeme makrem
+\verb|\en{}| při prvním výskytu termínu.
+
+\begin{pojem}{Úrok}{interest}
+Úrok je cena za zapůjčení peněz vyjádřená v~penězích. Věřitel\en{creditor}
+půjčí dlužníkovi\en{debtor} jistinu a~po čase dostane zpět jistinu navýšenou
+o~úrok.
+\end{pojem}
+
+Budoucí hodnotu vkladu při ročním složeném úročení spočítáme takto:
+\[ FV = PV \cdot (1 + r)^t \]
+\begin{kde}
+  \item $FV$ — budoucí hodnota\en{future value},
+  \item $PV$ — současná hodnota\en{present value},
+  \item $r$ — roční úroková míra (desetinné číslo),
+  \item $t$ — počet let.
+\end{kde}
+
+\begin{priklad}{Budoucí hodnota vkladu}
+Vložíme $PV = 10\,000$ Kč na účet s~úrokem $r = 5\,\%$ ročně na $t = 3$ roky.
+\begin{enumerate}
+  \item Dosadíme do vzorce: $FV = 10\,000 \cdot (1 + 0{,}05)^3$.
+  \item Spočítáme závorku: $1 + 0{,}05 = 1{,}05$.
+  \item Umocníme: $1{,}05^3 = 1{,}157625$.
+  \item Vynásobíme: $10\,000 \cdot 1{,}157625 = 11\,576{,}25$.
+\end{enumerate}
+\textbf{Výsledek: 11\,576,25 Kč.}
+\end{priklad}
+
+\begin{pozor}
+Úrokovou míru $5\,\%$ dosazujeme do vzorce jako desetinné číslo $0{,}05$,
+nikoli jako $5$. Záměna je nejčastější chyba u~úrokových výpočtů.
+\end{pozor}
+
+\begin{kucharka}{Jak spočítat budoucí hodnotu jednorázového vkladu}
+\begin{enumerate}
+  \item Zapiš si jistinu $PV$, úrokovou míru $r$ a~dobu $t$.
+  \item Úrokovou míru převeď na desetinné číslo ($5\,\% \to 0{,}05$).
+  \item Dosaď do $FV = PV \cdot (1+r)^t$ a~vyčísli.
+\end{enumerate}
+\end{kucharka}
+
+\section{Testové otázky ze zdrojových materiálů}
+
+\begin{otazka}{ukazka\_finance.pdf}
+Kolik činí budoucí hodnota vkladu $1\,000$ Kč při úroku $10\,\%$ ročně po
+dvou letech (složené úročení)?
+\begin{enumerate}[label=\alph*)]
+  \item $1\,100$ Kč
+  \item $1\,200$ Kč
+  \item $1\,210$ Kč
+  \item $1\,000$ Kč
+\end{enumerate}
+\end{otazka}
+\begin{reseni}{c}
+Platí $FV = 1\,000 \cdot 1{,}1^2 = 1\,000 \cdot 1{,}21 = 1\,210$ Kč.
+Odpověď a) počítá jen jeden rok, b) sčítá úrok lineárně bez složeného
+úročení, d) zapomíná úrok připočíst.
+\end{reseni}
+
+\begin{otazka}{ukazka\_kontrolni.pdf}
+Vysvětlete vlastními slovy rozdíl mezi jednoduchým a~složeným úročením.
+\end{otazka}
+\begin{odpoved}
+U~jednoduchého úročení se úrok počítá stále z~původní jistiny, takže roste
+lineárně. U~složeného úročení se úrok připisuje k~jistině a~v~dalším období
+se už úročí i~dříve připsaný úrok — jistina proto roste exponenciálně.
+\end{odpoved}
+
+% ============================================================
+\part{Matematická ukázka}
+% ============================================================
+
+\chapter{Věty, důkazy a rozhodovací stromy}
+\label{ch:veta}
+
+Pro rigoróznější kapitoly nabízí scriptorium prostředí pro matematické věty,
+důkaz se značkou QED a~styly uzlů pro rozhodovací stromy v~TikZ.
+
+\begin{veta}{Součet prvních $n$ přirozených čísel}
+Pro každé přirozené číslo $n$ platí
+\[ 1 + 2 + \dots + n = \frac{n(n+1)}{2}. \]
+\end{veta}
+
+\begin{dukaz}
+Označme součet $S = 1 + 2 + \dots + n$. Sečteme-li tutéž sumu napsanou
+pozpátku, dostaneme $2S = (n+1) + (n+1) + \dots + (n+1) = n(n+1)$, odkud
+$S = \frac{n(n+1)}{2}$.
+\end{dukaz}
+
+\section{Rozhodovací strom}
+
+Tam, kde je třeba zvolit metodu, používáme rozhodovací strom se styly uzlů
+\verb|rozhodnuti|, \verb|vysledek|, \verb|sipka| a~\verb|popisek|.
+
+\begin{center}
+\textbf{Jak derivovat výraz?}\\[0.8em]
+\begin{tikzpicture}[node distance=1.1cm and 1.8cm]
+  \node[rozhodnuti] (d1) {Je to elementární funkce z~tabulky?};
+  \node[vysledek, right=of d1] (r1) {použij \textbf{tabulku derivací}, např. $(x^n)' = n\,x^{n-1}$};
+  \node[rozhodnuti, below=of d1] (d2) {Je to součin $u \cdot v$?};
+  \node[vysledek, right=of d2] (r2) {\textbf{pravidlo součinu}: $(uv)' = u'v + uv'$};
+  \node[rozhodnuti, below=of d2] (d3) {Je to složená funkce $f(g(x))$?};
+  \node[vysledek, right=of d3] (r3) {\textbf{řetízkové pravidlo}: $f'(g)\cdot g'$};
+  \draw[sipka] (d1) -- node[popisek, above] {ano} (r1);
+  \draw[sipka] (d1) -- node[popisek, right] {ne} (d2);
+  \draw[sipka] (d2) -- node[popisek, above] {ano} (r2);
+  \draw[sipka] (d2) -- node[popisek, right] {ne} (d3);
+  \draw[sipka] (d3) -- node[popisek, above] {ano} (r3);
+\end{tikzpicture}
+\end{center}
+
+\end{document}
