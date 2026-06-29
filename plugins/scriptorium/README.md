@@ -2,10 +2,10 @@
 
 > The monastic room where manuscripts were copied and illuminated.
 
-A grimoire plugin that captures a proven recipe for building a **Czech academic LaTeX
-compendium** — the setup behind the 833-page *Kompendium k přijímací zkoušce* (MÚVS ČVUT).
+A grimoire plugin that captures a proven recipe for building a **structured Czech academic
+or technical LaTeX document** — a multi-chapter compendium, lecture notes, or study handbook.
 It ships one reference spell plus copy-ready template files so the recipe can be re-applied
-to a new study book without re-deriving it.
+to a new document without re-deriving it.
 
 ## What's inside
 
@@ -65,5 +65,5 @@ Latin Modern OTF fonts. Verify with `xelatex --version` and
 
 ---
 
-Source of truth: the live project at `~/dev/prijimacky`. The `assets/` here are copied
-verbatim from it; the reference docs distill its `STYLE.md` and preamble.
+The `assets/` are a complete, working setup; the reference docs explain how each piece
+(preamble, environments, build, conventions) fits together.

@@ -40,7 +40,7 @@ for i in 1 2 3; do
   fi
 done
 ...
-cp build/main.pdf kompendium-prijimacky-muvs.pdf
+cp build/main.pdf kompendium.pdf
 ```
 
 Key points:
@@ -55,7 +55,7 @@ Key points:
   `undefined` references, any `Missing character` — the latter usually means a glyph the
   current font can't render).
 - The one machine-specific thing to adjust is the **`TEX=` path** (`which xelatex` to find
-  yours). The output filename `kompendium-prijimacky-muvs.pdf` is also project-specific.
+  yours). The output filename `kompendium.pdf` is also project-specific.
 
 ## Isolated single-chapter compile (`test/wrap.tex`)
 
@@ -106,7 +106,7 @@ See `volumes.md` for how the `svazky/*.tex` files are structured.
 
 ## Output naming
 
-- Full book → `build/main.pdf`, copied to `kompendium-prijimacky-muvs.pdf` at the root
+- Full book → `build/main.pdf`, copied to `kompendium.pdf` at the root
   (the committed artifact).
 - Volumes → `build/<svazek>.pdf`, copied to `dist/<svazek>.pdf`.
 - Everything under `build/` (aux, log, toc, per-pass stdout) is git-ignored.

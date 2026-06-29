@@ -22,5 +22,5 @@ grep -c 'LaTeX Warning' build/main.log 2>/dev/null || echo "0"
 grep 'undefined' build/main.log | head -10 || true
 grep 'Missing character' build/main.log | head -10 || true
 
-cp build/main.pdf kompendium-prijimacky-muvs.pdf
-echo "PDF: $(pwd)/kompendium-prijimacky-muvs.pdf ($(du -h kompendium-prijimacky-muvs.pdf | cut -f1))"
+cp build/main.pdf kompendium.pdf
+echo "PDF: $(pwd)/kompendium.pdf ($(du -h kompendium.pdf | cut -f1))"

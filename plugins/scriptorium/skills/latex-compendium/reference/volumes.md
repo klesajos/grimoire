@@ -1,9 +1,8 @@
 # Standalone volumes (svazky)
 
-Besides the single full book (`main.tex` → `kompendium-...pdf`), the same chapters are also
-published as **standalone per-topic PDFs** — e.g. *Podnikové finance* on its own,
-*Mikroekonomie* on its own. A reader who only needs one topic gets a slim book instead of an
-833-page tome.
+Besides the single full book (`main.tex` → `kompendium.pdf`), the same chapters can also be
+published as **standalone per-topic PDFs** — one topic on its own. A reader who only needs
+one topic gets a slim book instead of the full multi-part volume.
 
 ## How a volume works
 
@@ -20,7 +19,7 @@ Volume roots live in `svazky/`. Template (`svazky/svazek-01-podnikove-finance.te
 \documentclass[11pt, a4paper, oneside]{book}
 \input{preamble/preamble}
 \title{\Huge\bfseries Podnikové finance\\[0.8em]
-       \Large Kompendium k~přijímací zkoušce --- MÚVS ČVUT\\[0.4em]
+       \Large Podtitul kompendia\\[0.4em]
        \normalsize svazek 01}
 \author{}
 \date{\today}

@@ -11,8 +11,8 @@ within=chapter]` number themselves per chapter (Pojem 3.1, Příklad 3.2, …).
 \newcommand{\en}[1]{ \textit{(angl. #1)}}
 ```
 
-Attach the English term at the **first** occurrence of a Czech technical term — the exam may
-be in either language. Don't repeat it on later uses.
+Attach the English term at the **first** occurrence of a Czech technical term — readers may
+meet it in either language. Don't repeat it on later uses.
 
 ```latex
 úrok\en{interest}        % → úrok (angl. interest)

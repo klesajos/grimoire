@@ -1,0 +1,14 @@
+---
+config:
+  theme: neutral
+---
+sequenceDiagram
+  actor A as Autor
+  participant R as Redakce
+  participant O as Recenzent
+  A->>R: Odeslání rukopisu
+  R-->>A: Potvrzení přijetí
+  R->>O: Předání k recenzi
+  O->>O: Posouzení rukopisu
+  O-->>R: Recenzní posudek
+  R-->>A: Rozhodnutí o publikaci

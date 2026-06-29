@@ -1,16 +1,16 @@
 # Chapter conventions
 
 Each chapter is **its own file** under `chapters/`, `\input` from `main.tex` (and from the
-relevant volume). These are the rules every chapter follows — distilled from the live
-project's `STYLE.md` writing contract.
+relevant volume). These are the rules every chapter follows — a strict writing contract that
+keeps a multi-author document consistent.
 
 ## File naming
 
 Numeric prefixes keep files sorted on disk in reading order, grouped by part:
 
-- **Core exam topics** use a two-digit code where the first digit is the part:
-  `11`–`16` finance, `21`–`25` math/stats, `31` English, `41`–`42` sample tests,
-  `51`–`59` micro, `61`–`65` macro. Example: `chapters/22-derivace.tex`.
+- **Core topics** use a two-digit code where the first digit is the part:
+  e.g. `11`–`16` for part 1, `21`–`25` for part 2, `51`–`59` for part 5.
+  Example: `chapters/22-derivace.tex`.
 - **Specials:** `00-uvod`, `legenda`, `90-tahak` (formula cheat sheet), `91-glosar`
   (Czech–English glossary).
 - **Advanced module families** use a letter prefix + number, one family per course:
@@ -21,8 +21,8 @@ Labels use ASCII slugs only: `\label{ch:pf-zaklady}`, `\label{sec:limita-intuiti
 
 ## Fixed chapter template (order matters)
 
-1. `\chapter{...}` + a **one-paragraph motivation**: *K čemu to je a co z toho zkouší* —
-   what the topic is for and what the exam asks from it.
+1. `\chapter{...}` + a **one-paragraph motivation**: *K čemu to je a co je důležité* —
+   what the topic is for and what matters about it.
 2. **Výklad** (exposition): `pojem` boxes for definitions, prose between them, `pozor` boxes
    for traps. Define every concept before using it.
 3. **Vzorce** (formulas): display math, each immediately followed by a `kde` symbol list.
@@ -71,7 +71,7 @@ tree and a `kucharka` with numbered steps.
 \chapter{Podnikové finance — základy}
 \label{ch:pf-zaklady}
 
-K čemu to je a co z toho zkouší: ...(one-paragraph motivation)...
+K čemu to je a co je důležité: ...(one-paragraph motivation)...
 
 \section{Co jsou podnikové finance}
 \label{sec:pf-co-jsou}
