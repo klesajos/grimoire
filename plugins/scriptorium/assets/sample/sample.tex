@@ -217,7 +217,7 @@ $\ln x$  & $\dfrac{1}{x}$ \\
 \end{table}
 
 % ============================================================
-\part{Diagramy, tabulky a normy}
+\part{Diagramy, grafy, tabulky a normy}
 % ============================================================
 
 \chapter{Rozhodovací stromy a diagramy}
@@ -269,6 +269,94 @@ diskriminantu (Mermaid \texttt{flowchart}).}
 \caption{Sekvenční diagram průběhu přijímacího řízení (Mermaid
 \texttt{sequenceDiagram}).}
 \label{fig:mermaid-rizeni}
+\end{figure}
+
+\chapter{Grafy a vizualizace dat}
+\label{ch:grafy}
+
+Pro kvantitativní data používáme grafy. Sloupcový graf~\ref{fig:graf-sloupce}
+porovnává hodnoty mezi kategoriemi, spojnicový graf~\ref{fig:graf-spojnice}
+ukazuje vývoj v~čase a~hladká křivka~\ref{fig:graf-gauss} znázorňuje rozdělení
+pravděpodobnosti. Všechny grafy jsou vysázeny vektorově přímo v~TikZ, bez
+externích dat či obrázků.
+
+\section{Sloupcový graf}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1.25cm, y=0.19cm]
+  % osy
+  \draw[->] (0,0) -- (6,0) node[right] {\small úroková míra};
+  \draw[->] (0,0) -- (0,29) node[above] {\small $FV$ (tis.\ Kč)};
+  % vodorovná mřížka + popisky osy y
+  \foreach \yv in {5,10,15,20,25} {
+    \draw[gray!30] (0,\yv) -- (5.7,\yv);
+    \draw (0,\yv) -- (-0.12,\yv) node[left, black] {\small \yv};
+  }
+  % sloupce: FV = 10000*(1+r)^10 (v tisících Kč)
+  \fill[pojemModra!75] (0.68,0) rectangle (1.32,12.19);
+  \node[above, font=\scriptsize] at (1,12.19) {12,2};   \node[below] at (1,0) {\small 2\,\%};
+  \fill[pojemModra!75] (1.68,0) rectangle (2.32,14.80);
+  \node[above, font=\scriptsize] at (2,14.80) {14,8};   \node[below] at (2,0) {\small 4\,\%};
+  \fill[pojemModra!75] (2.68,0) rectangle (3.32,17.91);
+  \node[above, font=\scriptsize] at (3,17.91) {17,9};   \node[below] at (3,0) {\small 6\,\%};
+  \fill[pojemModra!75] (3.68,0) rectangle (4.32,21.59);
+  \node[above, font=\scriptsize] at (4,21.59) {21,6};   \node[below] at (4,0) {\small 8\,\%};
+  \fill[pojemModra!75] (4.68,0) rectangle (5.32,25.94);
+  \node[above, font=\scriptsize] at (5,25.94) {25,9};   \node[below] at (5,0) {\small 10\,\%};
+\end{tikzpicture}
+\caption{Sloupcový graf: budoucí hodnota vkladu $10\,000$ Kč po deseti letech
+při různých úrokových mírách (vysázeno v~TikZ).}
+\label{fig:graf-sloupce}
+\end{figure}
+
+\section{Spojnicový graf}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.5cm, y=0.18cm]
+  \draw[->] (0,0) -- (11,0) node[right] {\small roky $t$};
+  \draw[->] (0,0) -- (0,30) node[above] {\small $FV$ (tis.\ Kč)};
+  \foreach \yv in {5,10,15,20,25} {
+    \draw[gray!30] (0,\yv) -- (10.5,\yv);
+    \draw (0,\yv) -- (-0.2,\yv) node[left, black] {\small \yv};
+  }
+  \foreach \xv in {2,4,6,8,10} \draw (\xv,0) -- (\xv,-0.6) node[below, black] {\small \xv};
+  % složené úročení: 10*(1,1)^t
+  \draw[reseniZelena, very thick]
+    plot coordinates {(0,10)(1,11)(2,12.1)(3,13.31)(4,14.64)(5,16.11)(6,17.72)(7,19.49)(8,21.44)(9,23.58)(10,25.94)};
+  % jednoduché úročení: 10 + 1*t
+  \draw[prikladSeda, very thick, dashed] (0,10) -- (10,20);
+  % legenda
+  \draw[reseniZelena, very thick] (0.5,29) -- (2,29) node[right, black] {\small složené úročení};
+  \draw[prikladSeda, very thick, dashed] (0.5,26) -- (2,26) node[right, black] {\small jednoduché úročení};
+\end{tikzpicture}
+\caption{Spojnicový graf: srovnání jednoduchého a~složeného úročení vkladu
+$10\,000$ Kč při sazbě $10\,\%$ za deset let (vysázeno v~TikZ).}
+\label{fig:graf-spojnice}
+\end{figure}
+
+\section{Hladká křivka — normální rozdělení}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1.3cm, y=3cm]
+  % plocha pod křivkou
+  \fill[pojemModra!12] (-3,0) -- plot[domain=-3:3, samples=100] (\x, {exp(-\x*\x/2)}) -- (3,0) -- cycle;
+  % Gaussova křivka N(0,1)
+  \draw[pojemModra, very thick] plot[domain=-3:3, samples=100] (\x, {exp(-\x*\x/2)});
+  % osy
+  \draw[->] (-3.4,0) -- (3.4,0) node[right] {\small $x$};
+  \draw[->] (0,0) -- (0,1.18) node[above] {\small hustota};
+  % popisky osy x
+  \foreach \xv in {-3,-2,-1,1,2,3} \draw (\xv,0) -- (\xv,-0.03) node[below, black, font=\scriptsize] {$\xv$};
+  % střední hodnota
+  \draw[dashed, gray] (0,0) -- (0,1);
+  \node[below, font=\scriptsize] at (0,-0.03) {$\mu$};
+\end{tikzpicture}
+\caption{Hustota normálního rozdělení $N(0,1)$ — Gaussova křivka vysázená
+v~TikZ pomocí \texttt{plot}.}
+\label{fig:graf-gauss}
 \end{figure}
 
 \chapter{Tabulky, citace a normy ČSN}

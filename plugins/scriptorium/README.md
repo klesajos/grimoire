@@ -23,15 +23,16 @@ to a new study book without re-deriving it.
 - **`assets/`** — copy-ready scaffolding (verbatim from the live project):
   `preamble/preamble.tex`, `build.sh`, `build-svazek.sh`, `test/wrap.tex`,
   `main.tex.template`.
-- **`assets/sample/`** — a self-contained 15-page showcase: [`sample.pdf`](assets/sample/sample.pdf)
+- **`assets/sample/`** — a self-contained 17-page showcase: [`sample.pdf`](assets/sample/sample.pdf)
   and its source [`sample.tex`](assets/sample/sample.tex). It exercises every environment
   (`pojem`, `priklad`, `otazka`, `reseni`, `odpoved`, `pozor`, `kucharka`, `veta`, `dukaz`),
   the `\en{}` macro and `kde` symbol list, mathematical definitions / theorems / proofs and
-  formulas with their variants, a vector TikZ figure and TikZ decision tree, **Mermaid
-  diagrams** (flowchart + sequence) rendered to vector PDF (`assets/sample/figures/`,
-  regenerable per its README), `booktabs` tables, a list of figures and list of tables, and
-  citations with a bibliography formatted per **ČSN ISO 690** (typography per **ČSN 01 6910**).
-  Compile with `xelatex sample.tex` (run three times for the TOC, lists, and citations).
+  formulas with their variants, a vector TikZ figure, a TikZ decision tree, TikZ data charts
+  (bar, line, and a Gaussian curve), **Mermaid diagrams** (flowchart + sequence) rendered to
+  vector PDF (`assets/sample/figures/`, regenerable per its README), `booktabs` tables, a list
+  of figures and list of tables, and citations with a bibliography formatted per **ČSN ISO 690**
+  (typography per **ČSN 01 6910**). Compile with `xelatex sample.tex` (run three times for the
+  TOC, lists, and citations).
 
 ## The setup in one paragraph
 
