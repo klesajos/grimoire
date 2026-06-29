@@ -359,6 +359,97 @@ v~TikZ pomocí \texttt{plot}.}
 \label{fig:graf-gauss}
 \end{figure}
 
+\section{Reálná data: největší města ČR}
+\label{sec:mesta}
+
+Grafy se neomezují na matematické funkce — stejně dobře poslouží reálným,
+nematematickým datům. Tabulka~\ref{tab:mesta} uvádí deset největších měst České
+republiky podle počtu obyvatel \cite{csu}. Týž soubor dat pak vizualizujeme
+pruhovým grafem~\ref{fig:graf-mesta} (žebříček) a~krabicovým
+grafem~\ref{fig:graf-boxplot} (rozdělení hodnot s~odlehlou hodnotou).
+
+\begin{table}[htbp]
+\centering
+\caption{Deset největších měst ČR podle počtu obyvatel
+(orientačně, ČSÚ k~1.~1.~2024).}
+\label{tab:mesta}
+\begin{tabular}{rlr}
+\toprule
+Pořadí & Město & Počet obyvatel \\
+\midrule
+1  & Praha            & 1\,384\,732 \\
+2  & Brno             &   400\,566 \\
+3  & Ostrava          &   283\,504 \\
+4  & Plzeň            &   186\,343 \\
+5  & Liberec          &   107\,882 \\
+6  & Olomouc          &   101\,268 \\
+7  & České Budějovice &    96\,053 \\
+8  & Hradec Králové   &    92\,220 \\
+9  & Pardubice        &    91\,755 \\
+10 & Ústí nad Labem   &    91\,273 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.0032cm, y=0.55cm]
+  % svislá mřížka
+  \foreach \xt in {400,800,1200} \draw[gray!25] (\xt,0.4) -- (\xt,10.5);
+  % osa x
+  \draw[->] (0,0.4) -- (1480,0.4);
+  \foreach \xt in {0,400,800,1200} \draw (\xt,0.4) -- (\xt,0.2) node[below, font=\scriptsize] {\xt};
+  % pruhy (počet obyvatel v tisících), shora dolů
+  \fill[pojemModra!70] (0,9.68) rectangle (1384.7,10.32); \node[left, font=\small] at (0,10) {Praha};            \node[right, font=\scriptsize] at (1384.7,10) {1\,385};
+  \fill[pojemModra!70] (0,8.68) rectangle (400.6,9.32);   \node[left, font=\small] at (0,9)  {Brno};             \node[right, font=\scriptsize] at (400.6,9) {401};
+  \fill[pojemModra!70] (0,7.68) rectangle (283.5,8.32);   \node[left, font=\small] at (0,8)  {Ostrava};          \node[right, font=\scriptsize] at (283.5,8) {284};
+  \fill[pojemModra!70] (0,6.68) rectangle (186.3,7.32);   \node[left, font=\small] at (0,7)  {Plzeň};            \node[right, font=\scriptsize] at (186.3,7) {186};
+  \fill[pojemModra!70] (0,5.68) rectangle (107.9,6.32);   \node[left, font=\small] at (0,6)  {Liberec};          \node[right, font=\scriptsize] at (107.9,6) {108};
+  \fill[pojemModra!70] (0,4.68) rectangle (101.3,5.32);   \node[left, font=\small] at (0,5)  {Olomouc};          \node[right, font=\scriptsize] at (101.3,5) {101};
+  \fill[pojemModra!70] (0,3.68) rectangle (96.1,4.32);    \node[left, font=\small] at (0,4)  {Č. Budějovice};    \node[right, font=\scriptsize] at (96.1,4) {96};
+  \fill[pojemModra!70] (0,2.68) rectangle (92.2,3.32);    \node[left, font=\small] at (0,3)  {Hradec Kr.};       \node[right, font=\scriptsize] at (92.2,3) {92};
+  \fill[pojemModra!70] (0,1.68) rectangle (91.8,2.32);    \node[left, font=\small] at (0,2)  {Pardubice};        \node[right, font=\scriptsize] at (91.8,2) {92};
+  \fill[pojemModra!70] (0,0.68) rectangle (91.3,1.32);    \node[left, font=\small] at (0,1)  {Ústí n. L.};       \node[right, font=\scriptsize] at (91.3,1) {91};
+\end{tikzpicture}
+\caption{Pruhový graf: deset největších měst ČR podle počtu obyvatel
+(v~tisících, vysázeno v~TikZ).}
+\label{fig:graf-mesta}
+\end{figure}
+
+Z~grafu je patrná silná pravostranná šikmost: Praha mnohonásobně převyšuje
+ostatní města. Tuto nesymetrii dobře zachytí krabicový graf\en{box plot}
+v~obrázku~\ref{fig:graf-boxplot}, sestrojený z~pětičíselné charakteristiky
+(minimum, dolní kvartil $Q_1$, medián, horní kvartil $Q_3$, maximum):
+\[
+  \min = 91{,}3; \quad Q_1 = 92{,}2; \quad \mathrm{med} = 104{,}6; \quad
+  Q_3 = 283{,}5; \quad \max = 1\,384{,}7 \ \text{(tis.\ obyvatel)}.
+\]
+Hodnota Prahy leží nad horní vnitřní hradbou $Q_3 + 1{,}5\cdot \mathrm{IQR}$,
+a~je proto vykreslena jako odlehlá hodnota\en{outlier}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=0.0034cm, y=1cm]
+  % svislá mřížka
+  \foreach \xt in {400,800,1200} \draw[gray!25] (\xt,-0.55) -- (\xt,0.55);
+  % box Q1..Q3 s mediánem
+  \draw[thick, fill=otazkaOranzova!18] (92.2,-0.35) rectangle (283.5,0.35);
+  \draw[very thick] (104.6,-0.35) -- (104.6,0.35);
+  % vousy
+  \draw[thick] (91.3,0) -- (92.2,0);      \draw[thick] (91.3,-0.18) -- (91.3,0.18);
+  \draw[thick] (283.5,0) -- (400.6,0);    \draw[thick] (400.6,-0.18) -- (400.6,0.18);
+  % odlehlá hodnota
+  \fill[pozorCervena] (1384.7,0) circle (2pt);
+  \node[above, font=\scriptsize] at (1384.7,0.08) {Praha};
+  % osa x
+  \draw[->] (0,-0.6) -- (1480,-0.6);
+  \foreach \xt in {0,400,800,1200} \draw (\xt,-0.6) -- (\xt,-0.7) node[below, font=\scriptsize] {\xt};
+\end{tikzpicture}
+\caption{Krabicový graf rozdělení počtu obyvatel deseti největších měst ČR
+(v~tisících); Praha je odlehlá hodnota (vysázeno v~TikZ).}
+\label{fig:graf-boxplot}
+\end{figure}
+
 \chapter{Tabulky, citace a normy ČSN}
 \label{ch:normy}
 
@@ -425,6 +516,11 @@ Praha: Úřad pro technickou normalizaci, metrologii a~státní zkušebnictví, 
 \bibitem{olsak}
 OLŠÁK, Petr. \textit{TeXbook naruby} [online]. Brno: Konvoj, 2001
 [cit.~2026-06-29]. Dostupné z: \url{http://petr.olsak.net/tbn.html}.
+
+\bibitem{csu}
+ČESKÝ STATISTICKÝ ÚŘAD. \textit{Počet obyvatel v~obcích České republiky
+k~1.~1.~2024} [online]. Praha: Český statistický úřad, 2024
+[cit.~2026-06-29]. Dostupné z: \url{https://www.czso.cz/}.
 
 \end{thebibliography}
 
